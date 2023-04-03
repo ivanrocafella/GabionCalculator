@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace GabionCalculator.DAL.Entities.Common.Interfaces
 {
-    internal interface IDateFixEntity
+    public interface IDateFixEntity
     {
+        public DateTime DateStart { get; set; }
+        public DateTime DateUpdate { get; set; }
     }
 }
