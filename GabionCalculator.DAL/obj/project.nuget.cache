@@ -1,8 +1,20 @@
 {
   "version": 2,
-  "dgSpecHash": "Gl0eI0tbGiJt3YkbGb+yMbDONydxg37vTnXf3sKJWusZzBsU1HEfjds0wjgnkFC0Ch74pUJ1K9yveSDrSIXE2w==",
+  "dgSpecHash": "gD8v5O8cwdysXNTC0tmqQi2UASzGNWsBIbtd4mVrQVjTVjOif7VwBv3UOw0uS4SZgyKBpsbAVfVJ3Mzv4tgkyA==",
   "success": true,
   "projectFilePath": "C:\\Иван\\Programming\\Калькулятор_габионов\\GabionCalculator\\GabionCalculator.DAL\\GabionCalculator.DAL.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Ivan The Constructor\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\7.0.4\\microsoft.aspnetcore.cryptography.internal.7.0.4.nupkg.sha512",
+    "C:\\Users\\Ivan The Constructor\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\7.0.4\\microsoft.aspnetcore.cryptography.keyderivation.7.0.4.nupkg.sha512",
+    "C:\\Users\\Ivan The Constructor\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\Ivan The Constructor\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
+    "C:\\Users\\Ivan The Constructor\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\Ivan The Constructor\\.nuget\\packages\\microsoft.extensions.identity.core\\7.0.4\\microsoft.extensions.identity.core.7.0.4.nupkg.sha512",
+    "C:\\Users\\Ivan The Constructor\\.nuget\\packages\\microsoft.extensions.identity.stores\\7.0.4\\microsoft.extensions.identity.stores.7.0.4.nupkg.sha512",
+    "C:\\Users\\Ivan The Constructor\\.nuget\\packages\\microsoft.extensions.logging\\7.0.0\\microsoft.extensions.logging.7.0.0.nupkg.sha512",
+    "C:\\Users\\Ivan The Constructor\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\Ivan The Constructor\\.nuget\\packages\\microsoft.extensions.options\\7.0.1\\microsoft.extensions.options.7.0.1.nupkg.sha512",
+    "C:\\Users\\Ivan The Constructor\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
