@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace GabionCalculator.DAL.Entities.Common
 {
-    internal class BaseEntity
+    public class BaseEntity
     {
+        public int Id { get; set; }
     }
 }

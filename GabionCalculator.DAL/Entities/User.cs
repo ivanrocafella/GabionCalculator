@@ -9,5 +9,11 @@ namespace GabionCalculator.DAL.Entities
 {
     public class User : IdentityUser
     {
+        public ICollection<Gabion> Gabions { get; set; }
+
+        public User()
+        {
+            Gabions = new HashSet<Gabion>();
+        }
     }
 }
