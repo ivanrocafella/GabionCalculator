@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace GabionCalculator.BAL.Models.Material
 {
-    internal class UpdateMaterialModel
+    public class UpdateMaterialModel : BaseResponseModel
     {
+        public string Name { get; set; }
+        public double Size { get; set; }
+        public double PricePerKg { get; set; }
+        public int MaterialKindId { get; set; }
     }
 }

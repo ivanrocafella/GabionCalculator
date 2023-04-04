@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GabionCalculator.DAL\GabionCalculator.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

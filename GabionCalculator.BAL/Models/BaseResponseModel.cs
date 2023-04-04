@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace GabionCalculator.BAL.Models
 {
-    internal class BaseResponseModel
+    public class BaseResponseModel
     {
+        public int Id { get; set; }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GabionCalculator.BAL.Models.Material
 {
-    public class CreateMaterialModel : BaseResponseModel
+    public class CreateMaterialModel 
     {
         public string Name { get; set; }
         public double Size { get; set; }

@@ -138,7 +138,7 @@ namespace GabionCalculator.DAL.Entities
 
         public int? MaterialId { get; set; }
         public Material? Material { get; set; }
-        public int? UserlId { get; set; }
+        public string? UserlId { get; set; }
         public User? User { get; set; }
     }
 }
