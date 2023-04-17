@@ -5,12 +5,14 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GabionCalculator.DAL", "GabionCalculator.DAL\GabionCalculator.DAL.csproj", "{F4DE4634-3CD3-4C76-886B-5257B4E344F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GabionCalculator.BAL", "GabionCalculator.BAL\GabionCalculator.BAL.csproj", "{148368D3-4900-451F-BBC5-7F43B9435E35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GabionCalculator.BAL", "GabionCalculator.BAL\GabionCalculator.BAL.csproj", "{148368D3-4900-451F-BBC5-7F43B9435E35}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C2ECA532-5D37-4496-A618-EDA874226FE4}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GabionCalculator.API", "GabionCalculator.API\GabionCalculator.API.csproj", "{F3285B19-30E2-44D3-A6C7-F21CF3BCF1E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{148368D3-4900-451F-BBC5-7F43B9435E35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{148368D3-4900-451F-BBC5-7F43B9435E35}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{148368D3-4900-451F-BBC5-7F43B9435E35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3285B19-30E2-44D3-A6C7-F21CF3BCF1E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3285B19-30E2-44D3-A6C7-F21CF3BCF1E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3285B19-30E2-44D3-A6C7-F21CF3BCF1E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3285B19-30E2-44D3-A6C7-F21CF3BCF1E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
