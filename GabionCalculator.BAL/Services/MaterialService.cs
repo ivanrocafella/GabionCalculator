@@ -28,12 +28,10 @@ namespace GabionCalculator.BAL.Services
         public async Task<MaterialResponseModel> CreateAsync(CreateMaterialModel createMaterialModel, CancellationToken cancellationToken = default)
         {
             Material material = _mapper.Map<Material>(createMaterialModel);
-            var id = (await _context.Materials.AddAsync(material)).Entity.Id;
+            await _context.Materials.AddAsync(material);
             await _context.SaveChangesAsync();
-            return new MaterialResponseModel
-            {
-                Id = id
-            };
+            MaterialResponseModel materialResponseModel = _mapper.Map<MaterialResponseModel>(material);
+            return materialResponseModel;
         }
 
         public Task<BaseResponseModel> DeleteAsync(int id, CancellationToken cancellationToken = default)

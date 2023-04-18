@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using GabionCalculator.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace GabionCalculator.BAL
 {
@@ -19,6 +21,10 @@ namespace GabionCalculator.BAL
       {
           services.AddServices();
           services.RegisterAutoMapper();
+          services.Configure<ApiBehaviorOptions>(options =>
+          {
+              options.SuppressModelStateInvalidFilter = true;
+          });
           return services;
       }
       
@@ -34,27 +40,41 @@ namespace GabionCalculator.BAL
           services.AddAutoMapper(typeof(IMappingProfilesMarker));
       }
 
-      public static async Task InitializeRoleAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public static IdentityOptions MakeOptionsIdentity(this IdentityOptions options)
       {
-          string adminEmail = "admin@adminov.ru";
-          string password = "WH90LeZ5uMe9";
-          if (await roleManager.FindByNameAsync("admin") == null)
-          {
-              await roleManager.CreateAsync(new IdentityRole("admin"));
-          }
-          if (await roleManager.FindByNameAsync("employee") == null)
-          {
-              await roleManager.CreateAsync(new IdentityRole("employee"));
-          }
-          if (await userManager.FindByNameAsync(adminEmail) == null)
-          {
-              User admin = new() { Email = adminEmail, UserName = adminEmail };
-              IdentityResult result = await userManager.CreateAsync(admin, password);
-              if (result.Succeeded)
-              {
-                  await userManager.AddToRoleAsync(admin, "admin");
-              }
-          }
+            options.Password.RequiredLength = 12;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireLowercase = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireDigit = false;
+            options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -._@+ " +
+                                                     "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+            return options;
+        }
+
+        public static async Task InitializeRoleAsync(this IServiceProvider services)
+      {                  
+           var userManager = services.GetRequiredService<UserManager<User>>();
+           var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+           string adminEmail = "admin@adminov.ru";
+           string password = "WH90LeZ5uMe9";
+           if (await roleManager.FindByNameAsync("admin") == null)
+           {
+               await roleManager.CreateAsync(new IdentityRole("admin"));
+           }
+           if (await roleManager.FindByNameAsync("employee") == null)
+           {
+               await roleManager.CreateAsync(new IdentityRole("employee"));
+           }
+           if (await userManager.FindByNameAsync(adminEmail) == null)
+           {
+               User admin = new() { Email = adminEmail, UserName = adminEmail };
+               IdentityResult result = await userManager.CreateAsync(admin, password);
+               if (result.Succeeded)
+               {
+                   await userManager.AddToRoleAsync(admin, "admin");
+               }
+           }        
       }
     }
 }
