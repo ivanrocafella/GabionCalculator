@@ -53,7 +53,7 @@ namespace GabionCalculator.BAL
         }
 
         public static async Task InitializeRoleAsync(this IServiceProvider services)
-      {                  
+        {                  
            var userManager = services.GetRequiredService<UserManager<User>>();
            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
            string adminEmail = "admin@adminov.ru";
@@ -75,6 +75,10 @@ namespace GabionCalculator.BAL
                    await userManager.AddToRoleAsync(admin, "admin");
                }
            }        
-      }
+        }
+
+#pragma warning disable CS8603 // Возможно, возврат ссылки, допускающей значение NULL.
+        public static async Task<User> GetCurrentUser(UserManager<User> UserManager, string nameUser) => await UserManager.FindByNameAsync(nameUser);
+#pragma warning restore CS8603 // Возможно, возврат ссылки, допускающей значение NULL.
     }
 }

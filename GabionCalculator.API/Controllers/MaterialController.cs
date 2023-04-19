@@ -4,6 +4,7 @@ using GabionCalculator.BAL.Services.Interfaces;
 using GabionCalculator.DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 
 namespace GabionCalculator.API.Controllers
 {
@@ -16,17 +17,14 @@ namespace GabionCalculator.API.Controllers
             _materialService = materialService;
         }
 
-        // POST: api/Material
-        [HttpPost]
+        // POST: api/Material/Post
+        [HttpPost("Post")]
         public async Task<IActionResult> PostAsync([FromBody] CreateMaterialModel createMaterialModel)
         {
             if (ModelState.IsValid)
                 return Ok(ApiResult<MaterialResponseModel>.Success(await _materialService.CreateAsync(createMaterialModel)));
             else
             {
-                IEnumerable<string> errors = ModelState.Values
-                            .SelectMany(v => v.Errors)
-                            .Select(e => e.ErrorMessage);
                 return StatusCode(500, ApiResult<MaterialResponseModel>.Failure(ModelState.Values
                             .SelectMany(v => v.Errors)
                             .Select(e => e.ErrorMessage)));

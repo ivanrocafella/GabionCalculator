@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace GabionCalculator.BAL.Models.User
 {
-    public class UserResponseModel : BaseResponseModel
+    public class UserResponseModel
     {
+        public string Id { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
     }

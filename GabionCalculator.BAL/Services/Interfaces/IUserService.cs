@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using GabionCalculator.BAL.Models.User;
+using Microsoft.AspNetCore.Identity;
 
 namespace GabionCalculator.BAL.Services.Interfaces
 {
@@ -15,10 +16,14 @@ namespace GabionCalculator.BAL.Services.Interfaces
     {
         Task<IEnumerable<UserResponseModel>> GetAllAsync(Expression<Func<User, bool>> predicate);
         Task<UserResponseModel> GetByIdAsync(string id, CancellationToken cancellationToken = default);
-        Task<UserResponseModel> GetByUserNameAsync(string UserName, CancellationToken cancellationToken = default);
-        Task<RegisterUserModel> RegisterAsync(RegisterUserModel registerUserModel, CancellationToken cancellationToken = default);
+        Task<User> GetByUserNameAsync(string UserName, CancellationToken cancellationToken = default);
+        Task<IdentityResult> RegisterAsync(RegisterUserModel registerUserModel, CancellationToken cancellationToken = default);
         Task<string> DeleteByIdAsync(string id, CancellationToken cancellationToken = default);
         Task<string> DeleteByUserNameAsync(string UserName, CancellationToken cancellationToken = default);
         Task<string> UpdateAsync(string id, UpdateUserModel updateUserModel, CancellationToken cancellationToken = default);
+        UserResponseModel GetResponseModel(User user, CancellationToken cancellationToken = default);
+        Task AddRoleAsync(User user, string role, CancellationToken cancellationToken = default);
+        Task<User> GetUserByLoginAsync(LoginUserModel loginUserModel, CancellationToken cancellationToken = default);
+        Task<SignInResult> GetSignInAsync(LoginUserModel loginUserModel, User user, CancellationToken cancellationToken = default);
     }
 }
