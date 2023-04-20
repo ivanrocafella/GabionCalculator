@@ -23,9 +23,6 @@ namespace GabionCalculator.DAL.Entities
         {
             get
             {
-                if (Kfactor != 0)
-                    return Kfactor;
-                else
                     return 1 / (Math.Log(1 + (double)MaterialDiameter / BendRadius)) - BendRadius / MaterialDiameter;
             }
         } // K-factor 
@@ -34,9 +31,6 @@ namespace GabionCalculator.DAL.Entities
         {
             get
             {
-                if (BarBilletVert != 0)
-                    return BarBilletVert;
-                else
                     return Height;
             }
         }
@@ -44,9 +38,6 @@ namespace GabionCalculator.DAL.Entities
         {
             get
             {
-                if (BarBilletHoriz != 0)
-                    return BarBilletHoriz;
-                else
                     return (int)Math.Ceiling(Length - 2 * (MaterialDiameter + BendRadius) +
                                       Width - 2 * (MaterialDiameter + BendRadius) +
                                       3 * (Math.PI * (BendRadius + Kfactor * MaterialDiameter) * 1 / 2) +
@@ -62,10 +53,6 @@ namespace GabionCalculator.DAL.Entities
         {
             get
             {
-                if (CardWidth != 0)
-                    return CardWidth;
-                else
-                {
                     CardWidthInterm = (BarBilletHoriz / 100) * 100;
 
                     if (BarBilletHoriz - CardWidthInterm >= 25 && BarBilletHoriz - CardWidthInterm < 50)
@@ -87,16 +74,12 @@ namespace GabionCalculator.DAL.Entities
                         };
                         return CardWidthInterm + 2 * OutletHoriz;
                     }
-                }
             }
         }
         public int CardHeight // Высота карты
         {
             get
             {
-                if (CardHeight != 0)
-                    return CardHeight;
-                else
                     return Height + 2 * OutletVert;
             }
         }
@@ -104,9 +87,6 @@ namespace GabionCalculator.DAL.Entities
         {
             get
             {
-                if (Weight != 0)
-                    return Weight;
-                else
                     return 7850 * (double)((CardHeight - 2 * OutletVert) * BarsQtyVert + (CardWidth - 2 * OutletHoriz) * BarsQtyHoriz)
                     * (Math.PI * Math.Pow(MaterialDiameter, 2) / 4) / Math.Pow(10, 9);
             }
@@ -120,9 +100,6 @@ namespace GabionCalculator.DAL.Entities
         {
             get
             {
-                if (MaterialTotalLength != 0)
-                    return MaterialTotalLength;
-                else
                     return (double)(CardHeight * BarsQtyVert + CardWidth * BarsQtyHoriz) / 1000;
             }
         } // м

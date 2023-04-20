@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using GabionCalculator.BAL.Models;
 using GabionCalculator.BAL.Models.Gabion;
+using GabionCalculator.BAL.Models.Material;
 using GabionCalculator.BAL.Services.Interfaces;
+using GabionCalculator.BAL.Utils;
 using GabionCalculator.DAL.Data;
 using GabionCalculator.DAL.Entities;
 using System;
@@ -24,9 +26,18 @@ namespace GabionCalculator.BAL.Services
             _mapper = mapper;
         }
 
-        public Task<CreateGabionModel> CreateAsync(CreateGabionModel createGabionModel, CancellationToken cancellationToken = default)
+        public async Task<GabionResponseModel> CreateAsync(CreateGabionModel createGabionModel, Material material, User user, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            string userJson = FileAction<User>.Serialize(user);
+            string materialJson = FileAction<Material>.Serialize(material); 
+            Gabion gabion = _mapper.Map<Gabion>(createGabionModel);
+            gabion.UserJson = userJson;
+            gabion.MaterialJson = materialJson;
+            SVG.Get(gabion);
+            await _context.Gabions.AddAsync(gabion);
+            await _context.SaveChangesAsync();
+            GabionResponseModel gabionResponseModel = _mapper.Map<GabionResponseModel>(gabion);
+            return gabionResponseModel;
         }
 
         public Task<BaseResponseModel> DeleteAsync(int id, CancellationToken cancellationToken = default)

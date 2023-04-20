@@ -44,11 +44,7 @@ namespace GabionCalculator.BAL.Services
             throw new NotImplementedException();
         }
 
-        public async Task<MaterialResponseModel> GetByIdAsync(int id, CancellationToken cancellationToken = default)
-        {
-            Material material = await _context.Materials.FindAsync(id, cancellationToken);
-            return _mapper.Map<MaterialResponseModel>(material);
-        }
+        public async Task<Material> GetByIdAsync(int id, CancellationToken cancellationToken = default) => await _context.Materials.FindAsync(id, cancellationToken);
 
         public Task<BaseResponseModel> UpdateAsync(int id, UpdateMaterialModel updateMaterialModel, CancellationToken cancellationToken = default)
         {

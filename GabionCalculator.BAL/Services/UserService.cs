@@ -51,10 +51,8 @@ namespace GabionCalculator.BAL.Services
         {
             throw new NotImplementedException();
         }
-#pragma warning disable CS8603 // Возможно, возврат ссылки, допускающей значение NULL.
         public async Task<User> GetByUserNameAsync(string UserName, CancellationToken cancellationToken = default) =>  await _userManager.FindByNameAsync(UserName);
-#pragma warning restore CS8603 // Возможно, возврат ссылки, допускающей значение NULL.
-
+        public async Task<User> GetByEmailAsync(string Email, CancellationToken cancellationToken = default) => await _userManager.FindByEmailAsync(Email);
         public UserResponseModel GetResponseModel(User user, CancellationToken cancellationToken = default) => _mapper.Map<UserResponseModel>(user);
  
         public async Task<IdentityResult> RegisterAsync(RegisterUserModel registerUserModel, CancellationToken cancellationToken = default)
@@ -70,7 +68,7 @@ namespace GabionCalculator.BAL.Services
                loginUserModel.Password,
                loginUserModel.RememberMe,
                false);
-        public async Task<User> GetUserByLoginAsync(LoginUserModel loginUserModel, CancellationToken cancellationToken = default)
+        public async Task<User> GetUserByNameOrEmailAsync(LoginUserModel loginUserModel, CancellationToken cancellationToken = default)
 #pragma warning disable CS8603 // Возможно, возврат ссылки, допускающей значение NULL.
             => await _userManager.FindByNameAsync(loginUserModel.EmailLogin) ?? await _userManager.FindByEmailAsync(loginUserModel.EmailLogin);
 #pragma warning restore CS8603 // Возможно, возврат ссылки, допускающей значение NULL.

@@ -16,7 +16,7 @@ namespace GabionCalculator.DAL.Entities
         public string? Name { get; set; }
         [NotMapped]
         public string? FullName { get { return $"{Name} ⌀{Size} {MaterialKind}"; } }
-        public double Size { get; set; }
+        public float Size { get; set; }
         public double PricePerKg { get; set; }
         public virtual int MaterialKindId
         {

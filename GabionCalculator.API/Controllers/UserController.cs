@@ -28,6 +28,10 @@ namespace GabionCalculator.API.Controllers
         [HttpPost("Post")]
         public async Task<IActionResult> PostAsync([FromBody] RegisterUserModel registerUserModel)
         {
+            if (await _userService.GetByUserNameAsync(registerUserModel.UserName) != null)
+                ModelState.AddModelError("UserName", "Пользователь с таким логином уже есть");
+            if (await _userService.GetByEmailAsync(registerUserModel.Email) != null)
+                ModelState.AddModelError("Email", "Пользователь с такой почтой уже есть");
             if (ModelState.IsValid)
             {
                 IdentityResult result = await _userService.RegisterAsync(registerUserModel);
@@ -45,8 +49,7 @@ namespace GabionCalculator.API.Controllers
                     foreach (var error in result.Errors)
                     {
                         var message = error.Description;
-                        if (message == "Passwords must be at least 12 characters.")
-                            message = "Пароль должен состоять из не менее 12 символов.";
+                        message = message == "Passwords must be at least 12 characters." ? "Пароль должен содержать не менее 12 символов." : default;
                         ModelState.AddModelError(string.Empty, message);
                     }        
                 }
@@ -62,7 +65,7 @@ namespace GabionCalculator.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await _userService.GetUserByLoginAsync(loginUserModel);
+                User user = await _userService.GetUserByNameOrEmailAsync(loginUserModel);
                 if (user != null)
                 {
                     SignInResult result = await _userService.GetSignInAsync(loginUserModel, user);
@@ -75,12 +78,5 @@ namespace GabionCalculator.API.Controllers
                         .SelectMany(v => v.Errors)
                         .Select(e => e.ErrorMessage)));
         }
-
-        // VAlidation
-     //  [AcceptVerbs("GET", "POST")]
-     //  public bool CheckExistAccountByEmail(string Email) => !_context.Users.Any(e => e.Email == Email);
-     //
-     //  [AcceptVerbs("GET", "POST")]
-     //  public bool CheckExistAccountByUserName(string UserName) => !_context.Users.Any(e => e.UserName == UserName);
     }
 }

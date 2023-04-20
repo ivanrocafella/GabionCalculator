@@ -14,11 +14,9 @@ namespace GabionCalculator.BAL.Models.User
     public class RegisterUserModel
     {
         [Required(ErrorMessage = "Укажите логин")]
-       // [Remote(action: "CheckExistAccountByUserName", controller: "User", ErrorMessage = "Такой пользователь уже есть")]
         [JsonPropertyName("UserName")]
         public string UserName { get; set; }
         [Required(ErrorMessage = "Укажите email")]
-      //  [Remote(action: "CheckExistAccountByEmail", controller: "User", ErrorMessage = "Такой пользователь уже есть")]
         [JsonPropertyName("Email")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Введите пароль")]

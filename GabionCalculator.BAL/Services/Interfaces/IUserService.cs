@@ -23,7 +23,8 @@ namespace GabionCalculator.BAL.Services.Interfaces
         Task<string> UpdateAsync(string id, UpdateUserModel updateUserModel, CancellationToken cancellationToken = default);
         UserResponseModel GetResponseModel(User user, CancellationToken cancellationToken = default);
         Task AddRoleAsync(User user, string role, CancellationToken cancellationToken = default);
-        Task<User> GetUserByLoginAsync(LoginUserModel loginUserModel, CancellationToken cancellationToken = default);
+        Task<User> GetUserByNameOrEmailAsync(LoginUserModel loginUserModel, CancellationToken cancellationToken = default);
         Task<SignInResult> GetSignInAsync(LoginUserModel loginUserModel, User user, CancellationToken cancellationToken = default);
+        Task<User> GetByEmailAsync(string Email, CancellationToken cancellationToken = default);
     }
 }
