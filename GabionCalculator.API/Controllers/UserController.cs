@@ -12,16 +12,20 @@ using System.Collections.Generic;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 using Microsoft.EntityFrameworkCore;
 using GabionCalculator.DAL.Data;
+using GabionCalculator.BAL.Models.Gabion;
+using AutoMapper;
 
 namespace GabionCalculator.API.Controllers
 {
     public class UserController : ApiController
     {
         private readonly IUserService _userService;
+        private readonly IMapper _mapper;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
 
         // POST: api/User/Post
@@ -59,8 +63,8 @@ namespace GabionCalculator.API.Controllers
                         .Select(e => e.ErrorMessage)));
         }
 
-        // POST: api/User
-        [HttpPost]
+        // POST: api/User/Login
+        [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync([FromBody] LoginUserModel loginUserModel)
         {
             if (ModelState.IsValid)
@@ -77,6 +81,28 @@ namespace GabionCalculator.API.Controllers
             return StatusCode(500, ApiResult<LoginUserModel>.Failure(ModelState.Values
                         .SelectMany(v => v.Errors)
                         .Select(e => e.ErrorMessage)));
+        }
+
+        // POST: api/User
+        [HttpPost]
+        public async Task<IActionResult> LogOutAsync()
+        {
+            await _userService.GetSignOutAsync();
+          // if (User.Identity.IsAuthenticated)
+          //     return StatusCode(500, ApiResult<IEnumerable<UserResponseModel>>.Failure(new List<string>() { "Пользователь не вышел из системы." }));
+          // else
+                return RedirectToAction("GetAsync","Gabion");
+        }
+
+        // GET: api/User/Users
+        [HttpGet("Users")]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var users = await _userService.GetAllExceptCurUserAsync(e => e.UserName != User.Identity.Name);
+            if (users.Any())
+                return Ok(ApiResult<IEnumerable<UserResponseModel>>.Success(_mapper.Map<IEnumerable<UserResponseModel>>(users)));
+            else
+                return StatusCode(500, ApiResult<IEnumerable<GabionResponseModel>>.Failure(new List<string>() { "Пользователи ещё не добавлены." }));
         }
     }
 }

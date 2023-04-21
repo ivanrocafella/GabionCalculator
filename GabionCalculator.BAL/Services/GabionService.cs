@@ -6,6 +6,7 @@ using GabionCalculator.BAL.Services.Interfaces;
 using GabionCalculator.BAL.Utils;
 using GabionCalculator.DAL.Data;
 using GabionCalculator.DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,19 +46,14 @@ namespace GabionCalculator.BAL.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<GabionResponseModel>> GetAllAsync(Expression<Func<Gabion, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<Gabion>> GetAllAsync() => await _context.Gabions.ToListAsync();
+            
 
         public Task<IEnumerable<GabionResponseModel>> GetAllByMaterialIdAsync(int id, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public Task<GabionResponseModel> GetByIdAsync(int id, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Gabion> GetByIdAsync(int id, CancellationToken cancellationToken = default) => await _context.Gabions.FindAsync(id, cancellationToken);
     }
 }

@@ -26,3 +26,6 @@ dotnet_diagnostic.CS8603.severity = none
 
 # IDE0055: Исправить форматирование
 dotnet_diagnostic.IDE0055.severity = none
+
+# CS8602: Разыменование вероятной пустой ссылки.
+dotnet_diagnostic.CS8602.severity = none

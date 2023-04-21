@@ -39,16 +39,18 @@ namespace GabionCalculator.BAL.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<MaterialResponseModel>> GetAllAsync(Expression<Func<Gabion, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<Material>> GetAllAsync() => await _context.Materials.ToListAsync();
 
         public async Task<Material> GetByIdAsync(int id, CancellationToken cancellationToken = default) => await _context.Materials.FindAsync(id, cancellationToken);
 
-        public Task<BaseResponseModel> UpdateAsync(int id, UpdateMaterialModel updateMaterialModel, CancellationToken cancellationToken = default)
+        public async Task<MaterialResponseModel> UpdateAsync(int id, UpdateMaterialModel updateMaterialModel, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Material material = _mapper.Map<Material>(updateMaterialModel);
+            material.Id = id;
+            _context.Materials.Update(material);
+            await _context.SaveChangesAsync();
+            MaterialResponseModel materialResponseModel = _mapper.Map<MaterialResponseModel>(material);
+            return materialResponseModel;
         }
     }
 }

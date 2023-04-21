@@ -29,5 +29,6 @@ namespace GabionCalculator.BAL.Models.Gabion
         public int MaterialId { get; set; }
         [JsonPropertyName("UserName")]
         public string? UserName { get; set; }
+        public IEnumerable<GabionCalculator.DAL.Entities.Material>? Materials { get; set; }
     }
 }

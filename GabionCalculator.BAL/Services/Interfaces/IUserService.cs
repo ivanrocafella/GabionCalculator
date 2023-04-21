@@ -14,7 +14,7 @@ namespace GabionCalculator.BAL.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<IEnumerable<UserResponseModel>> GetAllAsync(Expression<Func<User, bool>> predicate);
+        Task<IEnumerable<User>> GetAllExceptCurUserAsync(Expression<Func<User, bool>> predicate);
         Task<UserResponseModel> GetByIdAsync(string id, CancellationToken cancellationToken = default);
         Task<User> GetByUserNameAsync(string UserName, CancellationToken cancellationToken = default);
         Task<IdentityResult> RegisterAsync(RegisterUserModel registerUserModel, CancellationToken cancellationToken = default);
@@ -25,6 +25,7 @@ namespace GabionCalculator.BAL.Services.Interfaces
         Task AddRoleAsync(User user, string role, CancellationToken cancellationToken = default);
         Task<User> GetUserByNameOrEmailAsync(LoginUserModel loginUserModel, CancellationToken cancellationToken = default);
         Task<SignInResult> GetSignInAsync(LoginUserModel loginUserModel, User user, CancellationToken cancellationToken = default);
+        Task GetSignOutAsync(CancellationToken cancellationToken = default);
         Task<User> GetByEmailAsync(string Email, CancellationToken cancellationToken = default);
     }
 }

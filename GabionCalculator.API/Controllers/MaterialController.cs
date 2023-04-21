@@ -32,6 +32,18 @@ namespace GabionCalculator.API.Controllers
                             .Select(e => e.ErrorMessage)));            
         }
 
+        // POST: api/Material/Update/5
+        [HttpPut("Update/{id:int}")]
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateMaterialModel updateMaterialModel)
+        {
+            if (ModelState.IsValid)
+                return Ok(ApiResult<MaterialResponseModel>.Success(await _materialService.UpdateAsync(id, updateMaterialModel)));
+            else
+                return StatusCode(500, ApiResult<MaterialResponseModel>.Failure(ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(e => e.ErrorMessage)));
+        }
+
         // GET: api/Material/GetById/5
         [HttpGet("GetById/{id:int}")]
         public async Task<IActionResult> GetById(int id)

@@ -6,6 +6,7 @@ using GabionCalculator.DAL.Data;
 using GabionCalculator.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,10 +43,8 @@ namespace GabionCalculator.BAL.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<UserResponseModel>> GetAllAsync(Expression<Func<User, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<User>> GetAllExceptCurUserAsync(Expression<Func<User, bool>> predicate)
+            => await _userManager.Users.Where(predicate).ToListAsync();
 
         public Task<UserResponseModel> GetByIdAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -68,10 +67,11 @@ namespace GabionCalculator.BAL.Services
                loginUserModel.Password,
                loginUserModel.RememberMe,
                false);
+
+        public async Task GetSignOutAsync(CancellationToken cancellationToken = default) => await _signInManager.SignOutAsync();
+
         public async Task<User> GetUserByNameOrEmailAsync(LoginUserModel loginUserModel, CancellationToken cancellationToken = default)
-#pragma warning disable CS8603 // Возможно, возврат ссылки, допускающей значение NULL.
             => await _userManager.FindByNameAsync(loginUserModel.EmailLogin) ?? await _userManager.FindByEmailAsync(loginUserModel.EmailLogin);
-#pragma warning restore CS8603 // Возможно, возврат ссылки, допускающей значение NULL.
 
         public async Task AddRoleAsync(User user, string role, CancellationToken cancellationToken = default)
             => await _userManager.AddToRoleAsync(user, role);
