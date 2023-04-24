@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GabionCalculator.API", "GabionCalculator.API\GabionCalculator.API.csproj", "{F3285B19-30E2-44D3-A6C7-F21CF3BCF1E9}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "GabionCalculator.UI", "GabionCalculator.UI\GabionCalculator.UI.esproj", "{33541E06-5344-48CD-B149-0CBEA94F9064}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,12 @@ Global
 		{F3285B19-30E2-44D3-A6C7-F21CF3BCF1E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3285B19-30E2-44D3-A6C7-F21CF3BCF1E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3285B19-30E2-44D3-A6C7-F21CF3BCF1E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33541E06-5344-48CD-B149-0CBEA94F9064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33541E06-5344-48CD-B149-0CBEA94F9064}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33541E06-5344-48CD-B149-0CBEA94F9064}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{33541E06-5344-48CD-B149-0CBEA94F9064}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33541E06-5344-48CD-B149-0CBEA94F9064}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33541E06-5344-48CD-B149-0CBEA94F9064}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
