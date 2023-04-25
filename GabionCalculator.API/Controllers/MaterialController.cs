@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using GabionCalculator.BAL.Models;
+using GabionCalculator.BAL.Models.Gabion;
 using GabionCalculator.BAL.Models.Material;
+using GabionCalculator.BAL.Services;
 using GabionCalculator.BAL.Services.Interfaces;
 using GabionCalculator.DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -53,6 +55,17 @@ namespace GabionCalculator.API.Controllers
                 return Ok(ApiResult<MaterialResponseModel>.Success(materialResponseModel));
             else
                 return StatusCode(500, ApiResult<MaterialResponseModel>.Failure(new List<string>() { "Объект не найден." }));              
+        }
+
+        // GET: api/Materials
+        [HttpGet("Materials")]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var materials = await _materialService.GetAllAsync();
+            if (materials.Any())
+                return Ok(ApiResult<IEnumerable<MaterialResponseModel>>.Success(_mapper.Map<IEnumerable<MaterialResponseModel>>(materials)));
+            else
+                return StatusCode(500, ApiResult<IEnumerable<MaterialResponseModel>>.Failure(new List<string>() { "Объекты ещё не добавлены." }));
         }
     }
 }

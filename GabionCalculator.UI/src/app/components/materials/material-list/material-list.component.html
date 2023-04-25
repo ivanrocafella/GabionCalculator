@@ -1,1 +1,24 @@
-<p>material-list works!</p>
+<div class="container my-5">
+  <h1 class="mb-3">Список материалов</h1>
+  <h2 class="mb-3" *ngIf="!listing || listing.length == 0">Материалы ещё не добавлены</h2>
+  <table class="table table-dark table-hover" *ngIf="listing && listing.length > 0">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Наим-ие</th>
+        <th scope="col">Тип профиля</th>
+        <th scope="col">Цена за кг,сом</th>
+        <th scope="col">Дата обнов-я</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of listing">
+        <th scope="row">{{m.Id}}</th>
+        <td>{{m.FullName}}</td>
+        <td>{{m.MaterialKindId}}</td>
+        <td>{{m.PricePerKg}}</td>
+        <td>{{m.DateUpdate}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

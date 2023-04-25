@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace GabionCalculator.BAL.Models
 {
     public class BaseResponseModel
     {
+        [JsonPropertyName("Id")]
         public int Id { get; set; }
     }
 }

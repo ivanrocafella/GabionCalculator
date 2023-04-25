@@ -4,6 +4,8 @@ using GabionCalculator.DAL.Data;
 using GabionCalculator.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+string MyAllowSpecificOrigins = "_MyAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,17 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
     string connection = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseMySql(connection, ServerVersion.AutoDetect(connection));
 });
+
+//Enable Cross-Origin Requests (CORS)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
+                      });
+});
+
 
 // Add services to the container.
 builder.Services.AddIdentity<User, IdentityRole>(options => options.MakeOptionsIdentity()).AddEntityFrameworkStores<ApplicationContext>();
@@ -49,4 +62,5 @@ app.UseAuthorization();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
+app.UseCors(MyAllowSpecificOrigins);
 app.Run();
