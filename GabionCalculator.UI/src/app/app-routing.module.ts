@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { MaterialListComponent } from './components/materials/material-list/material-list.component';
 
 const routes: Routes = [
- // { path: '', component: MaterialListComponent },
   { path: 'materials', component: MaterialListComponent }
 ];
 

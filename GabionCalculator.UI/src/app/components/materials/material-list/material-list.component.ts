@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Material } from 'src/app/models/material.model';
+import { ApiResultResponseListMaterial } from 'src/app/models/apiResultResponseListMaterial.model';
 import { MaterialsService } from 'src/app/components/services/materials.service'
 
 @Component({
@@ -9,13 +9,13 @@ import { MaterialsService } from 'src/app/components/services/materials.service'
 })
 
 export class MaterialListComponent {
-  listing: Material[] = [];
+  apiResult: Partial<ApiResultResponseListMaterial> = {};
   constructor(private materialsService: MaterialsService) { };
   ngOnInit(): void {
     this.materialsService.getAllMaterials().subscribe(
       {
-        next: (materials) => {
-          this.listing = materials; console.log(this.listing);
+        next: (apiResultResponseListModel) => {
+          this.apiResult = apiResultResponseListModel; console.log(this.apiResult);
         },
         error: (response) => { console.log(response); }
       }
