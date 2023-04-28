@@ -34,6 +34,10 @@ namespace GabionCalculator.API.Controllers
                             .Select(e => e.ErrorMessage)));            
         }
 
+        // GET: api/Material/Post
+        [HttpGet("Post")]
+        public IActionResult Post() => Ok(ApiResult<CreateMaterialModel>.Success(_materialService.GetCreateMaterialModel()));
+
         // POST: api/Material/Update/5
         [HttpPut("Update/{id:int}")]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateMaterialModel updateMaterialModel)
@@ -54,7 +58,7 @@ namespace GabionCalculator.API.Controllers
             if (materialResponseModel != null)
                 return Ok(ApiResult<MaterialResponseModel>.Success(materialResponseModel));
             else
-                return StatusCode(500, ApiResult<MaterialResponseModel>.Failure(new List<string>() { "Объект не найден." }));              
+                return StatusCode(500, ApiResult<MaterialResponseModel>.Failure(new List<string>() { "Объект не найден." }));
         }
 
         // GET: api/Materials

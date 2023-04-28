@@ -1,0 +1,27 @@
+<head>
+  <meta charset="UTF-8" />
+</head>
+
+<div class="container my-5">
+  <h1 class="mb-3">Добавление материала</h1>
+  <form>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Тип материала:</label>
+      <select class="form-select" aria-label="Default select example">
+        <option *ngFor="let item of apiResult.result?.KindsMaterial; let i = index" [value]="i">{{item}}</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Наименование:</label>
+      <select class="form-select" aria-label="Default select example">
+        <option *ngFor="let item of apiResult.result?.Names; let i = index" [value]="item">{{item}}</option>
+      </select>
+    </div>
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+

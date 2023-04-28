@@ -21,7 +21,11 @@ namespace GabionCalculator.BAL.Models.Material
         [JsonPropertyName("PricePerKg")]
         public double PricePerKg { get; set; }
         [JsonPropertyName("MaterialKindId")]
-        [Range(1,double.PositiveInfinity)]
+        [Range(0,int.MaxValue)]
         public int MaterialKindId { get; set; }
+        [JsonPropertyName("KindsMaterial")]
+        public List<string>? KindsMaterial { get; set; }
+        [JsonPropertyName("Names")]
+        public string[]? Names { get; set; }
     }
 }

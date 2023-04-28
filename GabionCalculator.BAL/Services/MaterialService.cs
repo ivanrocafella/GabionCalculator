@@ -4,6 +4,7 @@ using GabionCalculator.BAL.Models.Material;
 using GabionCalculator.BAL.Services.Interfaces;
 using GabionCalculator.DAL.Data;
 using GabionCalculator.DAL.Entities;
+using GabionCalculator.DAL.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,20 @@ namespace GabionCalculator.BAL.Services
             await _context.SaveChangesAsync();
             MaterialResponseModel materialResponseModel = _mapper.Map<MaterialResponseModel>(material);
             return materialResponseModel;
+        }
+
+        public CreateMaterialModel GetCreateMaterialModel()
+        {
+            List<string> kinds = new();
+            foreach (MaterialKind kind in Enum.GetValues(typeof(MaterialKind)))
+                kinds.Add(kind.ToString());
+
+            CreateMaterialModel createMaterialModel = new()
+            {
+                KindsMaterial = kinds,
+                Names = new string[] { "Проволока", "Круг" }
+            };
+            return createMaterialModel;
         }
 
         public Task<BaseResponseModel> DeleteAsync(int id, CancellationToken cancellationToken = default)
