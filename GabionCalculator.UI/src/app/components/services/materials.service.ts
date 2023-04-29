@@ -14,6 +14,18 @@ export class MaterialsService {
   constructor(private http: HttpClient) { };
   getAllMaterials(): Observable<ApiResultResponseListMaterial> { return this.http.get<ApiResultResponseListMaterial>(this.baseApiURL + '/api/Material/Materials') };
   getCreateMaterialModel(): Observable<ApiResultCreateMaterialModel> { return this.http.get<ApiResultCreateMaterialModel>(this.baseApiURL + '/api/Material/Post') };
+  submitForm(formData: any) {
+    this.http.post(this.baseApiURL + '/api/Material/Post', formData).subscribe(
+      (response) => {
+        console.log('Успешно отправлено', response);
+        // Дополнительная логика при успешной отправке
+      },
+      (error) => {
+        console.error('Ошибка отправки', error);
+        // Дополнительная логика при ошибке отправки
+      }
+    );
+  }
 }
 
 

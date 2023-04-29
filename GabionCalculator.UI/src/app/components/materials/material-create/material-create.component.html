@@ -4,24 +4,34 @@
 
 <div class="container my-5">
   <h1 class="mb-3">Добавление материала</h1>
-  <form>
+  <form (ngSubmit)="onSubmit()">
     <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Тип материала:</label>
-      <select class="form-select" aria-label="Default select example">
-        <option *ngFor="let item of apiResult.result?.KindsMaterial; let i = index" [value]="i">{{item}}</option>
+      <label for="Name" class="form-label">Наименование:</label>
+      <select name="Name" id="Name" class="form-select" aria-label="Default select example" [(ngModel)]="formData.Name">
+        <option *ngFor="let item of apiResult.result?.Names; let i = index" [value]="item" [id]="item">{{item}}</option>
       </select>
     </div>
     <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Наименование:</label>
-      <select class="form-select" aria-label="Default select example">
-        <option *ngFor="let item of apiResult.result?.Names; let i = index" [value]="item">{{item}}</option>
+      <label class="form-label" for="Size">Размер, мм:</label>
+      <input name="Size" type="number" class="form-control" id="Size" step="0.01" [(ngModel)]="formData.Size">
+    </div>
+    <div class="mb-3">
+      <label for="MaterialKindId" class="form-label">Тип материала:</label>
+      <select name="MaterialKindId" class="form-select" [(ngModel)]="formData.MaterialKindId">
+        <option *ngFor="let item of KindsMaterial; let i = index" [value]="i">{{item}}</option>
       </select>
     </div>
-    <div class="mb-3 form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    <div class="mb-3">
+      <label form="PricePerKg" class="form-label" for="exampleCheck1">Цена за кг, сом:</label>
+      <input name="PricePerKg" type="number" class="form-control" id="PricePerKg" step="0.01" [(ngModel)]="formData.PricePerKg">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Создать</button>
   </form>
 </div>
+
+
+<script>document.addEventListener('DOMContentLoaded', () => {
+  console.log("DOM fully loaded and parsed");
+});
+  </script>
 

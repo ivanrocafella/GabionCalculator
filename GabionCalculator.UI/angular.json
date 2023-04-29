@@ -94,9 +94,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/js/script.js"
             ],
-            "scripts": [],
+            "scripts": [ "src/assets/jsScripts.js"],
             "karmaConfig": "karma.conf.js"
           }
         }

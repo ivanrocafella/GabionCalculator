@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { MaterialListComponent } from './components/materials/material-list/material-list.component';
 import { MaterialCreateComponent } from './components/materials/material-create/material-create.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,7 +13,7 @@ import { MaterialCreateComponent } from './components/materials/material-create/
     AppComponent, MaterialListComponent, MaterialCreateComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, HttpClientModule
+    BrowserModule, AppRoutingModule, HttpClientModule, FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,7 @@
 export interface CreateMaterialModel {
   KindsMaterial: string[];
   MaterialKindId: number; 
-  Name?: string;
+  Name: string;
   Names: string[];
   PricePerKg: number; 
   Size: number;
