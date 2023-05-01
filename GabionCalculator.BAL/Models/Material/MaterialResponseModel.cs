@@ -17,7 +17,7 @@ namespace GabionCalculator.BAL.Models.Material
         [JsonPropertyName("FullName")]
         public string? FullName { get { return $"{Name} ⌀{Size} {MaterialKind}"; } }
         [JsonPropertyName("Size")]
-        public double Size { get; set; }
+        public float Size { get; set; }
         [JsonPropertyName("PricePerKg")]
         public double PricePerKg { get; set; }
         [JsonPropertyName("MaterialKindId")]

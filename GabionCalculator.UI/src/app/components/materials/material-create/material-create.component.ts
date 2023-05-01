@@ -14,7 +14,10 @@ export class MaterialCreateComponent {
   KindsMaterial: string[] | undefined;
   formData: any = {};
 
-  constructor(private materialsService: MaterialsService) { };
+  constructor(private materialsService: MaterialsService) {
+    this.formData.Name = "Проволока";
+    this.formData.MaterialKindId = 0;
+  };
 
   ngOnInit(): void {
     this.materialsService.getCreateMaterialModel().subscribe(
@@ -26,12 +29,6 @@ export class MaterialCreateComponent {
           this.KindsMaterial = this.apiResult.result?.KindsMaterial;
           console.log(this.apiResult);
           console.log(this.DefaultName);
-          const mySelect = document.getElementById('Name') as HTMLSelectElement;
-          const myOption = document.getElementById('' + this.DefaultName + '') as HTMLOptionElement;
-          console.log(myOption);
-          console.log(mySelect);
-          const optionToSelect = mySelect.firstChild as HTMLOptionElement;
-          console.log(optionToSelect);
         },
         error: (response) => { console.log(response); }
       }
