@@ -30,14 +30,37 @@ namespace GabionCalculator.API.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] CreateGabionModel createGabionModel)
         {
+            User user = null;
+            if (!string.IsNullOrEmpty(createGabionModel.UserName))
+                user = await _userService.GetByUserNameAsync(User.Identity.Name);
             if (ModelState.IsValid)
             {
-                return Ok(ApiResult<GabionResponseModel>.Success(await _gabionService.CreateAsync(createGabionModel
+                Gabion gabion = _gabionService.GetTemporaryGabion(createGabionModel
                     , await _materialService.GetByIdAsync(createGabionModel.MaterialId)
-                    , await _userService.GetByUserNameAsync(User.Identity.Name))));
+                    , user);
+                return Ok(ApiResult<GabionResponseModel>.Success(await _gabionService.PostAsync(gabion)));
             }            
             else
-                return StatusCode(500, ApiResult<MaterialResponseModel>.Failure(ModelState.Values
+                return StatusCode(500, ApiResult<GabionResponseModel>.Failure(ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(e => e.ErrorMessage)));
+        }
+
+        // POST: api/Gabion/GetTemporaryGabion
+        [HttpPost("GetTemporaryGabion")]
+        public async Task<IActionResult> GetTemporaryGabionAsync([FromBody] CreateGabionModel createGabionModel)
+        {
+            User user = null;
+            if (!string.IsNullOrEmpty(createGabionModel.UserName))
+                user = await _userService.GetByUserNameAsync(User.Identity.Name);
+            if (ModelState.IsValid)
+            {
+                return Ok(ApiResult<GabionResponseModel>.Success(_mapper.Map<GabionResponseModel>(_gabionService.GetTemporaryGabion(createGabionModel
+                    , await _materialService.GetByIdAsync(createGabionModel.MaterialId)
+                    , user))));
+            }
+            else
+                return StatusCode(500, ApiResult<GabionResponseModel>.Failure(ModelState.Values
                             .SelectMany(v => v.Errors)
                             .Select(e => e.ErrorMessage)));
         }

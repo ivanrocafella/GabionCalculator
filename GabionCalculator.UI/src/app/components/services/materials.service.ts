@@ -17,12 +17,10 @@ export class MaterialsService {
   submitForm(formData: any) {
     this.http.post(this.baseApiURL + '/api/Material/Post', formData).subscribe(
       (response) => {
-        console.log('Успешно отправлено', response);
-        // Дополнительная логика при успешной отправке
+        console.log('Form submitted', response);
       },
       (error) => {
-        console.error('Ошибка отправки', error);
-        // Дополнительная логика при ошибке отправки
+        console.error('form has not been submitted', error);
       }
     );
   }

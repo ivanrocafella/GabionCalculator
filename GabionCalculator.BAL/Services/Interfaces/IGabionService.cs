@@ -14,7 +14,8 @@ namespace GabionCalculator.BAL.Services.Interfaces
     {
         Task<IEnumerable<Gabion>> GetAllAsync();
         Task<Gabion> GetByIdAsync(int id, CancellationToken cancellationToken = default);
-        Task<GabionResponseModel> CreateAsync(CreateGabionModel createGabionModel, Material material, User user, CancellationToken cancellationToken = default);
+        Gabion GetTemporaryGabion(CreateGabionModel createGabionModel, Material material, User user, CancellationToken cancellationToken = default);
+        Task<GabionResponseModel> PostAsync(Gabion gabion, CancellationToken cancellationToken = default);
         Task<BaseResponseModel> DeleteAsync(int id, CancellationToken cancellationToken = default);
         Task<IEnumerable<GabionResponseModel>> GetAllByMaterialIdAsync(int id, CancellationToken cancellationToken = default);
     }

@@ -23,7 +23,6 @@ namespace GabionCalculator.BAL.Models.Gabion
         public int BarBilletVert { get; set; }
         public int BarBilletHoriz { get; set; }
         public int CardWidth { get; set; } // Ширина карты 
-
         public int CardHeight { get; set; } // Высота карты
         public double Weight { get; set; } // кг
         public int Quantity { get; set; }
@@ -39,5 +38,7 @@ namespace GabionCalculator.BAL.Models.Gabion
         public double BatchPrice { get; set; }
         public DateTime DateStart { get; set; }
         public DateTime DateUpdate { get; set; }
+        public DAL.Entities.Material? Material { get; set; }
+        public DAL.Entities.User? User { get; set; }
     }
 }

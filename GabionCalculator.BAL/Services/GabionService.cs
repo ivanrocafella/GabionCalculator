@@ -27,14 +27,22 @@ namespace GabionCalculator.BAL.Services
             _mapper = mapper;
         }
 
-        public async Task<GabionResponseModel> CreateAsync(CreateGabionModel createGabionModel, Material material, User user, CancellationToken cancellationToken = default)
+        public Gabion GetTemporaryGabion(CreateGabionModel createGabionModel, Material material, User user, CancellationToken cancellationToken = default)
         {
-            string userJson = FileAction<User>.Serialize(user);
+            string userJson = string.Empty;
+            if (user != null)
+                userJson = FileAction<User>.Serialize(user);
             string materialJson = FileAction<Material>.Serialize(material); 
             Gabion gabion = _mapper.Map<Gabion>(createGabionModel);
             gabion.UserJson = userJson;
             gabion.MaterialJson = materialJson;
-            SVG.Get(gabion);
+            gabion.Material = material;
+            SVG.Get(gabion);  
+            return gabion;
+        }
+
+        public async Task<GabionResponseModel> PostAsync(Gabion gabion, CancellationToken cancellationToken = default)
+        {
             await _context.Gabions.AddAsync(gabion);
             await _context.SaveChangesAsync();
             GabionResponseModel gabionResponseModel = _mapper.Map<GabionResponseModel>(gabion);

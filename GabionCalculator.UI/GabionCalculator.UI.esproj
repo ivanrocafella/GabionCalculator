@@ -12,5 +12,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\app\components\services\" />
+    <Folder Include="src\assets\images\" />
   </ItemGroup>
 </Project>

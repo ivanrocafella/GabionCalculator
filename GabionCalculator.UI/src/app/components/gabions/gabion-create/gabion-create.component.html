@@ -4,102 +4,74 @@
 
 <div class="row">
   <div class="col-lg-6">
-    <div class="card mb-3" align="left" style="max-width: 600px; float:left">
+    <div class="card mb-3" align="left" style="max-width: 1200px; float:left">
       <div class="row g-0">
-        <div class="col-md-8">
+        <div class="col-md-6">
           <div class="card-body">
             <h5 class="card-title">Форма для заполнения</h5>
-              <form id="CalculateForm" class="card-text">
-                <div class="row mb-3">
-                  <label asp-for="MaterialId" class="col-sm-4 col-form-label"></label>
-                  <div class="col-sm-8">
-                    <select name="Name" id="Name" class="form-select" aria-label="Default select example" [(ngModel)]="formData.MaterialId">
-                      <option [value]="0" [id]="0">Ничего не выбрано</option>
-                      <option *ngFor="let item of apiResult.result?.Materials; let i = index" [value]="item.Id" [id]="item.Id">{{item.FullName}}</option>
-                    </select>
-                  </div>
+            <form id="CalculateForm" class="card-text" (ngSubmit)="onSubmit()">
+              <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Материал:</label>
+                <div class="col-sm-6">
+                  <select name="MaterialId" id="MaterialId" class="form-select" aria-label="Default select example" [(ngModel)]="formData.MaterialId" (ngModelChange)="setMaterialDiameter($event)">
+                    <option [value]="0" [id]="0">Ничего не выбрано</option>
+                    <option *ngFor="let item of apiResult.result?.Materials; let i = index" [value]="item.Id" [id]="item.Id">{{item.FullName}}</option>
+                  </select>
                 </div>
-                <div class="row mb-3">
-                  <label asp-for="Diameter" class="col-sm-4 col-form-label"></label>
-                  <div class="col-sm-8">
-                    <input asp-for="Diameter" type="number" class="form-control" id="Diameter" readonly>
-                    <span asp-validation-for="Diameter" class="text-danger"></span>
-                  </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Диаметр материала:</label>
+                <div class="col-sm-6">
+                  <input name="MaterialDiameter" type="number" class="form-control" id="MaterialDiameter" readonly [(ngModel)]="formData.MaterialDiameter">
                 </div>
-                <div class="row mb-3">
-                  <label asp-for="Length" class="col-sm-4 col-form-label"></label>
-                  <div class="col-sm-8">
-                    <input asp-for="Length" type="text" class="form-control" id="Length">
-                    <span asp-validation-for="Length" class="text-danger"></span>
-                  </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Длина,мм:</label>
+                <div class="col-sm-6">
+                  <input name="Length" type="number" class="form-control" id="Length" [(ngModel)]="formData.Length">
                 </div>
-                <div class="row mb-3">
-                  <label asp-for="ThreadDiameter" class="col-sm-4 col-form-label"></label>
-                  <div class="col-sm-8">
-                    <input asp-for="ThreadDiameter" type="text" autocomplete="off" class="form-control" id="ThreadDiameter" oninput="changeFuncThreadStep();">
-                    <span id="ThreadDiameterValid" class="text-danger"></span>
-                  </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Ширина,мм:</label>
+                <div class="col-sm-6">
+                  <input name="Width" type="number" class="form-control" id="Width" [(ngModel)]="formData.Width">
                 </div>
-                <div class="row mb-3">
-                  <label asp-for="ThreadLength" class="col-sm-4 col-form-label"></label>
-                  <div class="col-sm-8">
-                    <input asp-for="ThreadLength" type="text" class="form-control" id="ThreadLength">
-                    <span asp-validation-for="ThreadLength" class="text-danger"></span>
-                  </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Высота,мм:</label>
+                <div class="col-sm-6">
+                  <input name="Height" type="number" class="form-control" id="Height" [(ngModel)]="formData.Height">
                 </div>
-                <div class="row mb-3">
-                  <label asp-for="ThreadStep" class="col-sm-4 col-form-label"></label>
-                  <div class="col-sm-8">
-                    <input asp-for="ThreadStep" type="text" class="form-control" id="ThreadStep" readonly>
-                    <span asp-validation-for="ThreadStep" class="text-danger"></span>
-                  </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Высота ячейки,мм:</label>
+                <div class="col-sm-6">
+                  <input name="CellHeight" type="number" class="form-control" id="CellHeight" [(ngModel)]="formData.CellHeight">
                 </div>
-                <div class="row mb-3">
-                  <label asp-for="Quantity" class="col-sm-4 col-form-label"></label>
-                  <div class="col-sm-8">
-                    <input asp-for="Quantity" type="text" class="form-control" id="Quantity">
-                    <span asp-validation-for="Quantity" class="text-danger"></span>
-                  </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Ширина ячейки,мм:</label>
+                <div class="col-sm-6">
+                  <input name="CellWidth" type="number" class="form-control" id="CellWidth" [(ngModel)]="formData.CellWidth">
                 </div>
-                <div class="row mb-3 w-25">
-                  <div class="radios btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" asp-for="Kind" id="straight" autocomplete="off" checked onclick="showSubForm()" value="@Kind.Straight">
-                    <label class="btn btn-outline-primary" for="straight">|</label>
-
-                    <input type="radio" class="btn-check" asp-for="Kind" id="withBend" autocomplete="off" onclick="showSubForm()" value="@Kind.Bend">
-                    <label class="btn btn-outline-primary" for="withBend">⌊</label>
-
-                    <input type="radio" class="btn-check" asp-for="Kind" id="withBendDouble" autocomplete="off" onclick="showSubForm()" value="@Kind.BendDouble">
-                    <label class="btn btn-outline-primary" for="withBendDouble">⊔</label>
-                  </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Кол-во,шт:</label>
+                <div class="col-sm-6">
+                  <input name="Quantity" type="number" class="form-control" id="Quantity" [(ngModel)]="formData.Quantity">
                 </div>
-                <div id="subForm" class="row mb-3" style="display:none">
-                  <div class="row mb-3">
-                    <label asp-for="BendLength" class="col-sm-4 col-form-label"></label>
-                    <div class="col-sm-8">
-                      <input asp-for="BendLength" onfocus="this.value=''" type="text" class="form-control" id="BendLength">
-                      <span id="BendLengthValid" class="text-danger"></span>
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label asp-for="BendRadius" class="col-sm-4 col-form-label"></label>
-                    <div class="col-sm-8">
-                      <input asp-for="BendRadius" type="number" class="form-control" id="BendRadius" step="1" value="32" readonly>
-                      <span asp-validation-for="BendRadius" class="text-danger"></span>
-                    </div>
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-dark mt-2">Расчитать</button>
-              </form>
+              </div>
+              <button type="submit" class="btn btn-dark mt-2">Расчитать</button>
+            </form>
           </div>
         </div>
         <div class="col-md-4">
-          <img src="" class="d-block mx-auto mt-5" alt="...">
+          <img [src]="imageUrl" class="d-block mx-auto mt-5" alt="...">
         </div>
       </div>
     </div>
   </div>
-  <div class="col-lg-6" id="descriptAnchor" style="display:none">
+  <div class="col-lg-6" id="descriptAnchor" *ngIf="apiResult.succeeded">
     <div id="card_descript" class="card mb-3" style="min-width: 600px;">
       <div id="row_descript" class="row g-0">
         <div class="col-md-5">
