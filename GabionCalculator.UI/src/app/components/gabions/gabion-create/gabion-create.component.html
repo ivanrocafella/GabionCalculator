@@ -15,7 +15,7 @@
                 <div class="col-sm-6">
                   <select name="MaterialId" id="MaterialId" class="form-select" aria-label="Default select example" [(ngModel)]="formData.MaterialId" (ngModelChange)="setMaterialDiameter($event)">
                     <option [value]="0" [id]="0">Ничего не выбрано</option>
-                    <option *ngFor="let item of apiResult.result?.Materials; let i = index" [value]="item.Id" [id]="item.Id">{{item.FullName}}</option>
+                    <option *ngFor="let item of apiResultCreateGab.result?.Materials; let i = index" [value]="item.Id" [id]="item.Id">{{item.FullName}}</option>
                   </select>
                 </div>
               </div>
@@ -66,12 +66,12 @@
           </div>
         </div>
         <div class="col-md-4">
-          <img [src]="imageUrl" class="d-block mx-auto mt-5" alt="...">
+          <img [src]="imageUrl" style="height:auto;width:100%" class="d-block mx-auto mt-5" alt="...">
         </div>
       </div>
     </div>
   </div>
-  <div class="col-lg-6" id="descriptAnchor" *ngIf="apiResult.succeeded">
+  <div class="col-lg-6" id="DescriptAnchor" style="display:none">
     <div id="card_descript" class="card mb-3" style="min-width: 600px;">
       <div id="row_descript" class="row g-0">
         <div class="col-md-5">
@@ -80,8 +80,7 @@
             <p class="card-text"></p>
           </div>
         </div>
-        <div class="col-md-7" id="containSvg">
-        </div>
+        <div class="col-md-7" id="Svg"></div>
       </div>
     </div>
   </div>

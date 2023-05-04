@@ -20,7 +20,7 @@ export class MaterialsService {
         console.log('Form submitted', response);
       },
       (error) => {
-        console.error('form has not been submitted', error);
+        console.error('Form has not been submitted', error);
       }
     );
   }

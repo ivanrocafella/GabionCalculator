@@ -560,7 +560,7 @@ namespace GabionCalculator.BAL.Utils
 
             svgDoc.RootSvg.ViewBox = view;
             svgDoc.RootSvg.Width = new SvgLength(100, SvgLengthUnits.Percentage);
-            svgDoc.RootSvg.Height = new SvgLength(100, SvgLengthUnits.Auto);
+            svgDoc.RootSvg.Height = new SvgLength(100, SvgLengthUnits.Percentage);
 
             StringBuilder stringBuilder = new();
             svgDoc.Save(stringBuilder);
