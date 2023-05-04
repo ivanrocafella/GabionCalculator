@@ -18,6 +18,7 @@ export class GabionCreateComponent {
 
   constructor(private gabionService: GabionsService) {
     this.formData.MaterialId = 0;
+    this.formData.MaterialDiameter = 0;
   };
 
   ngOnInit(): void {
@@ -26,7 +27,7 @@ export class GabionCreateComponent {
         next: (ApiResultCreateGabionModel) => {
           this.apiResultCreateGab = ApiResultCreateGabionModel; console.log(this.apiResultCreateGab);
         },
-        error: (response) => { console.log(response); }
+        error: (response) => { console.error(response); }
       }
     )
   };
@@ -62,7 +63,7 @@ export class GabionCreateComponent {
       }      
     }
     else {
-      this.formData.MaterialDiameter = "";
+      this.formData.MaterialDiameter = 0;
     }
   };
   
