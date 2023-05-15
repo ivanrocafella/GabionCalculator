@@ -41,6 +41,8 @@ namespace GabionCalculator.BAL.Models.Gabion
         public int CardHeight { get; set; } // Высота карты
         [JsonPropertyName("Weight")]
         public double Weight { get; set; } // кг
+        [JsonPropertyName("BatchWeight")]
+        public double BatchWeight { get; set; } // кг
         [JsonPropertyName("Quantity")]
         public int Quantity { get; set; }
         [JsonPropertyName("BarsQtyVert")]

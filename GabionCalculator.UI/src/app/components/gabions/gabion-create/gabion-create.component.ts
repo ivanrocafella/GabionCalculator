@@ -44,7 +44,7 @@ export class GabionCreateComponent {
         next: (ApiResultResponseGabionModel) => {           
            this.apiResultTempGab = ApiResultResponseGabionModel;
            console.log('Form submitted', this.apiResultTempGab);
-           this.divDescriptAnchor.style.display = "block";
+           this.divDescriptAnchor.style.display = "flex";
            if (this.apiResultTempGab.result?.Svg != null) {
              this.divSvg.innerHTML = this.apiResultTempGab.result.Svg;
            }          

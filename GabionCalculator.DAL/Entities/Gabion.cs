@@ -109,6 +109,14 @@ namespace GabionCalculator.DAL.Entities
                     * (Math.PI * Math.Pow(MaterialDiameter, 2) / 4) / Math.Pow(10, 9);
             }
         } // кг
+        [JsonPropertyName("BatchWeight")]
+        public double BatchWeight
+        {
+            get
+            {
+                return Weight * Quantity;
+            }
+        } // кг
         [JsonPropertyName("Quantity")]
         public int Quantity { get; set; }
         [NotMapped]

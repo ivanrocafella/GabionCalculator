@@ -18,7 +18,7 @@ namespace GabionCalculator.BAL.Utils
             int outPartHorSize = 40; // length output part of horizontal size
             int outPartVertSize = 100; // length output part of vertical size
             int outPartVertSizeHalf = 50; // length output part of vertical height size
-            int width = gabion.Length + 2 * X_InitCoord; // width of svg
+            int width = gabion.Length + 3 * X_InitCoord; // width of svg
             int height = gabion.Width + gabion.CardHeight + 3 * Y_InitCoord; // height of svg
 
             var svgDoc = new GcSvgDocument();
@@ -262,18 +262,6 @@ namespace GabionCalculator.BAL.Utils
                                 Y_InitCoord + 2 * gabion.MaterialDiameter + gabion.MaterialDiameter / 2 + 48,
                                 0,
                                 SvgLengthUnits.Pixels));    // Make text of size's value length of gabion
-
-
-
-
-
-
-
-
-
-
-
-
 
             // ** Draw view from front
 
@@ -582,8 +570,10 @@ namespace GabionCalculator.BAL.Utils
             {
                 new SvgLength(x, units)
             };
-            var coordsYSizeThreadLength = new List<SvgLength>();
-            coordsYSizeThreadLength.Add(new SvgLength(y, units));
+            var coordsYSizeThreadLength = new List<SvgLength>
+            {
+                new SvgLength(y, units)
+            };
 
             var transforms = new List<SvgTransform>();
             var svgRotateTrans = new SvgRotateTransform()
@@ -594,7 +584,7 @@ namespace GabionCalculator.BAL.Utils
             };
             transforms.Add(svgRotateTrans);
 
-            SvgTextElement svgTextElement = new SvgTextElement
+            SvgTextElement svgTextElement = new()
             {
                 X = coordsXSizeThreadLength,
                 Y = coordsYSizeThreadLength,
@@ -688,11 +678,12 @@ namespace GabionCalculator.BAL.Utils
         static List<SvgCircleElement> GetListSvgCircleElements(float pathLength, int step, float xStart, float yStart, float radius, bool orientationIsHorizon)
         {
             // if orientation is true then the orientation is horizon othervise vertical
-            List<SvgCircleElement> svgCircleElements = new List<SvgCircleElement>();
-            var svgCircleElement = new SvgCircleElement();
+            List<SvgCircleElement> svgCircleElements = new();
+            _ = new SvgCircleElement();
             int qtyStep = (int)Math.Floor(pathLength / step);
             for (int i = 0; i <= qtyStep * step; i += step)
             {
+                SvgCircleElement svgCircleElement;
                 if (orientationIsHorizon) // horizon 
                 {
                     svgCircleElement = GetSvgCircleElement(xStart + i,

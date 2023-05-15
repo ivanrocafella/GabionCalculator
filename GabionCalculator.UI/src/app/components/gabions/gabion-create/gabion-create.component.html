@@ -20,7 +20,7 @@
                 </div>
               </div>
               <div class="row mb-3">
-                <label class="col-sm-4 col-form-label">Диаметр материала:</label>
+                <label class="col-sm-4 col-form-label">Диаметр материала,мм:</label>
                 <div class="col-sm-6">
                   <input name="MaterialDiameter" type="number" class="form-control" id="MaterialDiameter" readonly [(ngModel)]="formData.MaterialDiameter">
                 </div>
@@ -74,13 +74,27 @@
   <div class="col-lg-6" id="DescriptAnchor" style="display:none">
     <div id="card_descript" class="card mb-3" style="min-width: 600px;">
       <div id="row_descript" class="row g-0">
-        <div class="col-md-5">
+        <div class="col-md-6">
           <div class="card-body" id="PriceWeight">
             <h5 class="card-title">Результаты расчёта</h5>
-            <p class="card-text"></p>
+            <p class="card-text">Кол-во: {{apiResultTempGab.result?.Quantity}} шт</p>
+            <p class="card-text">Себестоимость: {{apiResultTempGab.result?.Sebes}} сом</p>
+            <p class="card-text">Общая себестоимость: {{apiResultTempGab.result?.BatchSebes}} сом</p>
+            <p class="card-text">Цена: {{apiResultTempGab.result?.Price}} сом</p>
+            <p class="card-text">Общая стоимость: {{apiResultTempGab.result?.BatchPrice}} сом</p>
+            <p class="card-text">Расход материала: {{apiResultTempGab.result?.MaterialTotalLength}} м</p>
+            <p class="card-text">Вес 1 шт: {{apiResultTempGab.result?.Weight}} кг</p>
+            <p class="card-text">Вес {{apiResultTempGab.result?.Quantity}} шт: {{apiResultTempGab.result?.BatchWeight}} кг</p>
+            <p class="card-text">Длина верт-го прутка: {{apiResultTempGab.result?.BarBilletVert}} м</p>
+            <p class="card-text">Кол-во верт-х прутков: {{apiResultTempGab.result?.BarsQtyVert}} шт</p>
+            <p class="card-text">Длина гориз-го прутка: {{apiResultTempGab.result?.BarBilletHoriz}} м</p>
+            <p class="card-text">Кол-во гориз-х прутков: {{apiResultTempGab.result?.BarsQtyHoriz}} шт</p>
+            <p class="card-text">Ширина карты: {{apiResultTempGab.result?.CardWidth}} мм</p>
+            <p class="card-text">Высота карты: {{apiResultTempGab.result?.CardHeight}} мм</p>
+            <p class="card-text">Материал: {{apiResultTempGab.result?.Material?.FullName}}</p>
           </div>
         </div>
-        <div class="col-md-7" id="Svg"></div>
+        <div class="col-md-6" id="Svg"></div> 
       </div>
     </div>
   </div>

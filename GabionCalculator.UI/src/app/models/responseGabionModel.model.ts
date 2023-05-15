@@ -18,10 +18,11 @@ export interface ResponseGabionModel {
   CardWidth: number;
   CardHeight: number;
   Weight: number;
+  BatchWeight: number;
   Quantity: number;
   BarsQtyVert: number;
   BarsQtyHoriz: number;
-  MaterialTotalLength: number // м
+  MaterialTotalLength: number; // м
   Svg?: string;
   MaterialJson?: string; // json
   UserJson?: string; // json
