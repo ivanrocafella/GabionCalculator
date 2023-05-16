@@ -12,6 +12,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\app\components\services\" />
+    <Folder Include="src\app\modules_spec\" />
     <Folder Include="src\assets\images\" />
   </ItemGroup>
 </Project>

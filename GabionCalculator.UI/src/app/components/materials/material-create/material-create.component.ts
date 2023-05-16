@@ -7,6 +7,7 @@ import { MaterialsService } from 'src/app/components/services/materials.service'
   templateUrl: './material-create.component.html',
   styleUrls: ['./material-create.component.css']
 })
+
 export class MaterialCreateComponent {
   apiResult: Partial<ApiResultCreateMaterialModel> = {};
   DefaultName: string | undefined;
@@ -15,7 +16,7 @@ export class MaterialCreateComponent {
   formData: any = {};
 
   constructor(private materialsService: MaterialsService) {
-    this.formData.Name = "Проволока";
+    this.formData.Name = "РџСЂРѕРІРѕР»РѕРєР°";
     this.formData.MaterialKindId = 0;
   };
 
