@@ -29,7 +29,7 @@ namespace GabionCalculator.API.Controllers
         }
 
         // POST: api/User/Post
-        [HttpPost("Post")]
+        [HttpPost("Register")]
         public async Task<IActionResult> PostAsync([FromBody] RegisterUserModel registerUserModel)
         {
             if (await _userService.GetByUserNameAsync(registerUserModel.UserName) != null)
@@ -55,10 +55,10 @@ namespace GabionCalculator.API.Controllers
                         var message = error.Description;
                         message = message == "Passwords must be at least 12 characters." ? "Пароль должен содержать не менее 12 символов." : default;
                         ModelState.AddModelError(string.Empty, message);
-                    }        
+                    }                     
                 }
             }               
-            return StatusCode(500, ApiResult<UserResponseModel>.Failure(ModelState.Values
+            return BadRequest(ApiResult<UserResponseModel>.Failure(ModelState.Values
                         .SelectMany(v => v.Errors)
                         .Select(e => e.ErrorMessage)));
         }

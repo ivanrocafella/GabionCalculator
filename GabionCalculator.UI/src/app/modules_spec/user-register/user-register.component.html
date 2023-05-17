@@ -5,6 +5,9 @@
 <div class="card">
   <div class="card-body">
     <h1 class="card-title">Регистрация</h1>
+    <div *ngIf="showError" class="alert alert-danger" role="alert">
+      <span [innerHTML]="errorMessage"></span>
+    </div>
     <form [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser(registerForm.value)">
       <div class="mb-3 row">
         <label for="userName" class="col-form-label col-sm-2">Имя пользователя:</label>
@@ -36,18 +39,17 @@
         <div class="col-md-5">
           <input type="password" id="passwordConfirm" formControlName="passwordConfirm" class="form-control" />
         </div>
-        <div *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched)" class="form-text text-danger">
-          <div *ngIf="passwordConfirm.errors?.['confirmedValidator']">
-          Passwords did not match
+        <div class="col-md-5">
+          <em *ngIf="validateControl('passwordConfirm') && hasError('passwordConfirm', 'required')">Пароль требуется</em>
+          <em *ngIf="hasError('passwordConfirm', 'mustMatch')">Пароли не совпадают</em>
         </div>
+      </div>
+      <br>
+      <div class="mb-3 row">
+        <div class="col-md-1">
+          <button type="submit" class="btn btn-success" [disabled]="!registerForm.valid">Регистрация</button>
         </div>
-        </div>
-        <br>
-        <div class="mb-3 row">
-          <div class="col-md-1">
-            <button type="submit" class="btn btn-info" [disabled]="!registerForm.valid">Регистрация</button>
-          </div>
-        </div>
-</form>
+      </div>
+    </form>
   </div>
 </div>

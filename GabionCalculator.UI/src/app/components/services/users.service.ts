@@ -12,6 +12,6 @@ export class UsersService {
   baseApiURL: string = environment.apiUrl;
   constructor(private http: HttpClient) { };
   public registerUser = (body: RegisterUserModel) => {
-    return this.http.post<ApiResultResponseUserModel>(this.baseApiURL + '/api/User/Post', body);
+    return this.http.post<ApiResultResponseUserModel>(this.baseApiURL + '/api/User/Register', body);
   }
 }

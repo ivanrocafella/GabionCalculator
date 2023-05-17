@@ -4,6 +4,8 @@ import { RegisterUserModel } from 'src/app/models/registerUserModel.model';
 import { ApiResultResponseUserModel } from 'src/app/models/apiResultResponseUserModel.model';
 import { UsersService } from 'src/app/components/services/users.service';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { passwordMatchValidator } from 'src/app/components/validators/confirmedPass.validator';
+import { PasswordConfirmationValidatorService } from 'src/app/components/validators/password-confirmation-validator.service'
 
 @Component({
   selector: 'app-user-register',
@@ -11,22 +13,21 @@ import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
   styleUrls: ['./user-register.component.css']
 })
 export class UserRegisterComponent implements OnInit{
-  registerForm: FormGroup;
-  constructor(private usersService: UsersService, fb: FormBuilder) {
-    this.registerForm = fb.group({
-      userName: fb.control('', [Validators.required]),
-      email: fb.control('', [Validators.required, Validators.email]),
-      password: fb.control('', [Validators.required]),
-      passwordConfirm: fb.control('')
-    },
-      {
-        validator: this.ConfirmedValidator('password', 'passwordConfirm'),
-      }
-    );
+  registerForm!: FormGroup;
+  public errorMessage: string = '';
+  public showError!: boolean;
+  constructor(private usersService: UsersService, private passConfValidator: PasswordConfirmationValidatorService) {
   }
 
   ngOnInit(): void {
-    this.registerForm.reset();
+    this.registerForm = new FormGroup({
+      userName: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required]),
+      passwordConfirm: new FormControl('', [Validators.required]),
+    }),
+    this.registerForm.get('passwordConfirm')!.setValidators([Validators.required,
+    this.passConfValidator.validateConfirmPassword(this.registerForm.get('password')!)]);;
   }
     
   public validateControl = (controlName: string) => {
@@ -38,6 +39,7 @@ export class UserRegisterComponent implements OnInit{
   }
 
   public registerUser = (registerFormValue: any) => {
+    this.showError = false;
     const formValues = { ...registerFormValue };
     const user: RegisterUserModel = {
       UserName: formValues.userName,
@@ -49,26 +51,14 @@ export class UserRegisterComponent implements OnInit{
     this.usersService.registerUser(user)
       .subscribe({
         next: (response) => console.log("Successful registration", response),
-        error: (err: HttpErrorResponse) => console.log(err.error.errors)
+        error: (err: HttpErrorResponse) => {
+          this.errorMessage = err.message;
+          this.showError = true;
+          console.log(err.message)
+        } 
       })
   }
 
-  ConfirmedValidator(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
-      const control = formGroup.controls[controlName];
-      const matchingControl = formGroup.controls[matchingControlName];
-      if (
-        matchingControl.errors &&
-        !matchingControl.errors['confirmedValidator']
-      ) {
-        return;
-      }
-      if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({ confirmedValidator: true });
-      } else {
-        matchingControl.setErrors(null);
-      }
-    };
-  }
+
   
 }

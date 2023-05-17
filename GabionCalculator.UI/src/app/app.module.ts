@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { MaterialListComponent } from './components/materials/material-list/material-list.component';
 import { MaterialCreateComponent } from './components/materials/material-create/material-create.component';
 import { FormsModule } from '@angular/forms';
 import { GabionCreateComponent } from './components/gabions/gabion-create/gabion-create.component';
 import { RouterModule } from '@angular/router';
+import { ErrorHandlerService } from 'src/app/components/services/error-handler.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,11 @@ import { RouterModule } from '@angular/router';
       { path: 'User', loadChildren: () => import('src/app/modules_spec/authentification/authentification.module').then(m => m.AuthentificationModule) },
     ])
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: ErrorHandlerService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
