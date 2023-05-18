@@ -8,6 +8,7 @@ using GabionCalculator.DAL.Entities;
 using GabionCalculator.BAL.Utils;
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GabionCalculator.API.Controllers
 {
@@ -28,6 +29,7 @@ namespace GabionCalculator.API.Controllers
 
         // POST: api/Gabion
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> PostAsync([FromBody] CreateGabionModel createGabionModel)
         {
             User user = null;
@@ -67,6 +69,7 @@ namespace GabionCalculator.API.Controllers
 
         // POST: api/Gabion/Gabions
         [HttpGet("Gabions")]
+        [Authorize]
         public async Task<IActionResult> GetAllAsync()
         {
             var gabions = await _gabionService.GetAllAsync();
@@ -78,6 +81,7 @@ namespace GabionCalculator.API.Controllers
 
         // GET: api/Gabion/GetById/5
         [HttpGet("GetById/{id:int}")]
+        [Authorize]
         public async Task<IActionResult> GetById(int id)
         {
             GabionResponseModel gabionResponseModel = _mapper.Map<GabionResponseModel>(await _gabionService.GetByIdAsync(id));

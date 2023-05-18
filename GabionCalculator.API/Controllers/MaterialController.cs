@@ -5,6 +5,7 @@ using GabionCalculator.BAL.Models.Material;
 using GabionCalculator.BAL.Services;
 using GabionCalculator.BAL.Services.Interfaces;
 using GabionCalculator.DAL.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace GabionCalculator.API.Controllers
 
         // POST: api/Material/Post
         [HttpPost("Post")]
+        [Authorize]
         public async Task<IActionResult> PostAsync([FromBody] CreateMaterialModel createMaterialModel)
         {
             if (ModelState.IsValid)
@@ -36,10 +38,12 @@ namespace GabionCalculator.API.Controllers
 
         // GET: api/Material/Post
         [HttpGet("Post")]
+        [Authorize]
         public IActionResult Post() => Ok(ApiResult<CreateMaterialModel>.Success(_materialService.GetCreateMaterialModel()));
 
         // POST: api/Material/Update/5
         [HttpPut("Update/{id:int}")]
+        [Authorize]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateMaterialModel updateMaterialModel)
         {
             if (ModelState.IsValid)
@@ -52,6 +56,7 @@ namespace GabionCalculator.API.Controllers
 
         // GET: api/Material/GetById/5
         [HttpGet("GetById/{id:int}")]
+        [Authorize]
         public async Task<IActionResult> GetById(int id)
         {
             MaterialResponseModel materialResponseModel = _mapper.Map<MaterialResponseModel>(await _materialService.GetByIdAsync(id));
@@ -63,6 +68,7 @@ namespace GabionCalculator.API.Controllers
 
         // GET: api/Materials
         [HttpGet("Materials")]
+        [Authorize]
         public async Task<IActionResult> GetAllAsync()
         {
             var materials = await _materialService.GetAllAsync();

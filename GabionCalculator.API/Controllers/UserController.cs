@@ -14,6 +14,9 @@ using Microsoft.EntityFrameworkCore;
 using GabionCalculator.DAL.Data;
 using GabionCalculator.BAL.Models.Gabion;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using GabionCalculator.BAL.Services.JwtFeatures;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace GabionCalculator.API.Controllers
 {
@@ -21,11 +24,13 @@ namespace GabionCalculator.API.Controllers
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly JwtHandler _jwtHandler;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper, JwtHandler jwtHandler)
         {
             _userService = userService;
             _mapper = mapper;
+            _jwtHandler = jwtHandler;
         }
 
         // POST: api/User/Post
@@ -74,17 +79,25 @@ namespace GabionCalculator.API.Controllers
                 {
                     SignInResult result = await _userService.GetSignInAsync(loginUserModel, user);
                     if (result.Succeeded)
-                        return Ok(ApiResult<UserResponseModel>.Success(_userService.GetResponseModel(user)));
+                    {
+                        var signinCredentials = _jwtHandler.GetSigningCredentials();
+                        var claims = _jwtHandler.GetClaims(user);
+                        var tokenOptions = _jwtHandler.GenerateTokenOptions(signinCredentials, claims);
+                        var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+                        return Ok(new AuthResponseModel { IsAuthSuccessful = true, Token = token});
+                    }                   
                 }
                 ModelState.AddModelError("", "Неправильный логин, электронная почта и (или) пароль");
-            }
-            return StatusCode(500, ApiResult<LoginUserModel>.Failure(ModelState.Values
-                        .SelectMany(v => v.Errors)
-                        .Select(e => e.ErrorMessage)));
+               
+            }            
+            return Unauthorized(new AuthResponseModel { ErrorMessage = ModelState.Values
+                       .SelectMany(v => v.Errors)
+                       .Select(e => e.ErrorMessage).ToString() });
         }
 
         // POST: api/User
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> LogOutAsync()
         {
             await _userService.GetSignOutAsync();
@@ -96,6 +109,7 @@ namespace GabionCalculator.API.Controllers
 
         // GET: api/User/Users
         [HttpGet("Users")]
+      //  [Authorize]
         public async Task<IActionResult> GetAllAsync()
         {
             var users = await _userService.GetAllExceptCurUserAsync(e => e.UserName != User.Identity.Name);
