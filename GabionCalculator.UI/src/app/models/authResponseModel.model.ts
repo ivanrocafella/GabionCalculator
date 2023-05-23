@@ -1,5 +1,5 @@
 export interface AuthUserModel {
   IsAuthSuccessful: boolean;
-  ErrorMessage: string;
+  Errors?: string[];
   Token: string;
 }

@@ -15,9 +15,9 @@ export class MaterialListComponent {
     this.materialsService.getAllMaterials().subscribe(
       {
         next: (apiResultResponseListModel) => {
-          this.apiResult = apiResultResponseListModel; console.log(this.apiResult);
+          this.apiResult = apiResultResponseListModel; console.log(this.apiResult); 
         },
-        error: (response) => { console.log(response); }
+        error: (response) => { console.log(response); console.log("ошибка!"); }
       }
     )
   }

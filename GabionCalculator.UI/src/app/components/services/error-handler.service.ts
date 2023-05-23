@@ -27,6 +27,10 @@ export class ErrorHandlerService implements HttpInterceptor {
       console.log(error.status);
       return this.handleBadRequest(error);
     }
+    else if (error.status === 401) {
+      console.log(error.status);
+      return this.handleBadRequest(error);
+    }
     else {
       return null;
     }
@@ -39,7 +43,8 @@ export class ErrorHandlerService implements HttpInterceptor {
 
   private handleBadRequest = (error: HttpErrorResponse): string | null => {
     console.log(this.router.url);
-    if (this.router.url === '/User/Register') {
+    console.log(error.error);
+    if (this.router.url === '/User/Register' || this.router.url === '/User/Login') {
       let message = '';
       const values = Object.values(error.error.errors);
       values.map((m: string | unknown) => {

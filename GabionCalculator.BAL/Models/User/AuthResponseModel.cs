@@ -11,8 +11,7 @@ namespace GabionCalculator.BAL.Models.User
     {
         [JsonPropertyName("IsAuthSuccessful")]
         public bool IsAuthSuccessful { get; set; }
-        [JsonPropertyName("ErrorMessage")]
-        public string? ErrorMessage { get; set; }
+        public IEnumerable<string>? Errors { get; set; }
         [JsonPropertyName("Token")]
         public string? Token { get; set; }
     }

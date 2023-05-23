@@ -90,9 +90,9 @@ namespace GabionCalculator.API.Controllers
                 ModelState.AddModelError("", "Неправильный логин, электронная почта и (или) пароль");
                
             }            
-            return Unauthorized(new AuthResponseModel { ErrorMessage = ModelState.Values
+            return Unauthorized(new AuthResponseModel { Errors = ModelState.Values
                        .SelectMany(v => v.Errors)
-                       .Select(e => e.ErrorMessage).ToString() });
+                       .Select(e => e.ErrorMessage) });
         }
 
         // POST: api/User

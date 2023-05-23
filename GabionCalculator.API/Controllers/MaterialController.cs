@@ -68,7 +68,7 @@ namespace GabionCalculator.API.Controllers
 
         // GET: api/Materials
         [HttpGet("Materials")]
-        [Authorize]
+    //    [Authorize]
         public async Task<IActionResult> GetAllAsync()
         {
             var materials = await _materialService.GetAllAsync();
