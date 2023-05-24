@@ -28,8 +28,7 @@ export class ErrorHandlerService implements HttpInterceptor {
       return this.handleBadRequest(error);
     }
     else if (error.status === 401) {
-      console.log(error.status);
-      return this.handleBadRequest(error);
+      return this.handleUnauthorized(error);
     }
     else {
       return null;
@@ -44,7 +43,7 @@ export class ErrorHandlerService implements HttpInterceptor {
   private handleBadRequest = (error: HttpErrorResponse): string | null => {
     console.log(this.router.url);
     console.log(error.error);
-    if (this.router.url === '/User/Register' || this.router.url === '/User/Login') {
+    if (this.router.url === '/User/Register') {
       let message = '';
       const values = Object.values(error.error.errors);
       values.map((m: string | unknown) => {
@@ -54,6 +53,21 @@ export class ErrorHandlerService implements HttpInterceptor {
     }
     else {
       return error.error ? error.error : error.message;
+    }
+  }
+
+  private handleUnauthorized = (error: HttpErrorResponse) => {
+    if (this.router.url === '/User/Login') {
+      let message = '';
+      const values = Object.values(error.error.errors);
+      values.map((m: string | unknown) => {
+        message += m + '<br>';
+      })
+      return message.slice(0, -4);
+    }
+    else {
+      this.router.navigate(['/User/Login']);
+      return error.message;
     }
   }
 }

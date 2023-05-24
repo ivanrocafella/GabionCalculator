@@ -9,6 +9,12 @@ import { FormsModule } from '@angular/forms';
 import { GabionCreateComponent } from './components/gabions/gabion-create/gabion-create.component';
 import { RouterModule } from '@angular/router';
 import { ErrorHandlerService } from 'src/app/components/services/error-handler.service';
+import { JwtModule } from "@auth0/angular-jwt";
+import { AuthGuard } from './shared/guards/auth.guard';
+
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
 
 @NgModule({
   declarations: [
@@ -17,9 +23,17 @@ import { ErrorHandlerService } from 'src/app/components/services/error-handler.s
   imports: [
     BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, RouterModule.forRoot([
       { path: 'User', loadChildren: () => import('src/app/modules_spec/authentification/authentification.module').then(m => m.AuthentificationModule) },
-    ])
+    ]),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["localhost:4200"],
+        disallowedRoutes: []
+      }
+    })
   ],
-  providers: [{
+  providers: [AuthGuard,
+    {
     provide: HTTP_INTERCEPTORS,
     useClass: ErrorHandlerService,
     multi: true

@@ -50,6 +50,7 @@ export class UserAuthentificationComponent implements OnInit{
       .subscribe({
         next: (response: AuthUserModel) => {
           localStorage.setItem("token", response.Token);
+          this.usersService.sendAuthStateChangeNotification(response.IsAuthSuccessful);
           this.router.navigate([this.returnUrl]);
           console.log("Successful authentification", response)
         },

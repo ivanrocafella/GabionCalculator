@@ -38,7 +38,7 @@ namespace GabionCalculator.API.Controllers
 
         // GET: api/Material/Post
         [HttpGet("Post")]
-        [Authorize]
+     //   [Authorize]
         public IActionResult Post() => Ok(ApiResult<CreateMaterialModel>.Success(_materialService.GetCreateMaterialModel()));
 
         // POST: api/Material/Update/5
@@ -68,7 +68,7 @@ namespace GabionCalculator.API.Controllers
 
         // GET: api/Materials
         [HttpGet("Materials")]
-    //    [Authorize]
+       // [Authorize]
         public async Task<IActionResult> GetAllAsync()
         {
             var materials = await _materialService.GetAllAsync();

@@ -4,6 +4,7 @@ import { RegisterUserModel } from 'src/app/models/registerUserModel.model';
 import { ApiResultResponseUserModel } from 'src/app/models/apiResultResponseUserModel.model';
 import { UsersService } from 'src/app/components/services/users.service';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { passwordMatchValidator } from 'src/app/components/validators/confirmedPass.validator';
 import { PasswordConfirmationValidatorService } from 'src/app/components/validators/password-confirmation-validator.service'
 
@@ -16,7 +17,7 @@ export class UserRegisterComponent implements OnInit{
   registerForm!: FormGroup;
   public errorMessage: string = '';
   public showError!: boolean;
-  constructor(private usersService: UsersService, private passConfValidator: PasswordConfirmationValidatorService) {
+  constructor(private usersService: UsersService, private passConfValidator: PasswordConfirmationValidatorService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -50,7 +51,7 @@ export class UserRegisterComponent implements OnInit{
     console.log(user);
     this.usersService.registerUser(user)
       .subscribe({
-        next: (response) => console.log("Successful registration", response),
+        next: (response) => { this.router.navigate(["/User/Login"]), console.log("Successful registration", response) },
         error: (err: HttpErrorResponse) => {
           this.errorMessage = err.message;
           this.showError = true;
