@@ -17,6 +17,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using GabionCalculator.BAL.Services.JwtFeatures;
 using System.IdentityModel.Tokens.Jwt;
+using GabionCalculator.BAL.Utils;
 
 namespace GabionCalculator.API.Controllers
 {
@@ -25,12 +26,14 @@ namespace GabionCalculator.API.Controllers
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
         private readonly JwtHandler _jwtHandler;
+        private readonly UserManager<User> _userManager;
 
-        public UserController(IUserService userService, IMapper mapper, JwtHandler jwtHandler)
+        public UserController(IUserService userService, IMapper mapper, JwtHandler jwtHandler, UserManager<User> userManager)
         {
             _userService = userService;
             _mapper = mapper;
             _jwtHandler = jwtHandler;
+            _userManager = userManager;
         }
 
         // POST: api/User/Post
@@ -47,12 +50,12 @@ namespace GabionCalculator.API.Controllers
                 if (result.Succeeded)
                 {
                     User user = await _userService.GetByUserNameAsync(registerUserModel.UserName);
-                    if (user != null) 
+                    if (user != null)
                     {
                         await _userService.AddRoleAsync(user, "employee");
                         return Ok(ApiResult<UserResponseModel>.Success(_userService.GetResponseModel(user)));
-                    };                   
-                }                    
+                    };
+                }
                 else
                 {
                     foreach (var error in result.Errors)
@@ -60,9 +63,9 @@ namespace GabionCalculator.API.Controllers
                         var message = error.Description;
                         message = message == "Passwords must be at least 12 characters." ? "Пароль должен содержать не менее 12 символов." : default;
                         ModelState.AddModelError(string.Empty, message);
-                    }                     
+                    }
                 }
-            }               
+            }
             return BadRequest(ApiResult<UserResponseModel>.Failure(ModelState.Values
                         .SelectMany(v => v.Errors)
                         .Select(e => e.ErrorMessage)));
@@ -77,15 +80,12 @@ namespace GabionCalculator.API.Controllers
                 User user = await _userService.GetUserByNameOrEmailAsync(loginUserModel);
                 if (user != null)
                 {
-                    SignInResult result = await _userService.GetSignInAsync(loginUserModel, user);
-                    if (result.Succeeded)
-                    {
-                        var signinCredentials = _jwtHandler.GetSigningCredentials();
-                        var claims = _jwtHandler.GetClaims(user);
-                        var tokenOptions = _jwtHandler.GenerateTokenOptions(signinCredentials, claims);
-                        var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-                        return Ok(new AuthResponseModel { IsAuthSuccessful = true, Token = token});
-                    }                   
+                   var signinCredentials = _jwtHandler.GetSigningCredentials();
+                   var claims = await _jwtHandler.GetClaims(user);
+                   var tokenOptions = _jwtHandler.GenerateTokenOptions(signinCredentials, claims);
+                   var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+                   User curUser = await CurrentUser.Get(_userManager, user.UserName);
+                   return Ok(new AuthResponseModel { IsAuthSuccessful = true, Token = token});                 
                 }
                 ModelState.AddModelError("", "Неправильный логин, электронная почта и (или) пароль");
                
@@ -97,9 +97,10 @@ namespace GabionCalculator.API.Controllers
 
         // POST: api/User
         [HttpPost]
-        [Authorize]
+ 
         public async Task<IActionResult> LogOutAsync()
         {
+            bool isAuth = User.Identity.IsAuthenticated;
             await _userService.GetSignOutAsync();
           // if (User.Identity.IsAuthenticated)
           //     return StatusCode(500, ApiResult<IEnumerable<UserResponseModel>>.Failure(new List<string>() { "Пользователь не вышел из системы." }));
@@ -109,7 +110,7 @@ namespace GabionCalculator.API.Controllers
 
         // GET: api/User/Users
         [HttpGet("Users")]
-      //  [Authorize]
+      //[Authorize]
         public async Task<IActionResult> GetAllAsync()
         {
             var users = await _userService.GetAllExceptCurUserAsync(e => e.UserName != User.Identity.Name);

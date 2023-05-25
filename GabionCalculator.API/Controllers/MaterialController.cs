@@ -66,7 +66,7 @@ namespace GabionCalculator.API.Controllers
                 return StatusCode(500, ApiResult<MaterialResponseModel>.Failure(new List<string>() { "Объект не найден." }));
         }
 
-        // GET: api/Materials
+        // GET: api/Material/Materials
         [HttpGet("Materials")]
        // [Authorize]
         public async Task<IActionResult> GetAllAsync()
@@ -76,6 +76,17 @@ namespace GabionCalculator.API.Controllers
                 return Ok(ApiResult<IEnumerable<MaterialResponseModel>>.Success(_mapper.Map<IEnumerable<MaterialResponseModel>>(materials)));
             else
                 return StatusCode(500, ApiResult<IEnumerable<MaterialResponseModel>>.Failure(new List<string>() { "Объекты ещё не добавлены." }));
+        }
+
+        // GET: api/Material/Privacy
+        [HttpGet("Privacy")]
+        [Authorize(Roles = "admin")]
+        public IActionResult Privacy()
+        {
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            return Ok(claims);
         }
     }
 }

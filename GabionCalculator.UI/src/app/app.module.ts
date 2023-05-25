@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { ErrorHandlerService } from 'src/app/components/services/error-handler.service';
 import { JwtModule } from "@auth0/angular-jwt";
 import { AuthGuard } from './shared/guards/auth.guard';
+import { PrivacyComponent } from './components/materials/privacy/privacy.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -18,16 +19,16 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [
-    AppComponent, MaterialListComponent, MaterialCreateComponent, GabionCreateComponent
+    AppComponent, MaterialListComponent, MaterialCreateComponent, GabionCreateComponent, PrivacyComponent
   ],
   imports: [
     BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, RouterModule.forRoot([
-      { path: 'User', loadChildren: () => import('src/app/modules_spec/authentification/authentification.module').then(m => m.AuthentificationModule) },
+      { path: 'User', loadChildren: () => import('src/app/modules_spec/authentification/authentification.module').then(m => m.AuthentificationModule) }      
     ]),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["localhost:4200"],
+        allowedDomains: ["localhost:7083"],
         disallowedRoutes: []
       }
     })

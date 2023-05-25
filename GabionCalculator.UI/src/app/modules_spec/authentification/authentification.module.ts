@@ -17,6 +17,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
       { path: 'Login', component: UserAuthentificationComponent },
       { path: 'Register', component: UserRegisterComponent }      
     ])
-  ]
+  ] 
 })
 export class AuthentificationModule { }
