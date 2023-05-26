@@ -39,4 +39,11 @@ export class UsersService {
     console.log(token, !this.jwtHelper.isTokenExpired(token));
     return token && !this.jwtHelper.isTokenExpired(token);
   }
+
+  public isUserAdmin = (): boolean => {
+    const token = localStorage.getItem("token");
+    const decodedToken = this.jwtHelper.decodeToken(token!);
+    const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+    return role === 'admin';
+  }
 }

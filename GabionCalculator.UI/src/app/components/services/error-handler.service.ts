@@ -14,6 +14,7 @@ export class ErrorHandlerService implements HttpInterceptor {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           let errorMessage = this.handleError(error);
+          console.log(errorMessage)
           return throwError(() => new Error(errorMessage!));
         })
       )
@@ -29,6 +30,10 @@ export class ErrorHandlerService implements HttpInterceptor {
     }
     else if (error.status === 401) {
       return this.handleUnauthorized(error);
+    }
+    else if (error.status === 403) {
+      console.log(error.status);
+      return this.handleForbidden(error);
     }
     else {
       return null;
@@ -70,4 +75,9 @@ export class ErrorHandlerService implements HttpInterceptor {
       return error.message;
     }
   }
+
+  private handleForbidden = (error: HttpErrorResponse) => {
+    this.router.navigate(["/Forbidden"], { queryParams: { returnUrl: this.router.url } });
+    return "Forbidden";
+  } 
 }

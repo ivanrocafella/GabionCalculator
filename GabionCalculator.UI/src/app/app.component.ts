@@ -10,13 +10,16 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'GabionCalculator.UI';
   public isUserAuthenticated!: boolean;
-  constructor(private usersService: UsersService, private router: Router) { }
-
-  ngOnInit(): void {
+  constructor(private usersService: UsersService, private router: Router) {
     this.usersService.authChanged
       .subscribe(res => {
         this.isUserAuthenticated = res;
       })
+  }
+
+  ngOnInit(): void {
+    if (this.usersService.isUserAuthenticated())
+      this.usersService.sendAuthStateChangeNotification(true);
   }
 
   public logout = () => {

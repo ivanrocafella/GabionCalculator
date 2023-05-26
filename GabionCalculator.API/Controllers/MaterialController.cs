@@ -25,7 +25,7 @@ namespace GabionCalculator.API.Controllers
 
         // POST: api/Material/Post
         [HttpPost("Post")]
-        [Authorize]
+    //    [Authorize]
         public async Task<IActionResult> PostAsync([FromBody] CreateMaterialModel createMaterialModel)
         {
             if (ModelState.IsValid)

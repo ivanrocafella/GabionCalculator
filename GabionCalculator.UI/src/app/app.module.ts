@@ -12,6 +12,7 @@ import { ErrorHandlerService } from 'src/app/components/services/error-handler.s
 import { JwtModule } from "@auth0/angular-jwt";
 import { AuthGuard } from './shared/guards/auth.guard';
 import { PrivacyComponent } from './components/materials/privacy/privacy.component';
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -19,7 +20,7 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [
-    AppComponent, MaterialListComponent, MaterialCreateComponent, GabionCreateComponent, PrivacyComponent
+    AppComponent, MaterialListComponent, MaterialCreateComponent, GabionCreateComponent, PrivacyComponent, ForbiddenComponent
   ],
   imports: [
     BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, RouterModule.forRoot([

@@ -16,7 +16,7 @@ export class MaterialCreateComponent {
   formData: any = {};
 
   constructor(private materialsService: MaterialsService) {
-    this.formData.Name = "РџСЂРѕРІРѕР»РѕРєР°";
+    this.formData.Name = "Р СџРЎР‚Р С•Р Р†Р С•Р В»Р С•Р С”Р В°";
     this.formData.MaterialKindId = 0;
   };
 

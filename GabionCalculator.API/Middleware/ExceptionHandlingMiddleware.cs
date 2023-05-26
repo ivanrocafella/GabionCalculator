@@ -1,6 +1,7 @@
 ﻿using GabionCalculator.BAL.Models;
 using GabionCalculator.DAL.Exceptions;
 using Newtonsoft.Json;
+using UnauthorizedAccessException = GabionCalculator.DAL.Exceptions.UnauthorizedAccessException;
 
 namespace GabionCalculator.API.Middleware
 {
@@ -37,6 +38,8 @@ namespace GabionCalculator.API.Middleware
             code = ex switch
             {
                 ResourceNotFoundException => StatusCodes.Status404NotFound,
+                UnauthorizedAccessException => StatusCodes.Status401Unauthorized,
+                ForbiddenException => StatusCodes.Status403Forbidden,
                 _ => code
             };
 
