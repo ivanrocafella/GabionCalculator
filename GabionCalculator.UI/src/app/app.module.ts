@@ -14,6 +14,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { PrivacyComponent } from './components/materials/privacy/privacy.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 
+
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
