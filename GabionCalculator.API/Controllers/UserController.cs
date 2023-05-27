@@ -110,14 +110,10 @@ namespace GabionCalculator.API.Controllers
 
         // GET: api/User/Users
         [HttpGet("Users")]
-      //[Authorize]
         public async Task<IActionResult> GetAllAsync()
         {
             var users = await _userService.GetAllExceptCurUserAsync(e => e.UserName != User.Identity.Name);
-            if (users.Any())
-                return Ok(ApiResult<IEnumerable<UserResponseModel>>.Success(_mapper.Map<IEnumerable<UserResponseModel>>(users)));
-            else
-                return StatusCode(500, ApiResult<IEnumerable<GabionResponseModel>>.Failure(new List<string>() { "Пользователи ещё не добавлены." }));
+            return Ok(ApiResult<IEnumerable<User>>.Success(users));
         }
     }
 }

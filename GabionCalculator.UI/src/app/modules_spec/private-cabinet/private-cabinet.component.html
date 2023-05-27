@@ -2,4 +2,30 @@
   <meta charset="UTF-8" />
 </head>
 
-<a *ngIf='isUserAdmin' class="btn btn-primary" routerLink="User/Register">Регистрация</a>
+<div class="container my-5">
+  <h1 class="mb-3">Список сотрудников</h1>
+  <table *ngIf='isAdmin' class="table">
+    <thead>
+      <tr>
+        <th scope="col">Email</th>
+        <th scope="col">Логин</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of apiResult.result">
+        <td scope="row">{{user.Email}}</td>
+        <td>{{user.UserName}}</td>
+        <td>
+          <button type="button" class="btn btn-outline-danger">
+            Удалить
+          </button>
+        </td>
+      </tr>
+    </tbody>     
+  </table>
+  <a *ngIf='isAdmin' class="btn btn-danger" routerLink="/User/Register">Регистрация нового сотрудника</a>
+</div>
+
+
+

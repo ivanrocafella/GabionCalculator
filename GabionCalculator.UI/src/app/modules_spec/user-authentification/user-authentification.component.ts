@@ -51,6 +51,9 @@ export class UserAuthentificationComponent implements OnInit{
         next: (response: AuthUserModel) => {
           localStorage.setItem("token", response.Token);
           this.usersService.sendAuthStateChangeNotification(response.IsAuthSuccessful);
+          if (this.usersService.isUserAdmin()) {
+            this.usersService.sendIsAdminStateChangeNotification(true);
+          }
           this.router.navigate([this.returnUrl]);
           console.log("Successful authentification", response)
         },

@@ -13,8 +13,11 @@ import { Router } from '@angular/router';
 export class MaterialsService {
   baseApiURL: string = environment.apiUrl;
   constructor(private http: HttpClient, private router: Router) { };
+
   getAllMaterials(): Observable<ApiResultResponseListMaterial> { return this.http.get<ApiResultResponseListMaterial>(this.baseApiURL + '/api/Material/Materials') };
+
   getCreateMaterialModel(): Observable<ApiResultCreateMaterialModel> { return this.http.get<ApiResultCreateMaterialModel>(this.baseApiURL + '/api/Material/Post') };
+
   submitForm(formData: any) {
     this.http.post(this.baseApiURL + '/api/Material/Post', formData).subscribe(
       (response) => {
