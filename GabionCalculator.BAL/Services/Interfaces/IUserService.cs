@@ -15,11 +15,12 @@ namespace GabionCalculator.BAL.Services.Interfaces
     public interface IUserService
     {
         Task<IEnumerable<User>> GetAllExceptCurUserAsync(Expression<Func<User, bool>> predicate);
-        Task<UserResponseModel> GetByIdAsync(string id, CancellationToken cancellationToken = default);
+        Task<User> GetByIdAsync(string id, CancellationToken cancellationToken = default);
         Task<User> GetByUserNameAsync(string UserName, CancellationToken cancellationToken = default);
         Task<IdentityResult> RegisterAsync(RegisterUserModel registerUserModel, CancellationToken cancellationToken = default);
         Task<string> DeleteByIdAsync(string id, CancellationToken cancellationToken = default);
         Task<string> DeleteByUserNameAsync(string UserName, CancellationToken cancellationToken = default);
+        Task DeleteByObject(User User, CancellationToken cancellationToken = default);
         Task<string> UpdateAsync(string id, UpdateUserModel updateUserModel, CancellationToken cancellationToken = default);
         UserResponseModel GetResponseModel(User user, CancellationToken cancellationToken = default);
         Task AddRoleAsync(User user, string role, CancellationToken cancellationToken = default);

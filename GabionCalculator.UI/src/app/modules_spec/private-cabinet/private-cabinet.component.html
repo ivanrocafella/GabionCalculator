@@ -3,7 +3,7 @@
 </head>
 
 <div class="container my-5">
-  <h1 class="mb-3">Список сотрудников</h1>
+  <h1 *ngIf='isAdmin' class="mb-3">Список сотрудников</h1>
   <table *ngIf='isAdmin' class="table">
     <thead>
       <tr>
@@ -13,11 +13,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of apiResult.result">
+      <tr *ngFor="let user of apiResult.result" id="user-{{user.Id}}">
         <td scope="row">{{user.Email}}</td>
         <td>{{user.UserName}}</td>
         <td>
-          <button type="button" class="btn btn-outline-danger">
+          <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="setIdForButton(user.Id)">
             Удалить
           </button>
         </td>
@@ -27,5 +27,22 @@
   <a *ngIf='isAdmin' class="btn btn-danger" routerLink="/User/Register">Регистрация нового сотрудника</a>
 </div>
 
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Удаление сотрудника</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="modal_body" class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+        <button type="button" class="btnDelCard btn btn-danger" data-bs-dismiss="modal" (click)="delUser($event)">Да</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 

@@ -2,12 +2,13 @@ import { RegisterUserModel } from 'src/app/models/registerUserModel.model';
 import { ApiResultResponseUserModel } from 'src/app/models/apiResultResponseUserModel.model';
 import { ApiResultResponseListUser } from 'src/app/models/apiResultResponseListUserModel.model';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Subject, Observable } from 'rxjs';
 import { LoginUserModel } from 'src/app/models/loginUserModel.model';
 import { AuthUserModel } from 'src/app/models/authResponseModel.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { createParameter } from 'typescript';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,10 @@ export class UsersService {
 
   public loginUser = (body: LoginUserModel) => {
     return this.http.post<AuthUserModel>(this.baseApiURL + '/api/User/Login', body);
+  }
+
+  public deleteUser = (id: string) => {
+    return this.http.post<ApiResultResponseUserModel>(this.baseApiURL + '/api/User/Remove/' + id +'', null);
   }
 
   public logout = () => {

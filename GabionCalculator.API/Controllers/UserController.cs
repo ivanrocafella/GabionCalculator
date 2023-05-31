@@ -108,6 +108,24 @@ namespace GabionCalculator.API.Controllers
                 return RedirectToAction("GetAsync","Gabion");
         }
 
+        // POST: api/User/Remove/5
+        [HttpPost("Remove/{id}")]
+
+        public async Task<IActionResult> Remove([FromRoute] string id)
+        {
+            if (!string.IsNullOrEmpty(id)) 
+            {
+                User user = await _userService.GetByIdAsync(id);
+                if (user != null) 
+                {
+                    await _userService.DeleteByObject(user); 
+                    return Ok(ApiResult<UserResponseModel>.Success(_mapper.Map<UserResponseModel>(user)));
+                }
+                return StatusCode(500, ApiResult<User>.Failure(new List<string>() { "Пользователь не найден" }));
+            }
+            return StatusCode(500, ApiResult<User>.Failure(new List<string>() { "Id пользователя не передан в параметры" }));
+        }
+
         // GET: api/User/Users
         [HttpGet("Users")]
         public async Task<IActionResult> GetAllAsync()

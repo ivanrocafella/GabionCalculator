@@ -43,13 +43,17 @@ namespace GabionCalculator.BAL.Services
             throw new NotImplementedException();
         }
 
+        public async Task DeleteByObject(User User, CancellationToken cancellationToken = default)
+        {
+            await _userManager.DeleteAsync(User);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<User>> GetAllExceptCurUserAsync(Expression<Func<User, bool>> predicate)
             => await _userManager.Users.Where(predicate).ToListAsync();
 
-        public Task<UserResponseModel> GetByIdAsync(string id, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<User> GetByIdAsync(string id, CancellationToken cancellationToken = default) => await _userManager.FindByIdAsync(id);
+
         public async Task<User> GetByUserNameAsync(string UserName, CancellationToken cancellationToken = default) =>  await _userManager.FindByNameAsync(UserName);
         public async Task<User> GetByEmailAsync(string Email, CancellationToken cancellationToken = default) => await _userManager.FindByEmailAsync(Email);
         public UserResponseModel GetResponseModel(User user, CancellationToken cancellationToken = default) => _mapper.Map<UserResponseModel>(user);
