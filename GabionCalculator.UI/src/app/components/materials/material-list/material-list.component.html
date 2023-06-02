@@ -13,6 +13,7 @@
         <th scope="col">Тип материала</th>
         <th scope="col">Цена за кг,coм</th>
         <th scope="col">Дата обнов-я</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -22,9 +23,15 @@
         <td>{{m.MaterialKindId}}</td>
         <td>{{m.PricePerKg}}</td>
         <td>{{m.DateUpdate | date:'MM/dd/yyyy HH:mm:ss'}}</td>
+        <td>
+          <p class="btn-group-vertical">
+            <a class="btn btn-success btn-sm" routerLink="/Material/Update/{{m.Id}}">Редактировать</a>
+            <button type="button" class="btn btn-danger btn-sm" onclick="deleteLine('@item.Id')">Удалить</button>
+          </p>
+        </td>
       </tr>
     </tbody>
   </table>
-  <a routerLink="/Material/Post" class="btn btn-success"> Добавить материал</a>
+  <a routerLink="/Material/Post" class="btn btn-success">Добавить материал</a>
 </div>
 

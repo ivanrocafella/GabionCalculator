@@ -3,8 +3,8 @@
 </head>
 
 <div class="container my-5">
-  <h1 class="mb-3">Добавление материала</h1>
-  <form [formGroup]="createMaterialForm" (ngSubmit)="onSubmit()">
+  <h1 class="mb-3">Редактирование материала</h1>
+  <form [formGroup]="editMaterialForm" (ngSubmit)="onSubmit()">
     <div class="mb-3">
       <label for="Name" class="form-label">Наименование:</label>
       <select formControlName="Name" id="Name" class="form-select" aria-label="Default select example" [(ngModel)]="formData.Name">
@@ -29,8 +29,7 @@
       <em *ngIf="validateControl('PricePerKg') && hasError('PricePerKg', 'required')">Поле обязательно для заполнения</em>
       <em *ngIf="validateControl('PricePerKg') && hasError('PricePerKg', 'min')">Значение должно быть не меньше 0</em>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="!createMaterialForm.valid">Создать</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!editMaterialForm.valid">Редактировать</button>
   </form>
 </div>
-
 

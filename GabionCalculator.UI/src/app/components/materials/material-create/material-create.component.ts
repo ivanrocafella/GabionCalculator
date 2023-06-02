@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiResultCreateMaterialModel } from 'src/app/models/apiResultCreateMatrialModel.model';
 import { MaterialsService } from 'src/app/components/services/materials.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-material-create',
@@ -14,13 +15,21 @@ export class MaterialCreateComponent {
   DefaultKindMaterial: string | undefined;
   KindsMaterial: string[] | undefined;
   formData: any = {};
+  createMaterialForm!: FormGroup
 
   constructor(private materialsService: MaterialsService) {
-    this.formData.Name = "Р СџРЎР‚Р С•Р Р†Р С•Р В»Р С•Р С”Р В°";
-    this.formData.MaterialKindId = 0;
   };
 
   ngOnInit(): void {
+    this.createMaterialForm = new FormGroup(
+      {
+        Name: new FormControl("", [Validators.required]),
+        Size: new FormControl("", [Validators.required, Validators.min(0.5)]),
+        MaterialKindId: new FormControl("", [Validators.required]),
+        PricePerKg: new FormControl("", [Validators.required, Validators.min(0)])
+      }
+    );
+
     this.materialsService.getCreateMaterialModel().subscribe(
       {
         next: (ApiResultCreateMaterialModel) => {
@@ -28,15 +37,30 @@ export class MaterialCreateComponent {
           this.DefaultName = this.apiResult.result?.Names[0];
           this.DefaultKindMaterial = this.apiResult.result?.KindsMaterial[0];
           this.KindsMaterial = this.apiResult.result?.KindsMaterial;
+          this.formData.Name = this.DefaultName;
+          this.formData.MaterialKindId = this.apiResult.result?.KindsMaterial.findIndex(x => x == this.apiResult.result?.KindsMaterial[0]);
           console.log(this.apiResult);
           console.log(this.DefaultName);
+          console.log(this.formData.MaterialKindId);
         },
         error: (response) => { console.log(response); }
       }
     ) 
   };
 
-  onSubmit(): void { this.materialsService.submitForm(this.formData) };
+  public validateControl = (controlName: string) => {
+    return this.createMaterialForm.get(controlName)!.invalid && this.createMaterialForm.get(controlName)!.touched
+  }
+
+  public hasError = (controlName: string, errorName: string) => {
+    return this.createMaterialForm.get(controlName)!.hasError(errorName)
+  }
+
+  onSubmit(): void { this.materialsService.submitFormPost(this.formData) };
+
+
+
+
 
   ngAfterViewInit() {
     console.log("DOM fully loaded and parsed");

@@ -16,6 +16,7 @@ namespace GabionCalculator.BAL.MappingProfiles
         {
             CreateMap<CreateMaterialModel, Material>();
             CreateMap<UpdateMaterialModel, Material>();
+            CreateMap<Material, UpdateMaterialModel>();
             CreateMap<Material, MaterialResponseModel>();
         }
     }

@@ -14,7 +14,7 @@ namespace GabionCalculator.BAL.Models.Material
         [Required]
         [JsonPropertyName("Name")]
         public string Name { get; set; }
-        [Range(1, double.PositiveInfinity)]
+        [Range(0.5, double.PositiveInfinity)]
         [JsonPropertyName("Size")]
         public float Size { get; set; }
         [Range(0, float.PositiveInfinity)]

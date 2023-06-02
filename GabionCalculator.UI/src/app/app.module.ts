@@ -13,6 +13,8 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { AuthGuard } from './shared/guards/auth.guard';
 import { PrivacyComponent } from './components/materials/privacy/privacy.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialEditComponent } from './components/materials/material-edit/material-edit.component';
 
 
 export function tokenGetter() {
@@ -21,10 +23,10 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [
-    AppComponent, MaterialListComponent, MaterialCreateComponent, GabionCreateComponent, PrivacyComponent, ForbiddenComponent
+    AppComponent, MaterialListComponent, MaterialCreateComponent, GabionCreateComponent, PrivacyComponent, ForbiddenComponent, MaterialEditComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, RouterModule.forRoot([
+    BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule, RouterModule.forRoot([
       { path: 'User', loadChildren: () => import('src/app/modules_spec/authentification/authentification.module').then(m => m.AuthentificationModule) }      
     ]),
     JwtModule.forRoot({

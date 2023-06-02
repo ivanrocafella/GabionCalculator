@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,17 +11,26 @@ namespace GabionCalculator.BAL.Models.Material
 {
     public class UpdateMaterialModel 
     {
+        [JsonPropertyName("Id")]
+        [ValidateNever]
+        public string Id { get; set; }
         [Required]
         [JsonPropertyName("Name")]
         public string Name { get; set; }
-        [Range(1, double.PositiveInfinity)]
+        [Range(0.5, double.PositiveInfinity)]
         [JsonPropertyName("Size")]
-        public double Size { get; set; }
-        [Range(0, double.PositiveInfinity)]
+        public float Size { get; set; }
+        [Range(0, float.PositiveInfinity)]
         [JsonPropertyName("PricePerKg")]
         public double PricePerKg { get; set; }
         [JsonPropertyName("MaterialKindId")]
-        [Range(1, double.PositiveInfinity)]
+        [Range(0, int.MaxValue)]
         public int MaterialKindId { get; set; }
+        [JsonPropertyName("KindsMaterial")]
+        [ValidateNever]
+        public List<string>? KindsMaterial { get; set; }
+        [JsonPropertyName("Names")]
+        [ValidateNever]
+        public string[]? Names { get; set; }
     }
 }

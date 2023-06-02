@@ -19,5 +19,6 @@ namespace GabionCalculator.BAL.Services.Interfaces
         Task<BaseResponseModel> DeleteAsync(int id, CancellationToken cancellationToken = default);
         Task<MaterialResponseModel> UpdateAsync(int id, UpdateMaterialModel updateMaterialModel, CancellationToken cancellationToken = default);
         CreateMaterialModel GetCreateMaterialModel();
+        UpdateMaterialModel GetUpdateMaterialModel(Material material, CancellationToken cancellationToken = default);
     }
 }

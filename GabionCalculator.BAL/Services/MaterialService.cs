@@ -49,6 +49,18 @@ namespace GabionCalculator.BAL.Services
             return createMaterialModel;
         }
 
+        public UpdateMaterialModel GetUpdateMaterialModel(Material material, CancellationToken cancellationToken = default)
+        {
+            List<string> kinds = new();
+            foreach (MaterialKind kind in Enum.GetValues(typeof(MaterialKind)))
+                kinds.Add(kind.ToString());
+
+            UpdateMaterialModel updateMaterialModel = _mapper.Map<UpdateMaterialModel>(material);
+            updateMaterialModel.KindsMaterial = kinds;
+            updateMaterialModel.Names = new string[] { "Проволока", "Круг" };
+            return updateMaterialModel;
+        }
+
         public Task<BaseResponseModel> DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
