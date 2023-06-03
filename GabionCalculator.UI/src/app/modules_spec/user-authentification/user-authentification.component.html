@@ -2,43 +2,45 @@
   <meta charset="UTF-8" />
 </head>
 
-<div class="card">
-  <div class="card-body">
-    <h1 class="card-title">Вход</h1>
-    <div *ngIf="showError" class="alert alert-danger" role="alert">
-      {{errorMessage}}
+<div class="container my-5">
+  <div class="card">
+    <div class="card-body">
+      <h1 class="card-title">Вход</h1>
+      <div *ngIf="showError" class="alert alert-danger" role="alert">
+        {{errorMessage}}
+      </div>
+      <form [formGroup]="loginForm" autocomplete="off" novalidate (ngSubmit)="loginUser(loginForm.value)">
+        <div class="mb-3 row">
+          <label for="emailLogin" class="col-form-label col-sm-2">Email или Логин:</label>
+          <div class="col-md-5">
+            <input type="text" id="emailLogin" formControlName="emailLogin" class="form-control" />
+          </div>
+          <div class="col-md-5">
+            <em *ngIf="validateControl('emailLogin') && hasError('emailLogin', 'required')">Email или Логин обязательны для заполнения</em>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="password" class="col-form-label col-sm-2">Пароль:</label>
+          <div class="col-md-5">
+            <input type="password" id="password" formControlName="password" class="form-control" />
+          </div>
+          <div class="col-md-5">
+            <em *ngIf="validateControl('password') && hasError('password', 'required')">Пароль обязателен для заполнения</em>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="rememberMe" class="col-form-label col-sm-2">Запомнить</label>
+          <div class="col-md-5">
+            <input type="checkbox" id="rememberMe" formControlName="rememberMe" class="form-check-input" />
+          </div>
+        </div>
+        <br>
+        <div class="mb-3 row">
+          <div class="col-md-1">
+            <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">Войти</button>
+          </div>
+        </div>
+      </form>
     </div>
-    <form [formGroup]="loginForm" autocomplete="off" novalidate (ngSubmit)="loginUser(loginForm.value)">
-      <div class="mb-3 row">
-        <label for="emailLogin" class="col-form-label col-sm-2">Email или Логин:</label>
-        <div class="col-md-5">
-          <input type="text" id="emailLogin" formControlName="emailLogin" class="form-control" />
-        </div>
-        <div class="col-md-5">
-          <em *ngIf="validateControl('emailLogin') && hasError('emailLogin', 'required')">Email или Логин обязательны для заполнения</em>
-        </div>
-      </div>
-      <div class="mb-3 row">
-        <label for="password" class="col-form-label col-sm-2">Пароль:</label>
-        <div class="col-md-5">
-          <input type="password" id="password" formControlName="password" class="form-control" />
-        </div>
-        <div class="col-md-5">
-          <em *ngIf="validateControl('password') && hasError('password', 'required')">Пароль обязателен для заполнения</em>
-        </div>
-      </div>
-      <div class="mb-3 row">
-        <label for="rememberMe" class="col-form-label col-sm-2">Запомнить</label>
-        <div class="col-md-5">
-          <input type="checkbox" id="rememberMe" formControlName="rememberMe" class="form-check-input"/>
-        </div>
-      </div>
-      <br>
-      <div class="mb-3 row">
-        <div class="col-md-1">
-          <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">Войти</button>
-        </div>
-      </div>
-    </form>
   </div>
-</div>  
+</div>

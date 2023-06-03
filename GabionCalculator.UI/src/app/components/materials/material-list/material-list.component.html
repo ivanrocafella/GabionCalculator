@@ -4,8 +4,8 @@
 
 <div class="container my-5">
   <h1 class="mb-3">Список материалов</h1>
-  <h2 class="mb-3" *ngIf="!apiResult.result || apiResult.result.length == 0">Материалы ещё не добавлены</h2>
-  <table class="table table-dark" *ngIf="apiResult.result && apiResult.result.length > 0">
+  <h2 class="mb-3" *ngIf="hasNoMaterials">Материалы ещё не добавлены</h2>
+  <table class="table table-dark" *ngIf="!hasNoMaterials">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -17,16 +17,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let m of apiResult.result">
+      <tr *ngFor="let m of apiResult.result" id="material-{{m.Id}}">
         <th scope="row">{{m.Id}}</th>
         <td>{{m.FullName}}</td>
-        <td>{{m.MaterialKindId}}</td>
+        <td>{{m.MaterialKindName}}</td>
         <td>{{m.PricePerKg}}</td>
         <td>{{m.DateUpdate | date:'MM/dd/yyyy HH:mm:ss'}}</td>
         <td>
           <p class="btn-group-vertical">
             <a class="btn btn-success btn-sm" routerLink="/Material/Update/{{m.Id}}">Редактировать</a>
-            <button type="button" class="btn btn-danger btn-sm" onclick="deleteLine('@item.Id')">Удалить</button>
+            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="setIdForButton(m.Id)">Удалить</button>
           </p>
         </td>
       </tr>
@@ -35,3 +35,20 @@
   <a routerLink="/Material/Post" class="btn btn-success">Добавить материал</a>
 </div>
 
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Удаление материала</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="modal_body" class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+        <button type="button" class="btnDelCard btn btn-danger" data-bs-dismiss="modal" (click)="delMaterial($event)">Да</button>
+      </div>
+    </div>
+  </div>
+</div>

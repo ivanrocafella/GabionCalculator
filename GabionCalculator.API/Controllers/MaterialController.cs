@@ -2,6 +2,7 @@
 using GabionCalculator.BAL.Models;
 using GabionCalculator.BAL.Models.Gabion;
 using GabionCalculator.BAL.Models.Material;
+using GabionCalculator.BAL.Models.User;
 using GabionCalculator.BAL.Services;
 using GabionCalculator.BAL.Services.Interfaces;
 using GabionCalculator.DAL.Entities;
@@ -74,6 +75,26 @@ namespace GabionCalculator.API.Controllers
             else
                 return StatusCode(500, ApiResult<MaterialResponseModel>.Failure(new List<string>() { "Объект не найден." }));
         }
+
+        // POST: api/Material/Remove/5
+        [HttpPost("Remove/{id}")]
+
+        public async Task<IActionResult> Remove([FromRoute] int id)
+        {
+            if (id > 0)
+            {
+                Material material = await _materialService.GetByIdAsync(id);
+                if (material != null)
+                {
+                    await _materialService.DeleteByObject(material);
+                    return Ok(ApiResult<MaterialResponseModel>.Success(_mapper.Map<MaterialResponseModel>(material)));
+                }
+                return StatusCode(500, ApiResult<Material>.Failure(new List<string>() { "Материал не найден" }));
+            }
+            return StatusCode(500, ApiResult<Material>.Failure(new List<string>() { "Id материала не передан в параметры" }));
+        }
+
+
 
         // GET: api/Material/Materials
         [HttpGet("Materials")]

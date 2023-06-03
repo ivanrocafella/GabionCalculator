@@ -29,6 +29,11 @@ namespace GabionCalculator.BAL.Models.Material
         [JsonPropertyName("MaterialKind")]
         [EnumDataType(typeof(MaterialKind))]
         public MaterialKind MaterialKind { get; set; }
+        [JsonPropertyName("MaterialKindName")]
+        public string MaterialKindName
+        {
+            get => Enum.GetName(typeof(MaterialKind), MaterialKindId);
+        }
         [JsonPropertyName("DateStart")]
         public DateTime DateStart { get; set; }
         [JsonPropertyName("DateUpdate")]

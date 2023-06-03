@@ -6,6 +6,7 @@ import { ApiResultCreateMaterialModel } from 'src/app/models/apiResultCreateMatr
 import { ApiResultUpdateMaterialModel } from 'src/app/models/apiResultUpdateMaterialModel.model';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { ApiResultResponseMaterialModel } from '../../models/apiResultResponseMaterialModel.model';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,10 @@ export class MaterialsService {
         console.error('Form has not been submitted', error);
       }
     );
+  }
+
+  public deleteMaterial = (id: number) => {
+    return this.http.post<ApiResultResponseMaterialModel>(this.baseApiURL + '/api/Material/Remove/' + id + '', null);
   }
 }
 

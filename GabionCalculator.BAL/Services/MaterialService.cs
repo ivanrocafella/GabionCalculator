@@ -5,6 +5,7 @@ using GabionCalculator.BAL.Services.Interfaces;
 using GabionCalculator.DAL.Data;
 using GabionCalculator.DAL.Entities;
 using GabionCalculator.DAL.Entities.Enums;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,12 @@ namespace GabionCalculator.BAL.Services
         public Task<BaseResponseModel> DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task DeleteByObject(Material material, CancellationToken cancellationToken = default)
+        {
+            _context.Materials.Remove(material);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Material>> GetAllAsync() => await _context.Materials.ToListAsync();

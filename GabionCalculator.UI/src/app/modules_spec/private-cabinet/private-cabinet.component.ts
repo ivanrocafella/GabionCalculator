@@ -35,11 +35,6 @@ export class PrivateCabinetComponent {
     })
   }
 
-  ngOnChanges(): void {
-    var btnDelCard = document.getElementById("btnDelCard");
-    console.log('sdasd') 
-  }
-
   setIdForButton(Id: string) {
     console.log(Id);
     var userLine = document.getElementById('user-' + Id + '')
@@ -47,7 +42,7 @@ export class PrivateCabinetComponent {
     var userLogin = userLine!.getElementsByTagName('td')[1].textContent;
     var btnDelCard = document.getElementsByClassName("btnDelCard")[0];
     var modal_body = document.getElementById("modal_body");
-    modal_body!.innerHTML = 'Вы действительно хотите удалить сотрудника ' + userLogin + '?';
+    modal_body!.innerHTML = 'Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ СЃРѕС‚СЂСѓРґРЅРёРєР° ' + userLogin + '?';
     btnDelCard.setAttribute('id', Id);
   }
 
