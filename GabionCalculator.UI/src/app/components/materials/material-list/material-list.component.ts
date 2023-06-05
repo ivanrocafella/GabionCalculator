@@ -22,7 +22,7 @@ export class MaterialListComponent {
           this.apiResult = apiResultResponseListModel; console.log(this.apiResult);
           this.hasNoMaterials = !(this.apiResult.result!.length > 0);
         },
-        error: (response) => { console.log(response); console.log("РѕС€РёР±РєР°!"); }
+        error: (response) => { console.log(response); console.log("Р С•РЎв‚¬Р С‘Р В±Р С”Р В°!"); }
       }
     )
   }

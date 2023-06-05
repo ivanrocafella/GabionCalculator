@@ -42,7 +42,7 @@ export class PrivateCabinetComponent {
     var userLogin = userLine!.getElementsByTagName('td')[1].textContent;
     var btnDelCard = document.getElementsByClassName("btnDelCard")[0];
     var modal_body = document.getElementById("modal_body");
-    modal_body!.innerHTML = 'Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ СЃРѕС‚СЂСѓРґРЅРёРєР° ' + userLogin + '?';
+    modal_body!.innerHTML = 'Р вЂ™РЎвЂ№ Р Т‘Р ВµР в„–РЎРѓРЎвЂљР Р†Р С‘РЎвЂљР ВµР В»РЎРЉР Р…Р С• РЎвЂ¦Р С•РЎвЂљР С‘РЎвЂљР Вµ РЎС“Р Т‘Р В°Р В»Р С‘РЎвЂљРЎРЉ РЎРѓР С•РЎвЂљРЎР‚РЎС“Р Т‘Р Р…Р С‘Р С”Р В° ' + userLogin + '?';
     btnDelCard.setAttribute('id', Id);
   }
 
