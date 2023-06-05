@@ -8,7 +8,6 @@ import { Subject, Observable } from 'rxjs';
 import { LoginUserModel } from 'src/app/models/loginUserModel.model';
 import { AuthUserModel } from 'src/app/models/authResponseModel.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { createParameter } from 'typescript';
 
 @Injectable({
   providedIn: 'root'

@@ -9,6 +9,7 @@ using GabionCalculator.BAL.Utils;
 using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using GabionCalculator.BAL.Models.User;
 
 namespace GabionCalculator.API.Controllers
 {
@@ -31,7 +32,7 @@ namespace GabionCalculator.API.Controllers
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> PostAsync([FromBody] CreateGabionModel createGabionModel)
-        {
+        {           
             User user = null;
             if (!string.IsNullOrEmpty(createGabionModel.UserName))
                 user = await _userService.GetByUserNameAsync(User.Identity.Name);
@@ -43,7 +44,7 @@ namespace GabionCalculator.API.Controllers
                 return Ok(ApiResult<GabionResponseModel>.Success(await _gabionService.PostAsync(gabion)));
             }            
             else
-                return StatusCode(500, ApiResult<GabionResponseModel>.Failure(ModelState.Values
+                return BadRequest(ApiResult<GabionResponseModel>.Failure(ModelState.Values
                             .SelectMany(v => v.Errors)
                             .Select(e => e.ErrorMessage)));
         }
@@ -52,17 +53,27 @@ namespace GabionCalculator.API.Controllers
         [HttpPost("GetTemporaryGabion")]
         public async Task<IActionResult> GetTemporaryGabionAsync([FromBody] CreateGabionModel createGabionModel)
         {
+            int CardWidthMax = 4030;
             User user = null;
             if (!string.IsNullOrEmpty(createGabionModel.UserName))
                 user = await _userService.GetByUserNameAsync(User.Identity.Name);
             if (ModelState.IsValid)
             {
-                return Ok(ApiResult<GabionResponseModel>.Success(_mapper.Map<GabionResponseModel>(_gabionService.GetTemporaryGabion(createGabionModel
-                    , await _materialService.GetByIdAsync(createGabionModel.MaterialId)
-                    , user))));
+                Gabion gabion = _gabionService.GetTemporaryGabion(createGabionModel
+                   , await _materialService.GetByIdAsync(createGabionModel.MaterialId)
+                   , user);
+                if (gabion.CardWidth <= CardWidthMax)
+                    return Ok(ApiResult<GabionResponseModel>.Success(_mapper.Map<GabionResponseModel>(gabion)));
+                else
+                {
+                    ModelState.AddModelError("IncorrectLengthOrWidth", $"Длина или ширина должны быть меньше на {gabion.CardWidth - CardWidthMax}");
+                    return BadRequest(ApiResult<GabionResponseModel>.Failure(ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(e => e.ErrorMessage)));
+                }
             }
             else
-                return StatusCode(500, ApiResult<GabionResponseModel>.Failure(ModelState.Values
+                return BadRequest(ApiResult<GabionResponseModel>.Failure(ModelState.Values
                             .SelectMany(v => v.Errors)
                             .Select(e => e.ErrorMessage)));
         }

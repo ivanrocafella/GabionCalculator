@@ -69,27 +69,27 @@ namespace GabionCalculator.DAL.Entities
         {
             get
             {
-                    CardWidthInterm = (BarBilletHoriz / 100) * 100;
-
-                    if (BarBilletHoriz - CardWidthInterm >= 25 && BarBilletHoriz - CardWidthInterm < 50)
-                        CardWidthInterm += 50;
-                    else if (BarBilletHoriz - CardWidthInterm >= 50 && BarBilletHoriz - CardWidthInterm < 100)
-                        CardWidthInterm += 100;
-
-                    if (CardWidthInterm % CellWidth == 0)
-                        return CardWidthInterm + 2 * OutletHoriz;
-                    else
+                CardWidthInterm = (BarBilletHoriz / 100) * 100;
+               
+                if (BarBilletHoriz - CardWidthInterm >= 25 && BarBilletHoriz - CardWidthInterm < 50)
+                    CardWidthInterm += 50;
+                else if (BarBilletHoriz - CardWidthInterm >= 50 && BarBilletHoriz - CardWidthInterm < 100)
+                    CardWidthInterm += 100;
+               
+                if (CardWidthInterm % CellWidth == 0)
+                    return CardWidthInterm + 2 * OutletHoriz;
+                else
+                {
+                    for (int i = 50; i < int.MaxValue; i += 50)
                     {
-                        for (int i = 50; i < int.MaxValue; i += 50)
+                        if ((CardWidthInterm + i) % CellWidth == 0)
                         {
-                            if ((CardWidthInterm + i) % CellWidth == 0)
-                            {
-                                CardWidthInterm += i;
-                                break;
-                            }
-                        };
-                        return CardWidthInterm + 2 * OutletHoriz;
-                    }
+                            CardWidthInterm += i;
+                            break;
+                        }
+                    };
+                    return CardWidthInterm + 2 * OutletHoriz;
+                }
             }
         }
         [JsonPropertyName("CardHeight")]

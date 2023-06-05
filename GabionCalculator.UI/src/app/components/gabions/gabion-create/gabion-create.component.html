@@ -9,59 +9,63 @@
         <div class="col-md-6">
           <div class="card-body">
             <h5 class="card-title">Форма для заполнения</h5>
-            <form id="CalculateForm" class="card-text" (ngSubmit)="onSubmit()">
+            <div *ngIf="showError" class="alert alert-danger" role="alert">
+              {{errorMessage}}
+            </div>
+            <form id="CalculateForm" [formGroup]="createGabionForm" (ngSubmit)="onSubmit()">
               <div class="row mb-3">
                 <label class="col-sm-4 col-form-label">Материал:</label>
                 <div class="col-sm-6">
-                  <select name="MaterialId" id="MaterialId" class="form-select" aria-label="Default select example" [(ngModel)]="formData.MaterialId" (ngModelChange)="setMaterialDiameter($event)">
+                  <select formControlName="MaterialId" id="MaterialId" class="form-select" aria-label="Default select example" [(ngModel)]="formData.MaterialId" (ngModelChange)="setMaterialDiameter($event)">
                     <option [value]="0" [id]="0">Ничего не выбрано</option>
                     <option *ngFor="let item of apiResultCreateGab.result?.Materials; let i = index" [value]="item.Id" [id]="item.Id">{{item.FullName}}</option>
                   </select>
                 </div>
               </div>
               <div class="row mb-3">
-                <label class="col-sm-4 col-form-label">Диаметр материала,мм:</label>
+                <label class="col-sm-4 col-form-label" for="MaterialDiameter">Диаметр материала,мм:</label>
                 <div class="col-sm-6">
-                  <input name="MaterialDiameter" type="number" class="form-control" id="MaterialDiameter" readonly [(ngModel)]="formData.MaterialDiameter">
+                  <input formControlName="MaterialDiameter" type="number" class="form-control" id="MaterialDiameter" readonly [(ngModel)]="formData.MaterialDiameter">
                 </div>
               </div>
               <div class="row mb-3">
                 <label class="col-sm-4 col-form-label">Длина,мм:</label>
                 <div class="col-sm-6">
-                  <input name="Length" type="number" class="form-control" id="Length" [(ngModel)]="formData.Length">
+                  <input formControlName="Length" type="number" class="form-control" id="Length" [(ngModel)]="formData.Length" (change)="checkSize($event)">
+                  <em *ngIf="validateControl('Length') && hasError('Length', 'required')">Поле обязательно для заполнения</em>
                 </div>
               </div>
               <div class="row mb-3">
                 <label class="col-sm-4 col-form-label">Ширина,мм:</label>
                 <div class="col-sm-6">
-                  <input name="Width" type="number" class="form-control" id="Width" [(ngModel)]="formData.Width">
+                  <input formControlName="Width" type="number" class="form-control" id="Width" [(ngModel)]="formData.Width" (change)="checkSize($event)">
                 </div>
               </div>
               <div class="row mb-3">
                 <label class="col-sm-4 col-form-label">Высота,мм:</label>
                 <div class="col-sm-6">
-                  <input name="Height" type="number" class="form-control" id="Height" [(ngModel)]="formData.Height">
+                  <input formControlName="Height" type="number" class="form-control" id="Height" [(ngModel)]="formData.Height">
                 </div>
               </div>
               <div class="row mb-3">
                 <label class="col-sm-4 col-form-label">Высота ячейки,мм:</label>
                 <div class="col-sm-6">
-                  <input name="CellHeight" type="number" class="form-control" id="CellHeight" [(ngModel)]="formData.CellHeight">
+                  <input formControlName="CellHeight" type="number" class="form-control" id="CellHeight" [(ngModel)]="formData.CellHeight">
                 </div>
               </div>
               <div class="row mb-3">
                 <label class="col-sm-4 col-form-label">Ширина ячейки,мм:</label>
                 <div class="col-sm-6">
-                  <input name="CellWidth" type="number" class="form-control" id="CellWidth" [(ngModel)]="formData.CellWidth">
+                  <input formControlName="CellWidth" type="number" class="form-control" id="CellWidth" [(ngModel)]="formData.CellWidth">
                 </div>
               </div>
               <div class="row mb-3">
                 <label class="col-sm-4 col-form-label">Кол-во,шт:</label>
                 <div class="col-sm-6">
-                  <input name="Quantity" type="number" class="form-control" id="Quantity" [(ngModel)]="formData.Quantity">
+                  <input formControlName="Quantity" type="number" class="form-control" id="Quantity" [(ngModel)]="formData.Quantity">
                 </div>
               </div>
-              <button type="submit" class="btn btn-dark mt-2">Расчитать</button>
+              <button type="submit" class="btn btn-dark mt-2" [disabled]="!createGabionForm.valid">Расчитать</button>
             </form>
           </div>
         </div>
