@@ -15,6 +15,9 @@ namespace GabionCalculator.BAL.MappingProfiles
         {
             CreateMap<CreateGabionModel, Gabion>();
             CreateMap<Gabion, GabionResponseModel>();
+            CreateMap<GabionResponseModel, Gabion>()
+                .ForMember(dest => dest.User, opt => opt.Ignore())
+                .ForMember(dest => dest.Material, opt => opt.Ignore()); ;
         }
     }
 }

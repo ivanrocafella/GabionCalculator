@@ -71,7 +71,11 @@ namespace GabionCalculator.BAL.Models.Gabion
         public DateTime DateUpdate { get; set; }
         [JsonPropertyName("Material")]
         public DAL.Entities.Material? Material { get; set; }
+        [JsonPropertyName("MaterialId")]
+        public int? MaterialId { get; set; }
         [JsonPropertyName("User")]
         public DAL.Entities.User? User { get; set; }
+        [JsonPropertyName("UserId")]
+        public string? UserId { get; set; }
     }
 }

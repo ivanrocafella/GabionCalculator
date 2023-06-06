@@ -37,16 +37,18 @@ namespace GabionCalculator.BAL.Services
             gabion.UserJson = userJson;
             gabion.MaterialJson = materialJson;
             gabion.Material = material;
+            gabion.User = user; 
+            gabion.UserId = user.Id;
             SVG.Get(gabion);  
             return gabion;
         }
 
-        public async Task<GabionResponseModel> PostAsync(Gabion gabion, CancellationToken cancellationToken = default)
+        public async Task<Gabion> PostAsync(GabionResponseModel gabionResponseModel, CancellationToken cancellationToken = default)
         {
+            Gabion gabion = _mapper.Map<Gabion>(gabionResponseModel);
             await _context.Gabions.AddAsync(gabion);
             await _context.SaveChangesAsync();
-            GabionResponseModel gabionResponseModel = _mapper.Map<GabionResponseModel>(gabion);
-            return gabionResponseModel;
+            return gabion;
         }
 
         public Task<BaseResponseModel> DeleteAsync(int id, CancellationToken cancellationToken = default)

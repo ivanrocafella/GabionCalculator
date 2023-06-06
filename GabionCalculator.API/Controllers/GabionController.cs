@@ -31,18 +31,10 @@ namespace GabionCalculator.API.Controllers
         // POST: api/Gabion
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> PostAsync([FromBody] CreateGabionModel createGabionModel)
+        public async Task<IActionResult> PostAsync([FromBody] GabionResponseModel gabionResponseModel)
         {           
-            User user = null;
-            if (!string.IsNullOrEmpty(createGabionModel.UserName))
-                user = await _userService.GetByUserNameAsync(User.Identity.Name);
             if (ModelState.IsValid)
-            {
-                Gabion gabion = _gabionService.GetTemporaryGabion(createGabionModel
-                    , await _materialService.GetByIdAsync(createGabionModel.MaterialId)
-                    , user);
-                return Ok(ApiResult<GabionResponseModel>.Success(await _gabionService.PostAsync(gabion)));
-            }            
+                return Ok(ApiResult<Gabion>.Success(await _gabionService.PostAsync(gabionResponseModel)));            
             else
                 return BadRequest(ApiResult<GabionResponseModel>.Failure(ModelState.Values
                             .SelectMany(v => v.Errors)
@@ -54,9 +46,7 @@ namespace GabionCalculator.API.Controllers
         public async Task<IActionResult> GetTemporaryGabionAsync([FromBody] CreateGabionModel createGabionModel)
         {
             int CardWidthMax = 4030;
-            User user = null;
-            if (!string.IsNullOrEmpty(createGabionModel.UserName))
-                user = await _userService.GetByUserNameAsync(User.Identity.Name);
+            User user = await _userService.GetByUserNameAsync(User.Identity.Name);
             if (ModelState.IsValid)
             {
                 Gabion gabion = _gabionService.GetTemporaryGabion(createGabionModel

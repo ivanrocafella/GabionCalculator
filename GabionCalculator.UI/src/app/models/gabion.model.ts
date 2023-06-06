@@ -2,6 +2,7 @@ import { Material } from 'src/app/models/material.model';
 import { User } from 'src/app/models/user.model';
 
 export interface Gabion {
+  Id: number;                                                             
   Height: number;
   Length: number;
   Width: number;

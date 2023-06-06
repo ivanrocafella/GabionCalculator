@@ -60,10 +60,10 @@ namespace GabionCalculator.DAL.Entities
         }
         [NotMapped]
         [JsonPropertyName("CardWidthInterm")]
-        public int CardWidthInterm { get; set; }
+        private int CardWidthInterm { get; set; }
         [NotMapped]
         [JsonPropertyName("CardHeightInterm")]
-        public int CardHeightInterm { get; set; }
+        private int CardHeightInterm { get; set; }
         [JsonPropertyName("CardWidth")]
         public int CardWidth // Ширина карты 
         {
@@ -156,8 +156,8 @@ namespace GabionCalculator.DAL.Entities
         public int? MaterialId { get; set; }
         [JsonPropertyName("Material")]
         public Material? Material { get; set; }
-        [JsonPropertyName("UserlId")]
-        public string? UserlId { get; set; }
+        [JsonPropertyName("UserId")]
+        public string? UserId { get; set; }
         [JsonPropertyName("User")]
         public User? User { get; set; }
     }

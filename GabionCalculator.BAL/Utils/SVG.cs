@@ -18,8 +18,8 @@ namespace GabionCalculator.BAL.Utils
             int outPartHorSize = 40; // length output part of horizontal size
             int outPartVertSize = 100; // length output part of vertical size
             int outPartVertSizeHalf = 50; // length output part of vertical height size
-            int width = gabion.Length + 3 * X_InitCoord; // width of svg
-            int height = gabion.Width + gabion.CardHeight + 3 * Y_InitCoord; // height of svg
+            int width = 900; // width of svg
+            int height = 1100; // height of svg
 
             var svgDoc = new GcSvgDocument();
             svgDoc.RootSvg.Width = new SvgLength(width, SvgLengthUnits.Pixels);

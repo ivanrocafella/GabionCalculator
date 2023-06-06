@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace GabionCalculator.BAL.Models.Gabion
         [ValidateNever]
         public int CellWidth { get; set; }
         [JsonPropertyName("MaterialDiameter")]
-        [ValidateNever]
+        [Range(0.1, double.PositiveInfinity, ErrorMessage= "Значение диаметра материала быть больше 0")]
         public float MaterialDiameter { get; set; }
         [JsonPropertyName("Quantity")]
         [ValidateNever]

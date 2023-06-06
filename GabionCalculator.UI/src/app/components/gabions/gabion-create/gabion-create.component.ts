@@ -4,6 +4,7 @@ import { ApiResultResponseGabionModel } from 'src/app/models/apiResultResponseGa
 import { GabionsService } from 'src/app/components/services/gabions.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-gabion-create',
@@ -25,20 +26,21 @@ export class GabionCreateComponent {
   createGabionForm!: FormGroup;
   errorMessage: string = '';
   showError!: boolean;
+  saveBtn?: HTMLButtonElement;
 
-  constructor(private gabionService: GabionsService) {
+  constructor(private gabionService: GabionsService, private snackBar: MatSnackBar) {
   };
 
   ngOnInit(): void {
     this.createGabionForm = new FormGroup({
-      MaterialId: new FormControl("", [Validators.required]),
-      MaterialDiameter: new FormControl("", [Validators.required]),
-      Length: new FormControl("", [Validators.required]),
-      Width: new FormControl("", [Validators.required]),
-      Height: new FormControl("", [Validators.required]),
-      CellHeight: new FormControl("", [Validators.required]),
-      CellWidth: new FormControl("", [Validators.required]),
-      Quantity: new FormControl("", [Validators.required])
+      MaterialId: new FormControl(""),
+      MaterialDiameter: new FormControl(""),
+      Length: new FormControl("", [Validators.required, Validators.min(250)]),
+      Width: new FormControl("", [Validators.required, Validators.min(250)]),
+      Height: new FormControl("", [Validators.required, Validators.min(200), Validators.max(2000)]),
+      CellHeight: new FormControl("", [Validators.required, Validators.min(50), Validators.max(200)]),
+      CellWidth: new FormControl("", [Validators.required, Validators.min(50), Validators.max(200)]),
+      Quantity: new FormControl("", [Validators.required, Validators.min(1)])
     });
     this.formData.MaterialId = 0;
     this.formData.MaterialDiameter = 0;
@@ -61,9 +63,13 @@ export class GabionCreateComponent {
   };
 
   onSubmit(): void {
+    if (this.saveBtn !== undefined) {
+      this.saveBtn.disabled = false;
+    }
     this.gabionService.submitForm(this.formData).subscribe(
       {
-        next: (ApiResultResponseGabionModel) => {           
+        next: (ApiResultResponseGabionModel) => {
+           this.showError = false;
            this.apiResultTempGab = ApiResultResponseGabionModel;
            console.log('Form submitted', this.apiResultTempGab);
            this.divDescriptAnchor.style.display = "flex";
@@ -76,6 +82,27 @@ export class GabionCreateComponent {
             this.errorMessage = err.message;
             this.showError = true;
             console.log(err.message)
+        }
+      }
+    )
+  };
+
+  post() {
+    this.gabionService.post(this.apiResultTempGab.result!).subscribe(
+      {
+        next: (ApiResultGabionModel) => {
+          console.log(ApiResultGabionModel);
+          this.saveBtn = document.getElementById("saveBtn") as HTMLButtonElement;
+          this.saveBtn.disabled = true;
+          this.snackBar.open("Габион успешно сохранён!", "Закрыть", {
+            duration: 5000, // Длительность отображения в миллисекундах
+          });
+        },
+        error: (err: HttpErrorResponse) => {
+          console.log(err.message)
+          this.snackBar.open('Упс! Произошла ошибка: ' + err.message +'', "Закрыть", {
+            duration: 5000, // Длительность отображения в миллисекундах
+          });
         }
       }
     )
@@ -95,11 +122,15 @@ export class GabionCreateComponent {
   };
 
   public validateControl = (controlName: string) => {
-    return this.createGabionForm.get(controlName)!.invalid && this.createGabionForm.get(controlName)!.touched
+    return this.createGabionForm.get(controlName)!.invalid && this.createGabionForm.get(controlName)!.touched;
   }
 
-  public hasError = (controlName: string, errorName: string) => {
-    return this.createGabionForm.get(controlName)!.hasError(errorName)
+  public validateControlForDissable = (controlName: string) => {
+    return this.createGabionForm.get(controlName)!.invalid && (this.createGabionForm.get(controlName)!.touched || this.createGabionForm.get(controlName)!.dirty)
+  }
+
+  public hasError = (controlName: string, errorName: string ) => {
+    return this.createGabionForm.get(controlName)!.hasError(errorName)  
   }
 
   public checkSize = (event: Event) => {
