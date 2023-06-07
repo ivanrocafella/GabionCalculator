@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialEditComponent } from './components/materials/material-edit/material-edit.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { GabionListComponent } from './components/gabions/gabion-list/gabion-list.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -24,12 +25,12 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [
-    AppComponent, MaterialListComponent, MaterialCreateComponent, GabionCreateComponent, PrivacyComponent, ForbiddenComponent, MaterialEditComponent
+    AppComponent, MaterialListComponent, MaterialCreateComponent, GabionCreateComponent, PrivacyComponent, ForbiddenComponent, MaterialEditComponent, GabionListComponent
   ],
   imports: [
     BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, MatSnackBarModule,
-    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }), RouterModule.forRoot([
-      { path: 'User', loadChildren: () => import('src/app/modules_spec/authentification/authentification.module').then(m => m.AuthentificationModule) }      
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
+    RouterModule.forRoot([{ path: 'User', loadChildren: () => import('src/app/modules_spec/authentification/authentification.module').then(m => m.AuthentificationModule) }      
     ]),
     JwtModule.forRoot({
       config: {

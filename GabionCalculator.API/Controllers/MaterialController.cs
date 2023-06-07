@@ -39,7 +39,7 @@ namespace GabionCalculator.API.Controllers
 
         // GET: api/Material/Post
         [HttpGet("Post")]
-     //   [Authorize]
+        [Authorize]
         public IActionResult Post() => Ok(ApiResult<CreateMaterialModel>.Success(_materialService.GetCreateMaterialModel()));
 
         // POST: api/Material/Update/5
@@ -57,7 +57,10 @@ namespace GabionCalculator.API.Controllers
         public async Task<IActionResult> UpdateAsync(int id, [FromBody]UpdateMaterialModel updateMaterialModel)
         {
             if (ModelState.IsValid)
-                return Ok(ApiResult<MaterialResponseModel>.Success(await _materialService.UpdateAsync(id, updateMaterialModel)));
+            {
+                Material material = await _materialService.GetByIdAsync(id);
+                return Ok(ApiResult<MaterialResponseModel>.Success(await _materialService.UpdateAsync(material, updateMaterialModel)));
+            }               
             else
                 return StatusCode(500, ApiResult<MaterialResponseModel>.Failure(ModelState.Values
                             .SelectMany(v => v.Errors)

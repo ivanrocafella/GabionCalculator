@@ -56,8 +56,16 @@ namespace GabionCalculator.BAL.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Gabion>> GetAllAsync() => await _context.Gabions.ToListAsync();
-            
+        public async Task<IEnumerable<Gabion>> GetAllAsync()
+        {
+            List<Gabion> Gabions = await _context.Gabions.ToListAsync();
+            for (int i = 0; i < Gabions.Count; i++)
+            {
+                Gabions[i].User = FileAction<User>.Deserialize(Gabions[i].UserJson);
+                Gabions[i].Material = FileAction<Material>.Deserialize(Gabions[i].MaterialJson);
+            }
+            return Gabions;
+        }
 
         public Task<IEnumerable<GabionResponseModel>> GetAllByMaterialIdAsync(int id, CancellationToken cancellationToken = default)
         {

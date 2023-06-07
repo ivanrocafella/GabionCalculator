@@ -77,10 +77,12 @@ namespace GabionCalculator.BAL.Services
 
         public async Task<Material> GetByIdAsync(int id, CancellationToken cancellationToken = default) => await _context.Materials.FindAsync(id, cancellationToken);
 
-        public async Task<MaterialResponseModel> UpdateAsync(int id, UpdateMaterialModel updateMaterialModel, CancellationToken cancellationToken = default)
+        public async Task<MaterialResponseModel> UpdateAsync(Material material, UpdateMaterialModel updateMaterialModel, CancellationToken cancellationToken = default)
         {
-            Material material = _mapper.Map<Material>(updateMaterialModel);
-            material.Id = id;
+            material.Name = updateMaterialModel.Name;
+            material.Size = updateMaterialModel.Size;
+            material.PricePerKg = updateMaterialModel.PricePerKg;
+            material.MaterialKindId = updateMaterialModel.MaterialKindId;
             _context.Materials.Update(material);
             await _context.SaveChangesAsync();
             MaterialResponseModel materialResponseModel = _mapper.Map<MaterialResponseModel>(material);

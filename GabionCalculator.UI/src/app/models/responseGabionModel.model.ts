@@ -32,6 +32,8 @@ export interface ResponseGabionModel {
   BatchPrice: number;
   DateStart: string;
   DateUpdate: string;
+  MaterialId?: number;
   Material?: Material;
+  UserId?: string;
   User?: User;
 }

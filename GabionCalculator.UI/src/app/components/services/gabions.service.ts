@@ -5,6 +5,7 @@ import { ApiResultCreateGabionModel } from 'src/app/models/apiResultCreateGabion
 import { ApiResultResponseGabionModel } from 'src/app/models/apiResultResponseGabionModel.model';
 import { ApiResultGabionModel } from 'src/app/models/apiResultGabionModel.model';
 import { ResponseGabionModel } from 'src/app/models/responseGabionModel.model';
+import { ApiResultResponseListGabion } from 'src/app/models/apiResultResponseListGabionModel.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,4 +17,5 @@ export class GabionsService {
   getCreateGabionModel(): Observable<ApiResultCreateGabionModel> { return this.http.get<ApiResultCreateGabionModel>(this.baseApiURL + '/api/Gabion') };
   submitForm(formData: any): Observable<ApiResultResponseGabionModel> { return this.http.post<ApiResultResponseGabionModel>(this.baseApiURL + '/api/Gabion/GetTemporaryGabion', formData) };
   post(body: ResponseGabionModel): Observable<ApiResultGabionModel> { return this.http.post<ApiResultGabionModel>(this.baseApiURL + '/api/Gabion', body) };
+  getAllGabions(): Observable<ApiResultResponseListGabion> { return this.http.get<ApiResultResponseListGabion>(this.baseApiURL + '/api/Gabion/Gabions') };
 }

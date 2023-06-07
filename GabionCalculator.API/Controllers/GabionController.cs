@@ -46,7 +46,10 @@ namespace GabionCalculator.API.Controllers
         public async Task<IActionResult> GetTemporaryGabionAsync([FromBody] CreateGabionModel createGabionModel)
         {
             int CardWidthMax = 4030;
-            User user = await _userService.GetByUserNameAsync(User.Identity.Name);
+            User user = new();
+            if (User.Identity.IsAuthenticated)
+              user = await _userService.GetByUserNameAsync(User.Identity.Name);
+                
             if (ModelState.IsValid)
             {
                 Gabion gabion = _gabionService.GetTemporaryGabion(createGabionModel

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ApiResultCreateGabionModel } from 'src/app/models/apiResultCreateGabionModel.model';
 import { ApiResultResponseGabionModel } from 'src/app/models/apiResultResponseGabionModel.model';
 import { GabionsService } from 'src/app/components/services/gabions.service';
+import { UsersService } from 'src/app/components/services/users.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -27,11 +28,19 @@ export class GabionCreateComponent {
   errorMessage: string = '';
   showError!: boolean;
   saveBtn?: HTMLButtonElement;
+  isUserAuthenticated!: boolean;
 
-  constructor(private gabionService: GabionsService, private snackBar: MatSnackBar) {
+  constructor(private gabionService: GabionsService, private snackBar: MatSnackBar, private userService: UsersService) {
+    this.userService.authChanged
+      .subscribe(res => {
+        this.isUserAuthenticated = res;
+      })
   };
 
   ngOnInit(): void {
+    if (this.userService.isUserAuthenticated())
+      this.userService.sendAuthStateChangeNotification(true);
+
     this.createGabionForm = new FormGroup({
       MaterialId: new FormControl(""),
       MaterialDiameter: new FormControl(""),
@@ -73,8 +82,12 @@ export class GabionCreateComponent {
            this.apiResultTempGab = ApiResultResponseGabionModel;
            console.log('Form submitted', this.apiResultTempGab);
            this.divDescriptAnchor.style.display = "flex";
-           if (this.apiResultTempGab.result?.Svg != null) {
-             this.divSvg.innerHTML = this.apiResultTempGab.result.Svg;
+          if (this.apiResultTempGab.result?.Svg != null) {
+            var svg = this.apiResultTempGab.result!.Svg;            
+            this.divSvg.innerHTML = svg;
+            var svgHtmlElem = this.divSvg.querySelectorAll('svg')[0];
+            console.log(svgHtmlElem);
+            svgHtmlElem.setAttribute('style','height: auto; width: 100%;');
            }          
         },
         error: (err: HttpErrorResponse) => {

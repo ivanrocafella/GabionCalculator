@@ -18,8 +18,8 @@ namespace GabionCalculator.BAL.Utils
             int outPartHorSize = 40; // length output part of horizontal size
             int outPartVertSize = 100; // length output part of vertical size
             int outPartVertSizeHalf = 50; // length output part of vertical height size
-            int width = 900; // width of svg
-            int height = 1100; // height of svg
+            int width = 1000; // width of svg
+            int height = 1000; // height of svg
 
             var svgDoc = new GcSvgDocument();
             svgDoc.RootSvg.Width = new SvgLength(width, SvgLengthUnits.Pixels);
@@ -542,13 +542,13 @@ namespace GabionCalculator.BAL.Utils
             {
                 MinX = 0,
                 MinY = 0,
-                Width = width,
-                Height = height
+                Width = width * 1.5f,
+                Height = height * 3.5f
             };
-
+                
             svgDoc.RootSvg.ViewBox = view;
-            svgDoc.RootSvg.Width = new SvgLength(100, SvgLengthUnits.Percentage);
-            svgDoc.RootSvg.Height = new SvgLength(100, SvgLengthUnits.Percentage);
+         //   svgDoc.RootSvg.Width = new SvgLength(100, SvgLengthUnits.Percentage);
+         //   svgDoc.RootSvg.Height = new SvgLength(100, SvgLengthUnits.Percentage);
 
             StringBuilder stringBuilder = new();
             svgDoc.Save(stringBuilder);
@@ -590,7 +590,7 @@ namespace GabionCalculator.BAL.Utils
                 Y = coordsYSizeThreadLength,
                 Color = new SvgColor(Color.Black),
                 FontStyle = SvgFontStyle.Normal,
-                FontSize = new SvgLength(30, units),
+                FontSize = new SvgLength(45, units),
                 FontWeight = SvgFontWeight.Bold,
                 Transform = transforms,
                 TextOrientation = SvgTextOrientation.Mixed

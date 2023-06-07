@@ -1,3 +1,8 @@
+.container {
+  margin-left: 1%;
+  max-width: 1600px;
+}
+
 svg {
   width: 100%;
   height: auto;
