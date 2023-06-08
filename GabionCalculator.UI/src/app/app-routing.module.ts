@@ -6,6 +6,7 @@ import { MaterialEditComponent } from './components/materials/material-edit/mate
 import { PrivacyComponent } from './components/materials/privacy/privacy.component';
 import { GabionCreateComponent } from './components/gabions/gabion-create/gabion-create.component';
 import { GabionListComponent } from './components/gabions/gabion-list/gabion-list.component';
+import { GabionDetailsComponent } from './components/gabions/gabion-details/gabion-details.component';
 import { ForbiddenComponent } from 'src/app/components/forbidden/forbidden.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { AdminGuard } from './shared/guards/admin.guard';
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'Forbidden', component: ForbiddenComponent },
   { path: 'Material/Post', component: MaterialCreateComponent },
   { path: 'Material/Update/:id', component: MaterialEditComponent },
+  { path: 'Gabion/Details/:id', component: GabionDetailsComponent },
   { path: '', component: GabionCreateComponent }
 ];
 

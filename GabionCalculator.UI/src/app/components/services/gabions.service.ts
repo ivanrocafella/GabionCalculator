@@ -18,4 +18,5 @@ export class GabionsService {
   submitForm(formData: any): Observable<ApiResultResponseGabionModel> { return this.http.post<ApiResultResponseGabionModel>(this.baseApiURL + '/api/Gabion/GetTemporaryGabion', formData) };
   post(body: ResponseGabionModel): Observable<ApiResultGabionModel> { return this.http.post<ApiResultGabionModel>(this.baseApiURL + '/api/Gabion', body) };
   getAllGabions(): Observable<ApiResultResponseListGabion> { return this.http.get<ApiResultResponseListGabion>(this.baseApiURL + '/api/Gabion/Gabions') };
+  getGabionResponseModel(id: number): Observable<ApiResultResponseGabionModel> { return this.http.get<ApiResultResponseGabionModel>(this.baseApiURL + '/api/Gabion/Details/' + id + '') };
 }

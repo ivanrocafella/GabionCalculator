@@ -17,11 +17,8 @@ export class MaterialsService {
   constructor(private http: HttpClient, private router: Router) { };
 
   getAllMaterials(): Observable<ApiResultResponseListMaterial> { return this.http.get<ApiResultResponseListMaterial>(this.baseApiURL + '/api/Material/Materials') };
-
   getCreateMaterialModel(): Observable<ApiResultCreateMaterialModel> { return this.http.get<ApiResultCreateMaterialModel>(this.baseApiURL + '/api/Material/Post') };
-
   getUpdateMaterialModel(id: number): Observable<ApiResultUpdateMaterialModel> { return this.http.get<ApiResultUpdateMaterialModel>(this.baseApiURL + '/api/Material/Update/' + id +'') };
-
   submitFormPost(formData: any) {
     this.http.post(this.baseApiURL + '/api/Material/Post', formData).subscribe(
       (response) => {
@@ -33,7 +30,6 @@ export class MaterialsService {
       }
     );
   }
-
   submitFormPut(id: number, formData: any) {
     this.http.put(this.baseApiURL + '/api/Material/Update/' + id + '', formData).subscribe(
       (response) => {
@@ -45,7 +41,6 @@ export class MaterialsService {
       }
     );
   }
-
   public deleteMaterial = (id: number) => {
     return this.http.post<ApiResultResponseMaterialModel>(this.baseApiURL + '/api/Material/Remove/' + id + '', null);
   }

@@ -84,7 +84,7 @@ namespace GabionCalculator.API.Controllers
         }
 
         // GET: api/Gabion/GetById/5
-        [HttpGet("GetById/{id:int}")]
+        [HttpGet("Details/{id:int}")]
         [Authorize]
         public async Task<IActionResult> GetById(int id)
         {

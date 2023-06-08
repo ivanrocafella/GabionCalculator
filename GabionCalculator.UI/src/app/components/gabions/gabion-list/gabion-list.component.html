@@ -5,15 +5,16 @@
 <div class="container my-5">
   <h1 class="mb-3">Список габионов</h1>
   <div class="row row-cols-1 g-4">
-    <div class="card mb-3" *ngFor="let g of apiResultListGabion.result" id="card-{{g.Id}}">
+    <div class="card mb-3" *ngFor="let g of apiResultListGabion.result; let i = index" routerLink="/Gabion/Details/{{g.Id}}" style="cursor: pointer;" id="card-{{g.Id}}">
       <div class="row g-0">
-        <div class="col-md-6" id="svg-{{g.Id}}">        
+        <div class="col-md-2" id="svg-{{g.Id}}" [innerHTML]="svgSafeHtml[i]">         
         </div>
-        <div class="col-md-6">
+        <div class="col-md-10 ">
           <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            <h2 class="card-title"># {{g.Id}}</h2>
+            <h4 class="card-title">Наименование: Габион Ø{{g.Material?.Size}} {{g.Length}}x{{g.Width}}x{{g.Height}}, ячейка {{g.CellHeight}}x{{g.CellWidth}}</h4>
+            <p class="card-text">Исполнитель: {{g.User?.UserName}}</p>
+            <p class="card-text"><small class="text-muted">Дата создания: {{g.DateStart | date:'dd/MM/yyyy HH:mm:ss'}}</small></p>
           </div>
         </div>
       </div>

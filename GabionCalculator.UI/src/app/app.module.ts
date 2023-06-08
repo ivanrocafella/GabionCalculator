@@ -18,6 +18,7 @@ import { MaterialEditComponent } from './components/materials/material-edit/mate
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { GabionListComponent } from './components/gabions/gabion-list/gabion-list.component';
+import { GabionDetailsComponent } from './components/gabions/gabion-details/gabion-details.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -25,7 +26,7 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [
-    AppComponent, MaterialListComponent, MaterialCreateComponent, GabionCreateComponent, PrivacyComponent, ForbiddenComponent, MaterialEditComponent, GabionListComponent
+    AppComponent, MaterialListComponent, MaterialCreateComponent, GabionCreateComponent, PrivacyComponent, ForbiddenComponent, MaterialEditComponent, GabionListComponent, GabionDetailsComponent
   ],
   imports: [
     BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, MatSnackBarModule,
