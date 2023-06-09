@@ -19,6 +19,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { GabionListComponent } from './components/gabions/gabion-list/gabion-list.component';
 import { GabionDetailsComponent } from './components/gabions/gabion-details/gabion-details.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -40,7 +43,7 @@ export function tokenGetter() {
         disallowedRoutes: []
       }
     }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule, MatPaginatorModule, MatTableModule
   ],
   providers: [AuthGuard,
     {

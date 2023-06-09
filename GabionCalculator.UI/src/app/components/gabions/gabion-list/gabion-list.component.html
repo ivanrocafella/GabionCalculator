@@ -5,9 +5,9 @@
 <div class="container my-5">
   <h1 class="mb-3">Список габионов</h1>
   <div class="row row-cols-1 g-4">
-    <div class="card mb-3" *ngFor="let g of apiResultListGabion.result; let i = index" routerLink="/Gabion/Details/{{g.Id}}" style="cursor: pointer;" id="card-{{g.Id}}">
+    <div class="card mb-3" *ngFor="let g of filteredGabions; let i = index" routerLink="/Gabion/Details/{{g.Id}}" style="cursor: pointer;" id="card-{{g.Id}}">
       <div class="row g-0">
-        <div class="col-md-2" id="svg-{{g.Id}}" [innerHTML]="svgSafeHtml[i]">         
+        <div class="col-md-2" id="svg-{{g.Id}}" [innerHTML]="filtSvgSafeHtml[i]">         
         </div>
         <div class="col-md-10 ">
           <div class="card-body">
@@ -20,4 +20,11 @@
       </div>
     </div>
   </div>
+  <mat-paginator [length]="totalItems"
+                 [pageSize]="itemsPerPage"
+                 [pageIndex]="currentPage"
+                 [pageSizeOptions]="[1,2]"
+                 (page)="onPageChange($event)"
+                 showFirstLastButtons>
+  </mat-paginator>
 </div>
