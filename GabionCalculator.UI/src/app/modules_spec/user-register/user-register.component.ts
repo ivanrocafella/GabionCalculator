@@ -51,7 +51,7 @@ export class UserRegisterComponent implements OnInit{
     console.log(user);
     this.usersService.registerUser(user)
       .subscribe({
-        next: (response) => { this.router.navigate(["/User/Login"]), console.log("Successful registration", response) },
+        next: (response) => { this.router.navigate(["/User/PrivateCabinet"]), console.log("Successful registration", response) },
         error: (err: HttpErrorResponse) => {
           this.errorMessage = err.message;
           this.showError = true;

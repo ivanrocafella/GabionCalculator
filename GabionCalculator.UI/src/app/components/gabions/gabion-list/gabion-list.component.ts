@@ -18,7 +18,6 @@ export class GabionListComponent implements OnInit {
   errorMessage!: string;
   showError!: boolean;
   svgSafeHtml: SafeHtml[] = [];
-  filtSvgSafeHtml: SafeHtml[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   pageEvent?: PageEvent;
@@ -26,36 +25,29 @@ export class GabionListComponent implements OnInit {
   // Переменная для хранения текущей страницы
   currentPage = 0;
   // Переменная для хранения количества элементов на странице
-  itemsPerPage = 1;
+  itemsPerPage = 5;
   // Переменная для хранения общего количества элементов
   totalItems = 0;
   // Пример массива данных
   listGabions: ResponseGabionModel[] = [];
-  filteredGabions: ResponseGabionModel[] = []; // Отфильтрованный массив данных на текущей странице
-
 
   constructor(private gabions: GabionsService, private sanitizer: DomSanitizer) { 
   }
 
 
   ngOnInit(): void {
-    this.getSrverData();
+    this.getSrverData(this.itemsPerPage, this.currentPage);
   }
 
-  public getSrverData() {
-    this.gabions.getAllGabions().subscribe(
+  public getSrverData(itemsPerPage: number, currentPage: number) {
+    this.gabions.getGabions(itemsPerPage, currentPage).subscribe(
       {
         next: (ApiResultListGabion) => {
           this.apiResultListGabion = ApiResultListGabion; console.log(this.apiResultListGabion);
 
           this.listGabions = ApiResultListGabion.result!;
-          console.log(this.listGabions)
+          this.totalItems = ApiResultListGabion.additNum;
 
-          if (this.currentPage == 0) {
-            this.filteredGabions = this.listGabions.slice(0, this.itemsPerPage);
-          } // added filteredGabions during execution of first page 
-
-          this.totalItems = this.listGabions.length;
           this.paginator.pageSize = this.itemsPerPage;
           this.paginator.pageIndex = this.currentPage;
 
@@ -72,9 +64,6 @@ export class GabionListComponent implements OnInit {
               sanitizedHtml = this.sanitizer.bypassSecurityTrustHtml(svgStr);
               this.svgSafeHtml.push(sanitizedHtml);
             })
-          if (this.currentPage == 0) {
-            this.filtSvgSafeHtml = this.svgSafeHtml.slice(0, this.itemsPerPage);
-          } // added filtSvgSafeHtml during execution of first page 
         },
         error: (err: HttpErrorResponse) => {
           console.log("error");
@@ -87,13 +76,7 @@ export class GabionListComponent implements OnInit {
   onPageChange(event: PageEvent) {
     this.currentPage = event.pageIndex;
     this.itemsPerPage = event.pageSize;
-    console.log(event.pageIndex)
-    // Действия, выполняемые при изменении страницы
-    const startIndex = event.pageIndex * event.pageSize;
-    const endIndex = startIndex + event.pageSize;
-    this.filteredGabions = this.listGabions.slice(startIndex, endIndex);
-    this.filtSvgSafeHtml = this.svgSafeHtml.slice(startIndex, endIndex);
-    console.log(this.filtSvgSafeHtml)
+    this.getSrverData(this.itemsPerPage, this.currentPage);
   } 
 }
 

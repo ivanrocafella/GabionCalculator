@@ -4,4 +4,5 @@ export interface ApiResultResponseListGabion {
   succeeded: boolean;
   result: ResponseGabionModel[];
   errors: string[];
+  additNum: number;
 }

@@ -32,9 +32,9 @@ namespace GabionCalculator.BAL.Services.JwtFeatures
         public async Task<List<Claim>> GetClaims(User user)
         {
             var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, user.Email)
-        };
+             {
+                 new Claim(ClaimTypes.Name, user.UserName)
+             };
             var roles = await _userManager.GetRolesAsync(user);
             foreach (var role in roles)
             {
@@ -44,8 +44,6 @@ namespace GabionCalculator.BAL.Services.JwtFeatures
         }
         public JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
         {
-            var minutes = Convert.ToDouble(_jwtSettings["expiryInMinutes"]);
-            var dateExpires = DateTime.Now.AddMinutes(Convert.ToDouble(_jwtSettings["expiryInMinutes"]));
             var tokenOptions = new JwtSecurityToken(
                 issuer: _jwtSettings["validIssuer"],
                 audience: _jwtSettings["validAudience"],

@@ -18,6 +18,9 @@ namespace GabionCalculator.BAL.Services.Interfaces
         Task<Gabion> PostAsync(GabionResponseModel gabionResponseModel, CancellationToken cancellationToken = default);
         Task<BaseResponseModel> DeleteAsync(int id, CancellationToken cancellationToken = default);
         Task<IEnumerable<GabionResponseModel>> GetAllByMaterialIdAsync(int id, CancellationToken cancellationToken = default);
+        IQueryable<Gabion> Pagination(IQueryable<Gabion> queryGabions, int itemsPerPage, int currentPage, CancellationToken cancellationToken = default);
+        IQueryable<Gabion> GetAllinQeryable();
+        Task<IEnumerable<Gabion>> QueryGabionsToList(IQueryable<Gabion> queryGabions, CancellationToken cancellationToken = default);
     }
 }
         

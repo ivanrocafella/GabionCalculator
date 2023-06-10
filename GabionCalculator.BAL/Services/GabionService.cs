@@ -73,5 +73,24 @@ namespace GabionCalculator.BAL.Services
         }
 
         public async Task<Gabion> GetByIdAsync(int id, CancellationToken cancellationToken = default) => await _context.Gabions.FindAsync(id, cancellationToken);
+
+        public IQueryable<Gabion> GetAllinQeryable() => _context.Gabions;
+
+        public IQueryable<Gabion> Pagination(IQueryable<Gabion> queryGabions
+            , int itemsPerPage
+            , int currentPage
+            , CancellationToken cancellationToken = default) => queryGabions.Skip(currentPage * itemsPerPage).Take(itemsPerPage);
+
+        public async Task<IEnumerable<Gabion>> QueryGabionsToList(IQueryable<Gabion> queryGabions
+            , CancellationToken cancellationToken = default)
+        {
+            List<Gabion> Gabions = await queryGabions.ToListAsync(cancellationToken);
+            foreach (var item in Gabions)
+            {
+                item.User = FileAction<User>.Deserialize(item.UserJson);
+                item.Material = FileAction<Material>.Deserialize(item.MaterialJson);
+            }
+            return Gabions;
+        } 
     }
 }

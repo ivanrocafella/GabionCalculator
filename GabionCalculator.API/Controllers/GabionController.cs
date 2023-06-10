@@ -73,12 +73,19 @@ namespace GabionCalculator.API.Controllers
 
         // POST: api/Gabion/Gabions
         [HttpGet("Gabions")]
-        [Authorize]
-        public async Task<IActionResult> GetAllAsync()
+       // [Authorize]
+        public async Task<IActionResult> GetAllAsync([FromQuery]int itemsPerPage, [FromQuery]int currentPage)
         {
-            var gabions = await _gabionService.GetAllAsync();
+            IQueryable<Gabion> queryGabions = _gabionService.GetAllinQeryable();
+            int totalItems = queryGabions.Count();
+            queryGabions = _gabionService.Pagination(queryGabions, itemsPerPage, currentPage);
+            IEnumerable<Gabion> gabions = await _gabionService.QueryGabionsToList(queryGabions);
             if (gabions.Any())
-                return Ok(ApiResult<IEnumerable<GabionResponseModel>>.Success(_mapper.Map<IEnumerable<GabionResponseModel>>(gabions)));
+            {
+                ApiResult<IEnumerable<GabionResponseModel>> apiResult = ApiResult<IEnumerable<GabionResponseModel>>
+                    .SuccessWithAdditNum(_mapper.Map<IEnumerable<GabionResponseModel>>(gabions), totalItems);
+                return Ok(apiResult);
+            }                
             else
                 return StatusCode(500, ApiResult<IEnumerable<GabionResponseModel>>.Failure(new List<string>() { "Объекты ещё не добавлены." }));
         }

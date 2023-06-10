@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ApiResultCreateGabionModel } from 'src/app/models/apiResultCreateGabionModel.model';
 import { ApiResultResponseGabionModel } from 'src/app/models/apiResultResponseGabionModel.model';
@@ -17,6 +17,10 @@ export class GabionsService {
   getCreateGabionModel(): Observable<ApiResultCreateGabionModel> { return this.http.get<ApiResultCreateGabionModel>(this.baseApiURL + '/api/Gabion') };
   submitForm(formData: any): Observable<ApiResultResponseGabionModel> { return this.http.post<ApiResultResponseGabionModel>(this.baseApiURL + '/api/Gabion/GetTemporaryGabion', formData) };
   post(body: ResponseGabionModel): Observable<ApiResultGabionModel> { return this.http.post<ApiResultGabionModel>(this.baseApiURL + '/api/Gabion', body) };
-  getAllGabions(): Observable<ApiResultResponseListGabion> { return this.http.get<ApiResultResponseListGabion>(this.baseApiURL + '/api/Gabion/Gabions') };
+  getGabions(itemsPerPage: number, currentPage: number): Observable<ApiResultResponseListGabion> {
+    const params = new HttpParams()
+      .set('itemsPerPage', itemsPerPage.toString())
+      .set('currentPage', currentPage.toString());
+    return this.http.get<ApiResultResponseListGabion>(this.baseApiURL + '/api/Gabion/Gabions', { params })};
   getGabionResponseModel(id: number): Observable<ApiResultResponseGabionModel> { return this.http.get<ApiResultResponseGabionModel>(this.baseApiURL + '/api/Gabion/Details/' + id + '') };
 }
