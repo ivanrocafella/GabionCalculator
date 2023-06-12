@@ -21,6 +21,14 @@ import { GabionListComponent } from './components/gabions/gabion-list/gabion-lis
 import { GabionDetailsComponent } from './components/gabions/gabion-details/gabion-details.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+
 
 
 export function tokenGetter() {
@@ -35,7 +43,7 @@ export function tokenGetter() {
     BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, MatSnackBarModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     RouterModule.forRoot([{ path: 'User', loadChildren: () => import('src/app/modules_spec/authentification/authentification.module').then(m => m.AuthentificationModule) }      
-    ]),
+    ]), MatDatepickerModule, MatInputModule, MatNativeDateModule, MatSelectModule, MatButtonModule, MatIconModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -50,7 +58,7 @@ export function tokenGetter() {
     provide: HTTP_INTERCEPTORS,
     useClass: ErrorHandlerService,
     multi: true
-  }],
-  bootstrap: [AppComponent]
+    }, { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' }],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -1,3 +1,9 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 75px;
+}
+
 .mat-mdc-paginator {
   background-color: black;
   color: white;
@@ -5,8 +11,26 @@
   border: 5px solid grey;
 }
 
-.mat-mdc-paginator-range-actions {
-  background-color: blue;
-  color: white;
-  border-radius: 10px;
+footer {
+  margin-left: -12px;
+  width: 100%;
+  max-width: 1200px;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  text-align: center;
 }
+
+.mat-mdc-text-field-wrapper {
+  background-color: black;
+  color: white;
+}
+
+.my-form-field {
+    margin-right: 10px;
+}
+
+  .my-form-field:first-child {
+    margin-left: -12px;
+  }

@@ -6,6 +6,12 @@ import { ResponseGabionModel } from 'src/app/models/responseGabionModel.model';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { DateAdapter } from '@angular/material/core';
+import { MaterialsService } from 'src/app/components/services/materials.service'
+import { ApiResultResponseListMaterial } from '../../../models/apiResultResponseListMaterial.model';
+import { ResponseMaterialModel } from '../../../models/responseMaterialModel.model';
+
+
 
 @Component({
   selector: 'app-gabion-list',
@@ -14,7 +20,9 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class GabionListComponent implements OnInit {
 
+
   apiResultListGabion: Partial<ApiResultResponseListGabion> = {};
+  apiResultListMaterial: Partial<ApiResultResponseListMaterial> = {};
   errorMessage!: string;
   showError!: boolean;
   svgSafeHtml: SafeHtml[] = [];
@@ -30,12 +38,33 @@ export class GabionListComponent implements OnInit {
   totalItems = 0;
   // Пример массива данных
   listGabions: ResponseGabionModel[] = [];
+  listMaterials: ResponseMaterialModel[] = [];
 
-  constructor(private gabions: GabionsService, private sanitizer: DomSanitizer) { 
+  //Filters
+  filterDateFrom: Date | null = null;
+  filterDateBefore: Date | null = null;
+  filterByExecut: string | null = null;
+  filterMaterialName: string | null = null;
+
+  constructor(private gabions: GabionsService
+    , private sanitizer: DomSanitizer
+    , private dateAdapter: DateAdapter<any>
+    , private materials: MaterialsService) { 
   }
 
 
   ngOnInit(): void {
+    this.ruLocale();
+    this.materials.getAllMaterials().subscribe(
+      {
+        next: (apiResultResponseListModel) => {
+          this.apiResultListMaterial = apiResultResponseListModel; console.log(this.apiResultListMaterial);
+          this.listMaterials = apiResultResponseListModel.result;
+          this.listMaterials.sort((a, b) => a.FullName.localeCompare(b.FullName));
+        },
+        error: (response) => { console.log(response); }
+      }
+    )
     this.getSrverData(this.itemsPerPage, this.currentPage);
   }
 
@@ -48,6 +77,23 @@ export class GabionListComponent implements OnInit {
           this.listGabions = ApiResultListGabion.result!;
           this.totalItems = ApiResultListGabion.additNum;
 
+          //Filtration
+          this.listGabions = this.listGabions
+            .filter(gabion => this.filterDateFrom ? new Date(gabion.DateStart) >= this.filterDateFrom : true);
+          this.listGabions = this.listGabions
+            .filter(gabion => this.filterDateBefore ? new Date(gabion.DateStart) <= this.filterDateBefore : true);
+          this.listGabions = this.listGabions
+            .filter(gabion => this.filterByExecut ? gabion.User?.UserName!.toLowerCase().includes(this.filterByExecut.toLowerCase()) : true);
+          this.listGabions = this.listGabions
+            .filter(gabion => this.filterMaterialName ? gabion.Material?.FullName! === this.filterMaterialName : true);
+          console.log(this.filterMaterialName);
+
+          this.paginator._intl.itemsPerPageLabel = "Элементов на странице";
+          this.paginator._intl.nextPageLabel = "Следующая страница";
+          this.paginator._intl.previousPageLabel = "Предыдущая страница";
+          this.paginator._intl.lastPageLabel = "Последняя страница";
+          this.paginator._intl.firstPageLabel = "Первая страница";
+
           this.paginator.pageSize = this.itemsPerPage;
           this.paginator.pageIndex = this.currentPage;
 
@@ -56,7 +102,7 @@ export class GabionListComponent implements OnInit {
           var svgStr;
           this.svgSafeHtml = [];
           var sanitizedHtml;
-          this.apiResultListGabion.result?.forEach(
+          this.listGabions.forEach(
             (value) => {
               svgElem = parser.parseFromString(value.Svg!, "image/svg+xml").documentElement;
               svgElem.setAttribute('style', 'height: auto; width: 100%;');
@@ -77,6 +123,20 @@ export class GabionListComponent implements OnInit {
     this.currentPage = event.pageIndex;
     this.itemsPerPage = event.pageSize;
     this.getSrverData(this.itemsPerPage, this.currentPage);
-  } 
+  }
+
+  ruLocale() {
+    this.dateAdapter.setLocale('ru-Ru');
+  }
+
+  cleareFilters() {
+    this.filterDateFrom = null;
+    this.filterDateBefore = null;
+    this.filterByExecut = null;
+    this.filterMaterialName = null;
+    this.getSrverData(this.itemsPerPage, this.currentPage);
+  }
 }
+
+
 
