@@ -20,6 +20,7 @@ export interface Gabion {
   CardWidth: number;
   CardHeight: number; // Высота карты
   Weight: number; // кг
+  WeightCard: number; // кг
   Quantity: number;
   BarsQtyVert: number;
   BarsQtyHoriz: number;

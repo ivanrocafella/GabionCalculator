@@ -27,7 +27,7 @@ namespace GabionCalculator.BAL.Services
             _mapper = mapper;
         }
 
-        public Gabion GetTemporaryGabion(CreateGabionModel createGabionModel, Material material, User user, CancellationToken cancellationToken = default)
+        public Gabion GetTemporaryGabion(CreateGabionModel createGabionModel, Material material, User user, CostWork costWork, CancellationToken cancellationToken = default)
         {
             string userJson = string.Empty;
             if (user != null)
@@ -39,7 +39,8 @@ namespace GabionCalculator.BAL.Services
             gabion.Material = material;
             gabion.User = user; 
             gabion.UserId = user.Id;
-            SVG.Get(gabion);  
+            SVG.Get(gabion);
+            Calculation.Calculate(gabion, costWork);
             return gabion;
         }
 

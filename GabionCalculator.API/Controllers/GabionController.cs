@@ -18,14 +18,16 @@ namespace GabionCalculator.API.Controllers
         private readonly IGabionService _gabionService;
         private readonly IMaterialService _materialService;
         private readonly IUserService _userService;
+        private readonly ICostWorkService _costWorkService;
         private readonly IMapper _mapper;
 
-        public GabionController(IGabionService gabionService, IMaterialService materialService, IUserService userService, IMapper mapper)
+        public GabionController(IGabionService gabionService, IMaterialService materialService, IUserService userService, IMapper mapper, ICostWorkService costWorkService)
         {
             _gabionService = gabionService;
             _materialService = materialService;
             _userService = userService;
             _mapper = mapper;
+            _costWorkService = costWorkService;
         }
 
         // POST: api/Gabion
@@ -47,6 +49,7 @@ namespace GabionCalculator.API.Controllers
         {
             int CardWidthMax = 4030;
             User user = new();
+            CostWork costWork = await _costWorkService.GetByIdAsync(1);
             if (User.Identity.IsAuthenticated)
               user = await _userService.GetByUserNameAsync(User.Identity.Name);
                 
@@ -54,12 +57,13 @@ namespace GabionCalculator.API.Controllers
             {
                 Gabion gabion = _gabionService.GetTemporaryGabion(createGabionModel
                    , await _materialService.GetByIdAsync(createGabionModel.MaterialId)
-                   , user);
+                   , user
+                   , costWork);
                 if (gabion.CardWidth <= CardWidthMax)
                     return Ok(ApiResult<GabionResponseModel>.Success(_mapper.Map<GabionResponseModel>(gabion)));
                 else
                 {
-                    ModelState.AddModelError("IncorrectLengthOrWidth", $"Длина или ширина должны быть меньше на {gabion.CardWidth - CardWidthMax}");
+                    ModelState.AddModelError("IncorrectLengthOrWidth", $"Необходимо уменьшить габариты на {gabion.CardWidth - CardWidthMax}");
                     return BadRequest(ApiResult<GabionResponseModel>.Failure(ModelState.Values
                             .SelectMany(v => v.Errors)
                             .Select(e => e.ErrorMessage)));

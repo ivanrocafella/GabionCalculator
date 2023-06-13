@@ -109,12 +109,29 @@ namespace GabionCalculator.DAL.Entities
                     * (Math.PI * Math.Pow(MaterialDiameter, 2) / 4) / Math.Pow(10, 9);
             }
         } // кг
+        [JsonPropertyName("WeightCard")]
+        public double WeightCard
+        {
+            get
+            {
+                return 7850 * (double)(CardHeight * BarsQtyVert + CardWidth * BarsQtyHoriz)
+                * (Math.PI * Math.Pow(MaterialDiameter, 2) / 4) / Math.Pow(10, 9);
+            }
+        } // кг
         [JsonPropertyName("BatchWeight")]
         public double BatchWeight
         {
             get
             {
                 return Weight * Quantity;
+            }
+        } // кг
+        [JsonPropertyName("BatchWeightCard")]
+        public double BatchWeightCard
+        {
+            get
+            {
+                return WeightCard * Quantity;
             }
         } // кг
         [JsonPropertyName("Quantity")]

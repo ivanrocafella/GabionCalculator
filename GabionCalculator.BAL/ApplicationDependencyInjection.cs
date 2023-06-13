@@ -54,7 +54,8 @@ namespace GabionCalculator.BAL
           services.AddScoped<IGabionService, GabionService>();
           services.AddScoped<IMaterialService, MaterialService>();
           services.AddScoped<IUserService, UserService>();
-      }
+          services.AddScoped<ICostWorkService, CostWorkService>();
+        }
       
       private static void RegisterAutoMapper(this IServiceCollection services)
       {

@@ -18,6 +18,7 @@ export interface ResponseGabionModel {
   CardWidth: number;
   CardHeight: number;
   Weight: number;
+  WeightCard: number; // кг
   BatchWeight: number;
   Quantity: number;
   BarsQtyVert: number;

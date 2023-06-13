@@ -19,6 +19,7 @@ namespace GabionCalculator.DAL.Data
 
         public DbSet<Gabion> Gabions { get; set; }
         public DbSet<Material> Materials { get; set; }
+        public DbSet<CostWork> CostWorks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
