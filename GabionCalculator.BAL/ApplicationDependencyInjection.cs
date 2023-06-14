@@ -18,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using GabionCalculator.BAL.Services.JwtFeatures;
 using GabionCalculator.DAL.Data;
 using Microsoft.EntityFrameworkCore;
+using Google.Protobuf.WellKnownTypes;
 
 namespace GabionCalculator.BAL
 {

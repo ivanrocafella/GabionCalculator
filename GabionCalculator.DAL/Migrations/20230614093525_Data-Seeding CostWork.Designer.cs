@@ -3,6 +3,7 @@ using System;
 using GabionCalculator.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GabionCalculator.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230614093525_Data-Seeding CostWork")]
+    partial class DataSeedingCostWork
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,7 +57,7 @@ namespace GabionCalculator.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CostWorks", (string)null);
+                    b.ToTable("CostWorks");
 
                     b.HasData(
                         new
@@ -155,7 +158,7 @@ namespace GabionCalculator.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Gabions", (string)null);
+                    b.ToTable("Gabions");
 
                     b.HasAnnotation("Relational:JsonPropertyName", "Gabions");
                 });
@@ -197,7 +200,7 @@ namespace GabionCalculator.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Materials", (string)null);
+                    b.ToTable("Materials");
 
                     b.HasAnnotation("Relational:JsonPropertyName", "Material");
                 });

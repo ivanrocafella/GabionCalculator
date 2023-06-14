@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection;
 
 namespace GabionCalculator.DAL.Data
 {
@@ -24,6 +26,7 @@ namespace GabionCalculator.DAL.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new CostWorkSeedConfiguration());
             SetNullBehaviour(builder);
         }
 
