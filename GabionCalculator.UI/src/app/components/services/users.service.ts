@@ -43,19 +43,26 @@ export class UsersService {
   public logout = () => {
     localStorage.removeItem("token");
     this.sendAuthStateChangeNotification(false);
+    this.sendIsAdminStateChangeNotification(false);
   }
 
   public isUserAuthenticated = (): boolean | string | null => {
-    console.log("working");
     const token = localStorage.getItem("token");
-    console.log(token, !this.jwtHelper.isTokenExpired(token));
-    return token && !this.jwtHelper.isTokenExpired(token);
+    var isTokenExpired = true;
+    if (token !== null) {
+      isTokenExpired = !this.jwtHelper.isTokenExpired(token);
+    }
+    return token && isTokenExpired;
   }
 
   public isUserAdmin = (): boolean => {
     const token = localStorage.getItem("token");
-    const decodedToken = this.jwtHelper.decodeToken(token!);
-    const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+    var decodedToken = null;
+    var role = '';
+    if (token !== null) {
+      decodedToken = this.jwtHelper.decodeToken(token!);
+      role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+    }
     return role === 'admin';
   }
 

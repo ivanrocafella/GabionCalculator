@@ -57,7 +57,7 @@ export class MaterialEditComponent {
   }
 
   public hasError = (controlName: string, errorName: string) => {
-    return this.editMaterialForm.get(controlName)!.hasError(errorName)
+    return this.editMaterialForm.get(controlName)!.hasError(errorName);
   }
 
   onSubmit(): void { this.materialsService.submitFormPut(this.id, this.formData) };

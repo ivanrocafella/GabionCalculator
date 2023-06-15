@@ -24,7 +24,7 @@
       </select>
     </div>
     <div class="mb-3">
-      <label form="PricePerKg" class="form-label" for="exampleCheck1">Цена за кг, сом:</label>
+      <label for="PricePerKg" class="form-label" for="exampleCheck1">Цена за кг, сом:</label>
       <input formControlName="PricePerKg" type="number" class="form-control" id="PricePerKg" [(ngModel)]="formData.PricePerKg">
       <em *ngIf="validateControl('PricePerKg') && hasError('PricePerKg', 'required')">Поле обязательно для заполнения</em>
       <em *ngIf="validateControl('PricePerKg') && hasError('PricePerKg', 'min')">Значение должно быть не меньше 0</em>

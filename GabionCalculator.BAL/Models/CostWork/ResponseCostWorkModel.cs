@@ -19,5 +19,7 @@ namespace GabionCalculator.BAL.Models.CostWork
         public double PNR { get; set; } // unity of measure = $
         [JsonPropertyName("Margin")]
         public double Margin { get; set; } // unity of measure = _
+        [JsonPropertyName("DateUpdate")]
+        public DateTime DateUpdate { get; set; }
     }
 }

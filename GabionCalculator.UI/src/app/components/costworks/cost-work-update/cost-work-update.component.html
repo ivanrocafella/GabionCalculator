@@ -1,0 +1,55 @@
+<head>
+  <meta charset="UTF-8" />
+</head>
+
+<div class="container my-5">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">Стоимость работ</h2>
+      <form id="CostWorkForm" [formGroup]="editCosWorklForm" (ngSubmit)="onEdit()">
+        <div class="row mb-3">
+          <label for="ExchangeDollar" class="col-sm-9 col-form-label ml-0 pl-0">Курс доллара,сом/$:</label>
+          <div class="col-sm-3 mb-1">
+            <input formControlName="ExchangeDollar" type="number" class="form-control" id="ExchangeDollar" #ExchangeDollar [(ngModel)]="formData.ExchangeDollar" (input)="restrictMaxLength(ExchangeDollar.id,5)">
+            <em *ngIf="validateControl('ExchangeDollar') && hasError('ExchangeDollar', 'required')">Поле обязательно для заполнения</em>
+            <em *ngIf="validateControl('ExchangeDollar') && hasError('ExchangeDollar', 'min')">Значение должно быть не меньше 0</em>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="TimeWeldingOneCrossBar" class="col-sm-9 col-form-label ml-0 pl-0">Время сварки 1-го поперечного прутка,ч:</label>
+          <div class="col-sm-3 mb-1">
+            <input formControlName="TimeWeldingOneCrossBar" type="number" class="form-control" id="TimeWeldingOneCrossBar" #TimeWeldingOneCrossBar [(ngModel)]="formData.TimeWeldingOneCrossBar" (input)="restrictMaxLength(TimeWeldingOneCrossBar.id,5)">
+            <em *ngIf="validateControl('TimeWeldingOneCrossBar') && hasError('TimeWeldingOneCrossBar', 'required')">Поле обязательно для заполнения</em>
+            <em *ngIf="validateControl('TimeWeldingOneCrossBar') && hasError('TimeWeldingOneCrossBar', 'min')">Значение должно быть не меньше 0</em>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="TimeSettingEguip" class="col-sm-9 col-form-label ml-0 pl-0">Время настройки оборудования,ч:</label>
+          <div class="col-sm-3 mb-1">
+            <input formControlName="TimeSettingEguip" type="number" class="form-control" id="TimeSettingEguip" #TimeSettingEguip [(ngModel)]="formData.TimeSettingEguip" (input)="restrictMaxLength(TimeSettingEguip.id,5)">
+            <em *ngIf="validateControl('TimeSettingEguip') && hasError('TimeSettingEguip', 'required')">Поле обязательно для заполнения</em>
+            <em *ngIf="validateControl('TimeSettingEguip') && hasError('TimeSettingEguip', 'min')">Значение должно быть не меньше 0</em>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="PNR" class="col-sm-9 col-form-label ml-0 pl-0">ПНР,$:</label>
+          <div class="col-sm-3 mb-1">
+            <input formControlName="PNR" type="number" class="form-control" id="PNR" #PNR [(ngModel)]="formData.PNR" (input)="restrictMaxLength(PNR.id,5)">
+            <em *ngIf="validateControl('PNR') && hasError('PNR', 'required')">Поле обязательно для заполнения</em>
+            <em *ngIf="validateControl('PNR') && hasError('PNR', 'min')">Значение должно быть не меньше 0</em>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="Margin" class="col-sm-9 col-form-label ml-0 pl-0">Наценка,%:</label>
+          <div class="col-sm-3 mb-1">
+            <input formControlName="Margin" type="number" class="form-control" id="Margin" #Margin [(ngModel)]="formData.Margin" (input)="restrictMaxLength(Margin.id,5)">
+            <em *ngIf="validateControl('Margin') && hasError('Margin', 'required')">Поле обязательно для заполнения</em>
+            <em *ngIf="validateControl('Margin') && hasError('Margin', 'min')">Значение должно быть не меньше 0</em>
+          </div>
+        </div>
+        <button id="liveToastBtn" type="submit" class="btn btn-dark mt-2" [disabled]="!editCosWorklForm.valid">Изменить</button>
+      </form>
+    </div>
+  </div>
+</div>
+

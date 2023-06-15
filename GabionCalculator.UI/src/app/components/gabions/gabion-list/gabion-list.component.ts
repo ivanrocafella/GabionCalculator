@@ -112,7 +112,7 @@ export class GabionListComponent implements OnInit {
             })
         },
         error: (err: HttpErrorResponse) => {
-          console.log("error");
+          console.log(err.message);
           this.errorMessage = err.message;
           this.showError = true;
         }

@@ -10,11 +10,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+        <li *ngIf="isUserAdmin && isUserAuthenticated" class="nav-item">
           <a class="nav-link active" aria-current="page" routerLink="Material/Materials">Материалы</a>
         </li>
-        <li class="nav-item">
+        <li *ngIf='isUserAuthenticated' class="nav-item">
           <a class="nav-link active" aria-current="page" routerLink="Gabion/Gabions">Габионы</a>
+        </li>
+        <li *ngIf="isUserAdmin && isUserAuthenticated" class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="CostWork/Update/1">Стоим-ть работ</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['Material/Privacy']" routerLinkActive="active"
@@ -38,3 +41,4 @@
     </div>
 </nav>  
 <router-outlet></router-outlet>
+<footer class="text-center">Бишкек 2023</footer>
