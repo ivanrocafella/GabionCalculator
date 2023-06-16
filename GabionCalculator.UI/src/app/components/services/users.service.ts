@@ -8,6 +8,9 @@ import { Subject, Observable } from 'rxjs';
 import { LoginUserModel } from 'src/app/models/loginUserModel.model';
 import { AuthUserModel } from 'src/app/models/authResponseModel.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { ApiResultChangePasswordUserModel } from '../../models/apiResultChangePasswordUserModel';
+import { ChangePasswordUserModel } from '../../models/changePasswordUserModel';
+import { User } from '../../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +41,14 @@ export class UsersService {
 
   public deleteUser = (id: string) => {
     return this.http.post<ApiResultResponseUserModel>(this.baseApiURL + '/api/User/Remove/' + id +'', null);
+  }
+
+  public getUser = () => {
+    return this.http.get<ApiResultResponseUserModel>(this.baseApiURL + '/api/User/GetUser');
+  }
+
+  public changePasswordUser = (id: string, body: ChangePasswordUserModel) => {
+    return this.http.put<User>(this.baseApiURL + '/api/User/ChangePassword/' + id + '', body);
   }
 
   public logout = () => {

@@ -28,7 +28,7 @@ export class UserRegisterComponent implements OnInit{
       passwordConfirm: new FormControl('', [Validators.required]),
     }),
     this.registerForm.get('passwordConfirm')!.setValidators([Validators.required,
-    this.passConfValidator.validateConfirmPassword(this.registerForm.get('password')!)]);;
+    this.passConfValidator.validateConfirmPassword(this.registerForm.get('password')!)]);
   }
     
   public validateControl = (controlName: string) => {

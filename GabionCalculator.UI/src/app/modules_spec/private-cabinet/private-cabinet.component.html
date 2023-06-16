@@ -3,46 +3,56 @@
 </head>
 
 <div class="container my-5">
-  <h1 *ngIf='isAdmin' class="mb-3">Список сотрудников</h1>
-  <table *ngIf='isAdmin' class="table">
-    <thead>
-      <tr>
-        <th scope="col">Email</th>
-        <th scope="col">Логин</th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of apiResult.result" id="user-{{user.Id}}">
-        <td scope="row">{{user.Email}}</td>
-        <td>{{user.UserName}}</td>
-        <td>
-          <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="setIdForButton(user.Id)">
-            Удалить
-          </button>
-        </td>
-      </tr>
-    </tbody>     
-  </table>
-  <a *ngIf='isAdmin' class="btn btn-danger" routerLink="/User/Register">Регистрация нового сотрудника</a>
-</div>
+  <div class="card mb-3" style="width: 18rem;">
+    <div class="card-body">
+      <h2 class="card-title">Информация</h2>
+      <p class="card-text">Email: {{currrentUser.Email}}</p>
+      <p class="card-text">Логин: {{currrentUser.UserName}}</p>
+      <a *ngIf="!isAdmin" class="btn btn-sm btn-dark mt-2" routerLink="/User/ChangePassword/{{currrentUser.Id}}">Сменить пароль</a>
+    </div>
+  </div>
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Удаление сотрудника</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div id="modal_body" class="modal-body">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
-        <button type="button" class="btnDelCard btn btn-danger" data-bs-dismiss="modal" (click)="delUser($event)">Да</button>
+    <h1 *ngIf='isAdmin' class="mb-3">Список сотрудников</h1>
+    <table *ngIf='isAdmin' class="table">
+      <thead>
+        <tr>
+          <th scope="col">Email</th>
+          <th scope="col">Логин</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of apiResult.result" id="user-{{user.Id}}">
+          <td scope="row">{{user.Email}}</td>
+          <td>{{user.UserName}}</td>
+          <td>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="setIdForButton(user.Id)">
+              Удалить
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <a *ngIf='isAdmin' class="btn btn-danger" routerLink="/User/Register">Регистрация нового сотрудника</a>
+  </div>
+
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Удаление сотрудника</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div id="modal_body" class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+          <button type="button" class="btnDelCard btn btn-danger" data-bs-dismiss="modal" (click)="delUser($event)">Да</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 

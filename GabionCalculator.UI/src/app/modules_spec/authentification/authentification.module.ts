@@ -7,17 +7,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorHandlerService } from 'src/app/components/services/error-handler.service';
 import { PrivateCabinetComponent } from 'src/app/modules_spec/private-cabinet/private-cabinet.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthGuard } from '../../shared/guards/auth.guard';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
 
 
 @NgModule({
-  declarations: [UserRegisterComponent, UserAuthentificationComponent, PrivateCabinetComponent],
+  declarations: [UserRegisterComponent, UserAuthentificationComponent, PrivateCabinetComponent, ChangePasswordComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       { path: 'Login', component: UserAuthentificationComponent },
       { path: 'Register', component: UserRegisterComponent },
-      { path: 'PrivateCabinet', component: PrivateCabinetComponent }  
+      { path: 'PrivateCabinet', component: PrivateCabinetComponent, canActivate: [AuthGuard] },
+      { path: 'ChangePassword/:id', component: ChangePasswordComponent, canActivate: [AuthGuard] } 
     ])
   ] 
 })

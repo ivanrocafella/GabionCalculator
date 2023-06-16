@@ -5,6 +5,7 @@ import { ApiResultResponseListUser } from 'src/app/models/apiResultResponseListU
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiResultResponseUserModel } from '../../models/apiResultResponseUserModel.model';
 import encodeUtf8 from 'encode-utf8';
+import { ResponseUserModel } from '../../models/responseUserModel.model';
 
 @Component({
   selector: 'app-private-cabinet',
@@ -15,6 +16,7 @@ export class PrivateCabinetComponent {
   public isAdmin!: boolean;
   apiResult: Partial<ApiResultResponseListUser> = {};
   responseUser: Partial<ApiResultResponseUserModel> = {};
+  currrentUser: Partial<ResponseUserModel> = {};
 
   constructor(private usersService: UsersService, private router: Router) {
     this.usersService.isAdminChanged
@@ -24,6 +26,15 @@ export class PrivateCabinetComponent {
   }
 
   ngOnInit(): void {
+    this.usersService.getUser().subscribe({
+      next: ApiResultResponseUserModel => {
+        this.currrentUser = ApiResultResponseUserModel.result
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err.message);
+      }
+    })
+
     if (this.usersService.isUserAdmin())
       this.usersService.sendIsAdminStateChangeNotification(true);
 

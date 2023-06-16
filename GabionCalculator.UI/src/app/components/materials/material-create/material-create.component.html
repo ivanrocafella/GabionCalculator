@@ -4,7 +4,7 @@
 
 <div class="container my-5">
   <h1 class="mb-3">Добавление материала</h1>
-  <form [formGroup]="createMaterialForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="createMaterialForm" novalidate (ngSubmit)="onSubmit()">
     <div class="mb-3">
       <label for="Name" class="form-label">Наименование:</label>
       <select formControlName="Name" id="Name" class="form-select" aria-label="Default select example" [(ngModel)]="formData.Name">

@@ -77,18 +77,22 @@ namespace GabionCalculator.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await _userService.GetUserByNameOrEmailAsync(loginUserModel);
+                User user = await _userService.GetUserByNameOrEmailAsync(loginUserModel);                
                 if (user != null)
                 {
-                   var signinCredentials = _jwtHandler.GetSigningCredentials();
-                   var claims = await _jwtHandler.GetClaims(user);
-                   var tokenOptions = _jwtHandler.GenerateTokenOptions(signinCredentials, claims);
-                   var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-                   User curUser = await CurrentUser.Get(_userManager, user.UserName);
-                   return Ok(new AuthResponseModel { IsAuthSuccessful = true, Token = token});                 
+                   bool isCorrectPassword = await _userManager.CheckPasswordAsync(user, loginUserModel.Password);
+                   if (isCorrectPassword)
+                   {
+                        var signinCredentials = _jwtHandler.GetSigningCredentials();
+                        var claims = await _jwtHandler.GetClaims(user);
+                        var tokenOptions = _jwtHandler.GenerateTokenOptions(signinCredentials, claims);
+                        var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+                        User curUser = await CurrentUser.Get(_userManager, user.UserName);
+                        return Ok(new AuthResponseModel { IsAuthSuccessful = true, Token = token });
+                   }
+                          
                 }
-                ModelState.AddModelError("", "Неправильный логин, электронная почта и (или) пароль");
-               
+                ModelState.AddModelError("", "Неправильный логин, электронная почта и (или) пароль"); 
             }            
             return Unauthorized(new AuthResponseModel { Errors = ModelState.Values
                        .SelectMany(v => v.Errors)
@@ -108,7 +112,7 @@ namespace GabionCalculator.API.Controllers
                 return RedirectToAction("GetAsync","Gabion");
         }
 
-        // POST: api/User/Remove/5
+        // POST: api/User/Remove/skf34l41ksm
         [HttpPost("Remove/{id}")]
 
         public async Task<IActionResult> Remove([FromRoute] string id)
@@ -122,6 +126,68 @@ namespace GabionCalculator.API.Controllers
                     return Ok(ApiResult<UserResponseModel>.Success(_mapper.Map<UserResponseModel>(user)));
                 }
                 return StatusCode(500, ApiResult<User>.Failure(new List<string>() { "Пользователь не найден" }));
+            }
+            return StatusCode(500, ApiResult<User>.Failure(new List<string>() { "Id пользователя не передан в параметры" }));
+        }
+
+        // POST: api/User/GetUser
+        [HttpGet("GetUser")]
+        public async Task<IActionResult> GetUser()
+        {
+            User user = await CurrentUser.Get(_userManager, User.Identity.Name);
+            if (user != null)
+                return Ok(ApiResult<UserResponseModel>.Success(_mapper.Map<UserResponseModel>(user)));
+            return StatusCode(500, ApiResult<User>.Failure(new List<string>() { "Пользователь не найден" }));
+        }
+
+        // POST: api/User/ChangePassword
+        [HttpGet("ChangePassword/{id}")]
+        public async Task<IActionResult> ChangePassword([FromRoute] string id)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                User user = await _userService.GetByIdAsync(id);
+                if (user != null)
+                    return Ok(ApiResult<ChangePasswordUserModel>.Success(_mapper.Map<ChangePasswordUserModel>(user)));
+                return StatusCode(500, ApiResult<User>.Failure(new List<string>() { "Пользователь не найден" }));
+            }
+            return StatusCode(500, ApiResult<User>.Failure(new List<string>() { "Id пользователя не передан в параметры" }));
+        }
+
+        // POST: api/User/ChangePassword/324hbds3
+        [HttpPut("ChangePassword/{id}")]
+        public async Task<IActionResult> ChangePassword([FromRoute] string id, [FromBody] ChangePasswordUserModel changePasswordUserModel)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                User user = await _userService.GetByIdAsync(id);
+                if (user != null)
+                {
+                    if (ModelState.IsValid)
+                    {
+                       IdentityResult result = await _userManager.ChangePasswordAsync(user, changePasswordUserModel.OldPassword, changePasswordUserModel.NewPassword);
+                       if (result.Succeeded)
+                           return Ok(user);
+                       else
+                       {
+                             foreach (var error in result.Errors)
+                             {
+                                   var message = error.Description switch
+                                   {
+                                       "Incorrect password." => "Вы ввели неправильный пароль",
+                                       "Passwords must be at least 12 characters." => "Пароль должен содержать не менее 12 символов.",
+                                       _ => error.Description
+
+                                   }; 
+                                 ModelState.AddModelError(string.Empty, message);
+                             }
+                       }
+                    }
+                    return BadRequest(ApiResult<UserResponseModel>.Failure(ModelState.Values
+                                                           .SelectMany(v => v.Errors)
+                                                           .Select(e => e.ErrorMessage)));
+                }
+                return StatusCode(500, ApiResult<User>.Failure(new List<string>() { "Пользователь не найден" }));    
             }
             return StatusCode(500, ApiResult<User>.Failure(new List<string>() { "Id пользователя не передан в параметры" }));
         }

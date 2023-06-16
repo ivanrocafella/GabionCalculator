@@ -17,6 +17,7 @@ namespace GabionCalculator.BAL.MappingProfiles
             CreateMap<RegisterUserModel, User>();
             CreateMap<LoginUserModel, User>();
             CreateMap<User, UserResponseModel>();
+            CreateMap<User, ChangePasswordUserModel>();
         }
     }
 }

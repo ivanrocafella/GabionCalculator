@@ -12,6 +12,8 @@ export class PasswordConfirmationValidatorService {
     return (confirmationControl: AbstractControl): { [key: string]: boolean } | null => {
       const confirmValue = confirmationControl.value;
       const passwordValue = passwordControl.value;
+      console.log(confirmValue, passwordValue)
+      console.log('PasswordConfirmationValidatorService')
       if (confirmValue === '') {
         return null;
       }
