@@ -65,6 +65,10 @@ namespace GabionCalculator.BAL.Models.Gabion
         public double Price { get; set; }
         [JsonPropertyName("BatchPrice")]
         public double BatchPrice { get; set; }
+        [JsonPropertyName("PriceMaterial")]
+        public double PriceMaterial { get { return PriceMaterialBatch / Quantity; } }
+        [JsonPropertyName("PriceMaterialBatch")]
+        public double PriceMaterialBatch { get; set; }
         [JsonPropertyName("DateStart")]
         public DateTime DateStart { get; set; }
         [JsonPropertyName("DateUpdate")]

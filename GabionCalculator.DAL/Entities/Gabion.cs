@@ -61,9 +61,6 @@ namespace GabionCalculator.DAL.Entities
         [NotMapped]
         [JsonPropertyName("CardWidthInterm")]
         private int CardWidthInterm { get; set; }
-        [NotMapped]
-        [JsonPropertyName("CardHeightInterm")]
-        private int CardHeightInterm { get; set; }
         [JsonPropertyName("CardWidth")]
         public int CardWidth // Ширина карты 
         {
@@ -105,7 +102,7 @@ namespace GabionCalculator.DAL.Entities
         {
             get
             {
-                    return 7850 * (double)((CardHeight - 2 * OutletVert) * BarsQtyVert + (CardWidth - 2 * OutletHoriz) * BarsQtyHoriz)
+                    return 7850 * (double)((CardHeight - 2 * OutletVert) * BarsQtyVert + (CardWidth - 2 * OutletHoriz) * BarsQtyHoriz + (CardHeight - 2 * OutletVert) * 1.25)
                     * (Math.PI * Math.Pow(MaterialDiameter, 2) / 4) / Math.Pow(10, 9);
             }
         } // кг
@@ -114,7 +111,7 @@ namespace GabionCalculator.DAL.Entities
         {
             get
             {
-                return 7850 * (double)(CardHeight * BarsQtyVert + CardWidth * BarsQtyHoriz)
+                return 7850 * (double)(CardHeight * BarsQtyVert + CardWidth * BarsQtyHoriz + CardHeight * 1.25)
                 * (Math.PI * Math.Pow(MaterialDiameter, 2) / 4) / Math.Pow(10, 9);
             }
         } // кг
@@ -147,7 +144,7 @@ namespace GabionCalculator.DAL.Entities
         {
             get
             {
-                    return (double)(CardHeight * BarsQtyVert + CardWidth * BarsQtyHoriz) / 1000;
+                    return (double)(CardHeight * BarsQtyVert + CardWidth * BarsQtyHoriz + CardHeight * 1.25) / 1000;
             }
         } // м
         [JsonPropertyName("Svg")]
@@ -164,6 +161,10 @@ namespace GabionCalculator.DAL.Entities
         public double Price { get; set; }
         [JsonPropertyName("BatchPrice")]
         public double BatchPrice { get; set; }
+        [JsonPropertyName("PriceMaterial")]
+        public double PriceMaterial { get { return PriceMaterialBatch / Quantity; } }
+        [JsonPropertyName("PriceMaterialBatch")]
+        public double PriceMaterialBatch { get; set; }
         [JsonPropertyName("DateStart")]
         public DateTime DateStart { get; set; }
         [JsonPropertyName("DateUpdate")]

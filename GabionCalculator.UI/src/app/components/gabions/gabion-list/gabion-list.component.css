@@ -1,7 +1,7 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding-bottom: 75px;
+  padding-bottom: 85px;
 }
 
 .mat-mdc-paginator {
@@ -18,7 +18,7 @@ footer {
   justify-content: center;
   align-items: center;
   position: fixed;
-  bottom: 50px;
+  bottom: 30px;
   text-align: center;
 }
 
@@ -31,6 +31,6 @@ footer {
     margin-right: 10px;
 }
 
-  .my-form-field:first-child {
-    margin-left: -12px;
-  }
+.my-form-field:first-child {
+  margin-left: -12px;
+}

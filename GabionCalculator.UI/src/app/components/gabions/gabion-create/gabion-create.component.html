@@ -52,6 +52,7 @@
                     <em *ngIf="validateControl('Height') && hasError('Height', 'required')">Поле обязательно для заполнения</em>
                     <em *ngIf="validateControl('Height') && hasError('Height', 'min')">Значение должно быть не меньше 200</em>
                     <em *ngIf="validateControl('Height') && hasError('Height', 'max')">Значение должно быть не больше 2000</em>
+                    <em *ngIf="validateControl('Height') && hasError('Height', 'noDivide')">Значение должно быть кратно 100</em>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -60,7 +61,8 @@
                     <input formControlName="CellHeight" type="number" class="form-control" id="CellHeight" [(ngModel)]="formData.CellHeight" autocomplete="on">
                     <em *ngIf="validateControl('CellHeight') && hasError('CellHeight', 'required')">Поле обязательно для заполнения</em>
                     <em *ngIf="validateControl('CellHeight') && hasError('CellHeight', 'min')">Значение должно быть не меньше 50</em>
-                    <em *ngIf="validateControl('CellHeight') && hasError('CellHeight', 'max')">Значение должно быть не больше 200</em>
+                    <em *ngIf="validateControl('CellHeight') && hasError('CellHeight', 'max')">Значение должно быть не больше 100</em>
+                    <em *ngIf="validateControl('CellHeight') && hasError('CellHeight', 'noDivide')">Значение должно быть кратно 50</em>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -69,7 +71,8 @@
                     <input formControlName="CellWidth" type="number" class="form-control" id="CellWidth" [(ngModel)]="formData.CellWidth" autocomplete="on">
                     <em *ngIf="validateControl('CellWidth') && hasError('CellWidth', 'required')">Поле обязательно для заполнения</em>
                     <em *ngIf="validateControl('CellWidth') && hasError('CellWidth', 'min')">Значение должно быть не меньше 50</em>
-                    <em *ngIf="validateControl('CellWidth') && hasError('CellWidth', 'max')">Значение должно быть не больше 200</em>
+                    <em *ngIf="validateControl('CellWidth') && hasError('CellWidth', 'max')">Значение должно быть не больше 100</em>
+                    <em *ngIf="validateControl('CellWidth') && hasError('CellWidth', 'noDivide')">Значение должно быть кратно 50</em>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -97,21 +100,20 @@
             <div class="card-body" id="PriceWeight">
               <h2 class="card-title">Результаты расчёта</h2>
               <p class="card-text">Кол-во: {{apiResultTempGab.result?.Quantity}} шт</p>
-              <p class="card-text">Себестоимость: {{apiResultTempGab.result?.Sebes}} сом</p>
-              <p class="card-text">Общая себестоимость: {{apiResultTempGab.result?.BatchSebes}} сом</p>
-              <p class="card-text">Цена: {{apiResultTempGab.result?.Price}} сом</p>
-              <p class="card-text">Общая стоимость: {{apiResultTempGab.result?.BatchPrice}} сом</p>
-              <p class="card-text">Расход материала: {{apiResultTempGab.result?.MaterialTotalLength}} м</p>
-              <p class="card-text">Вес 1 шт: {{apiResultTempGab.result?.Weight}} кг</p>
-              <p class="card-text">Вес {{apiResultTempGab.result?.Quantity}} шт: {{apiResultTempGab.result?.BatchWeight}} кг</p>
-              <p class="card-text">Длина верт-го прутка: {{apiResultTempGab.result?.BarBilletVert}} м</p>
-              <p class="card-text">Кол-во верт-х прутков: {{apiResultTempGab.result?.BarsQtyVert}} шт</p>
-              <p class="card-text">Длина гориз-го прутка: {{apiResultTempGab.result?.BarBilletHoriz}} м</p>
-              <p class="card-text">Кол-во гориз-х прутков: {{apiResultTempGab.result?.BarsQtyHoriz}} шт</p>
-              <p class="card-text">Ширина карты: {{apiResultTempGab.result?.CardWidth}} мм</p>
-              <p class="card-text">Высота карты: {{apiResultTempGab.result?.CardHeight}} мм</p>
+              <p *ngIf="isUserAuthenticated" class="card-text">Себестоимость: {{roundNumber(apiResultTempGab.result?.Sebes)}} сом</p>
+              <p *ngIf="isUserAuthenticated" class="card-text">Общая себестоимость: {{roundNumber(apiResultTempGab.result?.BatchSebes)}} сом</p>
+              <p class="card-text">Цена: {{roundNumber(apiResultTempGab.result?.Price)}} сом</p>
+              <p class="card-text">Общая стоимость: {{roundNumber(apiResultTempGab.result?.BatchPrice)}} сом</p>
+              <p *ngIf="isUserAuthenticated" class="card-text">Расход мат-ла на 1 шт: {{roundNumber(apiResultTempGab.result?.MaterialTotalLength)}} м</p>
+              <p class="card-text">Вес 1 шт: {{roundNumber(apiResultTempGab.result?.Weight)}} кг</p>
+              <p class="card-text">Вес {{apiResultTempGab.result?.Quantity}} шт: {{roundNumber(apiResultTempGab.result?.BatchWeight)}} кг</p>
+              <p *ngIf="isUserAuthenticated" class="card-text">Цена мат-ла на 1 шт: {{roundNumber(apiResultTempGab.result?.PriceMaterial)}} сом</p>
+              <p *ngIf="isUserAuthenticated" class="card-text">Общая стоим-ть мат-ла: {{roundNumber(apiResultTempGab.result?.PriceMaterialBatch)}} сом</p>
+              <p *ngIf="isUserAuthenticated" class="card-text">Ширина карты: {{apiResultTempGab.result?.CardWidth}} мм</p>
+              <p *ngIf="isUserAuthenticated" class="card-text">Высота карты: {{apiResultTempGab.result?.CardHeight}} мм</p>
               <p class="card-text">Материал: {{apiResultTempGab.result?.Material?.FullName}}</p>
               <button *ngIf="isUserAuthenticated" type="button" id="saveBtn" class="btn btn-dark ml-5" (click)="post()">Сохранить</button>
+              <button (click)="printDiv('myDiv')">Print</button>
             </div>
           </div>
           <div class="col-md-7 mb-3" id="Svg"></div>
@@ -121,4 +123,10 @@
   </div>
 </div>
 
+<div id="myDiv" style="display:none">
+  <!-- Content to be printed -->
+  <h1>Hello, World!</h1>
+  <p>This is the content to be printed.</p>
+  <div id="Svg-print"></div>
+</div>
 

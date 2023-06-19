@@ -31,6 +31,8 @@ export interface ResponseGabionModel {
   BatchSebes: number;
   Price: number;
   BatchPrice: number;
+  PriceMaterial: number;
+  PriceMaterialBatch: number;
   DateStart: string;
   DateUpdate: string;
   MaterialId?: number;

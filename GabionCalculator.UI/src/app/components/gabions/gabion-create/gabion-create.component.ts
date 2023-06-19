@@ -6,6 +6,7 @@ import { UsersService } from 'src/app/components/services/users.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CellDividinngValidatorService } from 'src/app/components/validators/cell-dividinng-validator.service';
 
 @Component({
   selector: 'app-gabion-create',
@@ -30,7 +31,7 @@ export class GabionCreateComponent {
   saveBtn?: HTMLButtonElement;
   isUserAuthenticated!: boolean;
 
-  constructor(private gabionService: GabionsService, private snackBar: MatSnackBar, private userService: UsersService) {
+  constructor(private gabionService: GabionsService, private snackBar: MatSnackBar, private userService: UsersService, private divideValidator : CellDividinngValidatorService) {
     this.userService.authChanged
       .subscribe(res => {
         this.isUserAuthenticated = res;
@@ -46,9 +47,9 @@ export class GabionCreateComponent {
       MaterialDiameter: new FormControl(""),
       Length: new FormControl("", [Validators.required, Validators.min(250)]),
       Width: new FormControl("", [Validators.required, Validators.min(250)]),
-      Height: new FormControl("", [Validators.required, Validators.min(200), Validators.max(2000)]),
-      CellHeight: new FormControl("", [Validators.required, Validators.min(50), Validators.max(200)]),
-      CellWidth: new FormControl("", [Validators.required, Validators.min(50), Validators.max(200)]),
+      Height: new FormControl("", [Validators.required, Validators.min(200), Validators.max(2000), this.divideValidator.dividingValidator(200, 2000, 100)]),
+      CellHeight: new FormControl("", [Validators.required, Validators.min(50), Validators.max(100), this.divideValidator.dividingValidator(50, 100, 50)]),
+      CellWidth: new FormControl("", [Validators.required, Validators.min(50), Validators.max(100), this.divideValidator.dividingValidator(50, 100, 50)]),
       Quantity: new FormControl("", [Validators.required, Validators.min(1)])
     });
     this.formData.MaterialId = 0;
@@ -158,6 +159,23 @@ export class GabionCreateComponent {
       this.kFactor = 1 / Math.log(1 + this.diameterMaterial / this.bendRadius) - this.bendRadius / this.diameterMaterial;
       console.log(this.kFactor);
     } 
+  }
+
+  roundNumber(value: number | undefined): number {
+    if (typeof value == 'number') {
+      return Math.round(value);
+    }
+    return 0;
+  }
+
+  printDiv(divId: string) {
+    var divPrint = document.getElementById("Svg-print") as HTMLDivElement;
+    divPrint.innerHTML = this.apiResultTempGab.result?.Svg!;
+    let printContents = document.getElementById(divId)!.innerHTML;
+    let originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
   }
 
 }

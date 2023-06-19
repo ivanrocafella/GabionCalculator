@@ -13,8 +13,8 @@ namespace GabionCalculator.BAL.Utils
         public static void Calculate(Gabion gabion, CostWork costWork)
         {
            double timeProdiction = costWork.TimeWeldingOneCrossBar * gabion.BarsQtyHoriz * gabion.Quantity;  // unity of measure = h
-           gabion.BatchSebes = gabion.BatchWeightCard * gabion.Material.PricePerKg
-                + (costWork.TimeSettingEguip + timeProdiction) * costWork.PNR / costWork.ExchangeDollar; // unity of measure = som
+           gabion.PriceMaterialBatch = gabion.BatchWeightCard * gabion.Material.PricePerKg; // price of material for batch = som 
+           gabion.BatchSebes = gabion.PriceMaterialBatch + (costWork.TimeSettingEguip + timeProdiction) * costWork.PNR / costWork.ExchangeDollar; // unity of measure = som
            gabion.Sebes = gabion.BatchSebes / gabion.Quantity; // unity of measure = som
            gabion.BatchPrice = gabion.BatchSebes * costWork.Margin; // unity of measure = som 
            gabion.Price = gabion.Sebes * costWork.Margin; // unity of measure = som 
