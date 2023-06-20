@@ -29,6 +29,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { CostWorkUpdateComponent } from './components/costworks/cost-work-update/cost-work-update.component';
+import { NgxPrintModule } from 'ngx-print';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -52,14 +54,14 @@ export function tokenGetter() {
         disallowedRoutes: []
       }
     }),
-    BrowserAnimationsModule, MatPaginatorModule, MatTableModule
+    BrowserAnimationsModule, MatPaginatorModule, MatTableModule, NgxPrintModule
   ],
   providers: [AuthGuard,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: ErrorHandlerService,
     multi: true
-    }, { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' }],
-  bootstrap: [AppComponent],
+    }, { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' }, DatePipe],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

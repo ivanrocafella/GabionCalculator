@@ -23,13 +23,7 @@ em {
   box-shadow: 1px 1px 1px #cabcbc;
 }
 
-@media print {
-  /* Styles for printing */
-  #myDiv {
-    
-    display: flex;
-    text-align: center;
-    font-size: 14px;
-    /* Add other styles as needed */
-  }
+.btn-group {
+    margin-left: 5px;
 }
+

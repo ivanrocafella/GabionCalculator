@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ApiResultCreateGabionModel } from 'src/app/models/apiResultCreateGabionModel.model';
 import { ApiResultResponseGabionModel } from 'src/app/models/apiResultResponseGabionModel.model';
 import { GabionsService } from 'src/app/components/services/gabions.service';
@@ -7,6 +7,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CellDividinngValidatorService } from 'src/app/components/validators/cell-dividinng-validator.service';
+import { DatePipe } from '@angular/common';
+import * as printJS from 'print-js';
+import * as jQuery from 'jquery';
+
 
 @Component({
   selector: 'app-gabion-create',
@@ -14,6 +18,8 @@ import { CellDividinngValidatorService } from 'src/app/components/validators/cel
   styleUrls: ['./gabion-create.component.css']
 })
 export class GabionCreateComponent {
+  @ViewChild('draw_card', { static: false }) draw_card!: ElementRef;
+
   kFactor: number = 0;
   bendRadius: number = 17.5;
   diameterMaterial: number = 0;
@@ -29,16 +35,20 @@ export class GabionCreateComponent {
   errorMessage: string = '';
   showError!: boolean;
   saveBtn?: HTMLButtonElement;
+  drawingBtn?: HTMLButtonElement;
+  calculationBtn?: HTMLButtonElement;
   isUserAuthenticated!: boolean;
+  dateCreate: Date = new Date();
 
-  constructor(private gabionService: GabionsService, private snackBar: MatSnackBar, private userService: UsersService, private divideValidator : CellDividinngValidatorService) {
+  constructor(private gabionService: GabionsService, private snackBar: MatSnackBar, private userService: UsersService
+    , private divideValidator: CellDividinngValidatorService, private datePipe: DatePipe) {
     this.userService.authChanged
       .subscribe(res => {
         this.isUserAuthenticated = res;
       })
   };
 
-  ngOnInit(): void {
+  initializingForm() {
     if (this.userService.isUserAuthenticated())
       this.userService.sendAuthStateChangeNotification(true);
 
@@ -59,11 +69,15 @@ export class GabionCreateComponent {
     this.gabionService.getCreateGabionModel().subscribe(
       {
         next: (ApiResultCreateGabionModel) => {
-          this.apiResultCreateGab = ApiResultCreateGabionModel; console.log(this.apiResultCreateGab);  
+          this.apiResultCreateGab = ApiResultCreateGabionModel; console.log(this.apiResultCreateGab);
         },
         error: (response) => { console.error(response); }
       }
     )
+  }
+
+  ngOnInit(): void {
+    this.initializingForm();
   };
 
   ngAfterViewInit() {
@@ -79,6 +93,11 @@ export class GabionCreateComponent {
     this.gabionService.submitForm(this.formData).subscribe(
       {
         next: (ApiResultResponseGabionModel) => {
+           this.drawingBtn = document.getElementById("drawingBtn") as HTMLButtonElement;
+           this.calculationBtn = document.getElementById("calculationBtn") as HTMLButtonElement;
+           this.drawingBtn.disabled = true;
+           this.calculationBtn.disabled = true; 
+              
            this.showError = false;
            this.apiResultTempGab = ApiResultResponseGabionModel;
            console.log('Form submitted', this.apiResultTempGab);
@@ -88,7 +107,7 @@ export class GabionCreateComponent {
             this.divSvg.innerHTML = svg;
             var svgHtmlElem = this.divSvg.querySelectorAll('svg')[0];
             console.log(svgHtmlElem);
-            svgHtmlElem.setAttribute('style','height: auto; width: 100%;');
+            svgHtmlElem.setAttribute('style', 'height: auto; width: 100%;');
            }          
         },
         error: (err: HttpErrorResponse) => {
@@ -105,9 +124,15 @@ export class GabionCreateComponent {
     this.gabionService.post(this.apiResultTempGab.result!).subscribe(
       {
         next: (ApiResultGabionModel) => {
+          this.makeContentCalculation();
+          this.makeContentDraw();
           console.log(ApiResultGabionModel);
+          this.drawingBtn = document.getElementById("drawingBtn") as HTMLButtonElement;
+          this.calculationBtn = document.getElementById("calculationBtn") as HTMLButtonElement;
           this.saveBtn = document.getElementById("saveBtn") as HTMLButtonElement;
           this.saveBtn.disabled = true;
+          this.drawingBtn!.disabled = false;
+          this.calculationBtn!.disabled = false; 
           this.snackBar.open("Габион успешно сохранён!", "Закрыть", {
             duration: 5000, // Длительность отображения в миллисекундах
           });
@@ -168,14 +193,68 @@ export class GabionCreateComponent {
     return 0;
   }
 
-  printDiv(divId: string) {
-    var divPrint = document.getElementById("Svg-print") as HTMLDivElement;
-    divPrint.innerHTML = this.apiResultTempGab.result?.Svg!;
-    let printContents = document.getElementById(divId)!.innerHTML;
-    let originalContents = document.body.innerHTML;
+  printDiv() {
+    this.makeContentDraw();
+
+    const printContents = this.draw_card.nativeElement.innerHTML;
+    const originalContents = document.body.innerHTML;
+
     document.body.innerHTML = printContents;
+
     window.print();
     document.body.innerHTML = originalContents;
+   // window.location.reload()
   }
 
+  makeContentDraw() {
+    var svg_draw = document.getElementById("svg_draw") as HTMLDivElement;
+    svg_draw.innerHTML = this.apiResultTempGab.result?.Svg!;
+    var stamp = '<table class="table table-bordered border-dark">' +
+      '<thead>' +
+      '<tr>' +
+      '<th colspan="2" class="text-center">Габион ' + this.apiResultTempGab.result?.Width + 'x' + this.apiResultTempGab.result?.Length + 'x' + this.apiResultTempGab.result?.Height + ', Ø ' + this.apiResultTempGab.result?.Material?.Size + '</th>' +
+      '<td class="text-left">Тип заказа:</th>' +
+      '<td class="text-center">' + this.apiResultTempGab.result?.Material?.FullName + '</td>' +
+      '</tr>' +
+      '</thead>' +
+      '<tbody>' +
+      '<tr>' +
+      '<th scope="col" class="w-25">Исполнитель</th>' +
+      '<td class="w-30">' + this.apiResultTempGab.result?.User?.UserName + '</td>' +
+      '<td class="w-25"></td>' +
+      '<td class="text-center w-20">' + this.datePipe.transform(this.dateCreate, 'dd.MM.yyyy') + '</td>' +
+      '</tr>' +
+      '</tbody>' +
+      '</table>';
+    var notes =
+      '<div><p class="card-text fw-bold">Кол - во: ' + this.apiResultTempGab.result?.Quantity + ' шт.</p>' +
+      '<p class="card-text">1. Размер карты-заготовки ' + this.apiResultTempGab.result?.CardWidth + 'x' + this.apiResultTempGab.result?.CardHeight + ' мм</p>' +
+      '<p class="card-text">2. Неуказанные предельные отклонения размеров: H14, h14, ±t2/2</p>' +
+      '<p class="card-text d-flex justify-content-between"></span><span style="text-align: right;"></span></p></div>';
+
+    var stamp_draw = document.getElementById("stamp_draw") as HTMLDivElement;
+    stamp_draw.innerHTML = stamp;
+    var notes_draw = document.getElementById("notes_draw") as HTMLDivElement;
+    notes_draw.innerHTML = notes;
+  }
+
+  makeContentCalculation() {
+    var svg_calculation = document.getElementById("svg_calculation") as HTMLDivElement;
+    var notes_calculation = document.getElementById("notes_calculation") as HTMLDivElement;
+    svg_calculation.innerHTML = this.apiResultTempGab.result?.Svg!;
+
+    var PriceWeightDiv = document.getElementById("PriceWeight") as HTMLDivElement;
+    notes_calculation.innerHTML = PriceWeightDiv.innerHTML;
+  }
+
+  printDrawJs(): void {
+    this.makeContentDraw();
+    const draw_card = document.getElementById("draw_card") as HTMLDivElement;
+    draw_card.style.display = "block"
+    printJS({
+      printable: 'draw_card',
+      type: 'html',
+      // Other optional configuration options...
+    });
+  } 
 }
