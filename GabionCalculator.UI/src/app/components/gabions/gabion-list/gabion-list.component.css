@@ -1,7 +1,7 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding-bottom: 85px;
+  padding-bottom: 120px;
 }
 
 .mat-mdc-paginator {
@@ -18,7 +18,7 @@ footer {
   justify-content: center;
   align-items: center;
   position: fixed;
-  bottom: 30px;
+  bottom: 60px;
   text-align: center;
 }
 

@@ -186,9 +186,14 @@ export class GabionCreateComponent {
     } 
   }
 
-  roundNumber(value: number | undefined): number {
+  roundNumber(value: number | undefined, rounded: boolean): number {
     if (typeof value == 'number') {
-      return Math.round(value);
+      if (rounded) {
+        return Math.round(value);
+      }
+      else {
+        return parseFloat(value.toFixed(1));
+      }
     }
     return 0;
   }
@@ -206,13 +211,26 @@ export class GabionCreateComponent {
    // window.location.reload()
   }
 
+  printDrawJs(): void {
+    this.makeContentDraw();
+    const draw_card = document.getElementById("draw_card") as HTMLDivElement;
+    draw_card.style.display = "flex";
+    printJS({
+      printable: 'draw_card',
+      type: 'html',
+      // Other optional configuration options...
+    });
+  } 
+
   makeContentDraw() {
     var svg_draw = document.getElementById("svg_draw") as HTMLDivElement;
     svg_draw.innerHTML = this.apiResultTempGab.result?.Svg!;
     var stamp = '<table class="table table-bordered border-dark">' +
       '<thead>' +
       '<tr>' +
-      '<th colspan="2" class="text-center">Габион ' + this.apiResultTempGab.result?.Width + 'x' + this.apiResultTempGab.result?.Length + 'x' + this.apiResultTempGab.result?.Height + ', Ø ' + this.apiResultTempGab.result?.Material?.Size + '</th>' +
+      '<th colspan="2" class="text-center">Габион Ø' + this.apiResultTempGab.result?.Material?.Size + ' ' + this.apiResultTempGab.result?.Width + 'x'
+      + this.apiResultTempGab.result?.Length + 'x' + this.apiResultTempGab.result?.Height + ', ячейка '
+      + this.apiResultTempGab.result?.CellHeight + 'x' + this.apiResultTempGab.result?.CellWidth + '</th>' +
       '<td class="text-left">Тип заказа:</th>' +
       '<td class="text-center">' + this.apiResultTempGab.result?.Material?.FullName + '</td>' +
       '</tr>' +
@@ -247,14 +265,5 @@ export class GabionCreateComponent {
     notes_calculation.innerHTML = PriceWeightDiv.innerHTML;
   }
 
-  printDrawJs(): void {
-    this.makeContentDraw();
-    const draw_card = document.getElementById("draw_card") as HTMLDivElement;
-    draw_card.style.display = "block"
-    printJS({
-      printable: 'draw_card',
-      type: 'html',
-      // Other optional configuration options...
-    });
-  } 
+
 }

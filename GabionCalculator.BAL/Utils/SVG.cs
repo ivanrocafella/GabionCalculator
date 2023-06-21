@@ -15,11 +15,11 @@ namespace GabionCalculator.BAL.Utils
         {
             int X_InitCoord = 100; // X origin
             int Y_InitCoord = 200; // Y origin
-            int outPartHorSize = 40; // length output part of horizontal size
-            int outPartVertSize = 100; // length output part of vertical size
-            int outPartVertSizeHalf = 50; // length output part of vertical height size
-            int width = 1000; // width of svg
-            int height = 1000; // height of svg
+            int outPartHorSize = 60; // length output part of horizontal size
+            int outPartVertSize = 110; // length output part of vertical size
+            int outPartVertSizeHalf = 60; // length output part of vertical height size
+            int width = 1350; // width of svg
+            int height = 1350; // height of svg
 
             var svgDoc = new GcSvgDocument();
             svgDoc.RootSvg.Width = new SvgLength(width, SvgLengthUnits.Pixels);
@@ -32,7 +32,6 @@ namespace GabionCalculator.BAL.Utils
 
             var pbViewAboveGabion = new SvgPathBuilder();
             var pathViewAboveGabion = new SvgPathElement();
-
 
             pbViewAboveGabion.AddMoveTo(false, X_InitCoord,
                                    Y_InitCoord);
@@ -83,6 +82,26 @@ namespace GabionCalculator.BAL.Utils
             pbViewAboveGabion.AddHorizontalLineTo(false, X_InitCoord); // side internal by length top
             pbViewAboveGabion.AddVerticalLineTo(false, Y_InitCoord); // diam of material at the start
 
+            // Inscription of above view 
+
+            // Underline
+
+            var horUnderlineOfInscriptionViewAbove = GetSvgLineElement(X_InitCoord + gabion.Length / 2 - 50
+                                                                , Y_InitCoord - outPartHorSize - 50
+                                                                , X_InitCoord + gabion.Length / 2 + 100
+                                                                , Y_InitCoord - outPartHorSize - 50
+                                                                , Color.Black
+                                                                , 1f
+                                                                , SvgLengthUnits.Pixels);
+            svgElements.Add(horUnderlineOfInscriptionViewAbove);
+
+            // Text
+
+            svgElements.Add(GetSvgTextElement("Сверху",
+                                 X_InitCoord + gabion.Length / 2 - 50,
+                                 Y_InitCoord - outPartHorSize - 55,
+                                 0,
+                                 SvgLengthUnits.Pixels));    // Make text of inscription of above view 
 
 
             // top display of vertical bars with horizon orientation on the top side
@@ -180,7 +199,7 @@ namespace GabionCalculator.BAL.Utils
 
             svgElements.Add(GetSvgTextElement($"{gabion.Length}",
                                  X_InitCoord + gabion.Length / 2 - 10,
-                                 Y_InitCoord - outPartHorSize + 8,
+                                 Y_InitCoord - outPartHorSize + 5,
                                  0,
                                  SvgLengthUnits.Pixels));    // Make text of size's value length of gabion
 
@@ -232,7 +251,7 @@ namespace GabionCalculator.BAL.Utils
             svgElements.Add(serifLineBotSizeWidthAbove);
 
             svgElements.Add(GetSvgTextElement($"{gabion.Width}",
-                                X_InitCoord + gabion.Length + outPartVertSizeHalf - 12,
+                                X_InitCoord + gabion.Length + outPartVertSizeHalf - 15,
                                 Y_InitCoord + gabion.Width / 2 + 10,
                                 -90,
                                 SvgLengthUnits.Pixels));    // Make text of size's value length of gabion
@@ -250,16 +269,16 @@ namespace GabionCalculator.BAL.Utils
 
             var horLineDiameterMaterial = GetSvgLineElement(X_InitCoord + (gabion.MaterialDiameter / 2 + gabion.MaterialDiameter) + 50
                                                      , Y_InitCoord + 2 * gabion.MaterialDiameter + gabion.MaterialDiameter / 2 + 50
-                                                     , X_InitCoord + (gabion.MaterialDiameter / 2 + gabion.MaterialDiameter) + 105
+                                                     , X_InitCoord + (gabion.MaterialDiameter / 2 + gabion.MaterialDiameter) + 140
                                                      , Y_InitCoord + 2 * gabion.MaterialDiameter + gabion.MaterialDiameter / 2 + 50
                                                      , Color.Black
                                                      , 1f
                                                      , SvgLengthUnits.Pixels);
             svgElements.Add(horLineDiameterMaterial);
 
-            svgElements.Add(GetSvgTextElement($"⌀{gabion.MaterialDiameter}",
+            svgElements.Add(GetSvgTextElement($"Ø{gabion.MaterialDiameter}",
                                 X_InitCoord + (gabion.MaterialDiameter / 2 + gabion.MaterialDiameter) + 50,
-                                Y_InitCoord + 2 * gabion.MaterialDiameter + gabion.MaterialDiameter / 2 + 48,
+                                Y_InitCoord + 2 * gabion.MaterialDiameter + gabion.MaterialDiameter / 2 + 45,
                                 0,
                                 SvgLengthUnits.Pixels));    // Make text of size's value length of gabion
 
@@ -286,6 +305,28 @@ namespace GabionCalculator.BAL.Utils
                                                                     , 1.5f
                                                                     , SvgLengthUnits.Pixels);
             svgElements.Add(BarVerticalFrontViewLastElement);
+
+
+            // Inscription of view front 
+
+            // Underline
+
+            var horUnderlineOfInscriptionViewFront = GetSvgLineElement(X_InitCoord + gabion.Length / 2 - 50
+                                                                , Y_InitCoord + gabion.Width + 100
+                                                                , X_InitCoord + gabion.Length / 2 + 130
+                                                                , Y_InitCoord + gabion.Width + 100
+                                                                , Color.Black
+                                                                , 1f
+                                                                , SvgLengthUnits.Pixels);
+            svgElements.Add(horUnderlineOfInscriptionViewFront);
+
+            // Text
+
+            svgElements.Add(GetSvgTextElement("Спереди",
+                                 X_InitCoord + gabion.Length / 2 - 50,
+                                 Y_InitCoord + gabion.Width + 95,
+                                 0,
+                                 SvgLengthUnits.Pixels));    // Make text of inscription of front view 
 
             // front display of horizontal bars by height
 
@@ -359,7 +400,7 @@ namespace GabionCalculator.BAL.Utils
             svgElements.Add(serifLineBotSizeHeightCard);
 
             svgElements.Add(GetSvgTextElement($"{gabion.CardHeight}",
-                                X_InitCoord + gabion.Length + outPartVertSize - 2,
+                                X_InitCoord + gabion.Length + outPartVertSize - 5,
                                 2 * Y_InitCoord + gabion.Width + gabion.CardHeight / 2 + 20,
                                 -90,
                                 SvgLengthUnits.Pixels));    // Make text of size's value height card of gabion
@@ -412,7 +453,7 @@ namespace GabionCalculator.BAL.Utils
             svgElements.Add(serifLineBotSizeHeight);
 
             svgElements.Add(GetSvgTextElement($"{gabion.Height}",
-                              X_InitCoord + gabion.Length + outPartVertSizeHalf - 2,
+                              X_InitCoord + gabion.Length + outPartVertSizeHalf - 5,
                               2 * Y_InitCoord + gabion.Width + gabion.CardHeight / 2 + 20,
                               -90,
                               SvgLengthUnits.Pixels));    // Make text of size's value height of gabion
@@ -465,8 +506,8 @@ namespace GabionCalculator.BAL.Utils
             svgElements.Add(serifBotSizeCellHeight);
 
             svgElements.Add(GetSvgTextElement($"{gabion.CellHeight}",
-                          X_InitCoord - outPartVertSizeHalf + 8,
-                          2 * Y_InitCoord + gabion.Width + gabion.CardHeight - gabion.OutletVert - gabion.CellHeight / 2 + 20,
+                          X_InitCoord - outPartVertSizeHalf + 5,
+                          2 * Y_InitCoord + gabion.Width + gabion.CardHeight - gabion.OutletVert - gabion.CellHeight / 2 + 30,
                           -90,
                           SvgLengthUnits.Pixels));    // Make text of size's value cell height of gabion
 
@@ -518,14 +559,63 @@ namespace GabionCalculator.BAL.Utils
             svgElements.Add(serifLineRightSizeCellWidth);
 
             svgElements.Add(GetSvgTextElement($"{gabion.CellWidth}",
-                         X_InitCoord + gabion.MaterialDiameter + gabion.MaterialDiameter / 2 + gabion.CellWidth / 2 - 10,
-                         2 * Y_InitCoord + gabion.Width + gabion.CardHeight + outPartHorSize - 12,
+                         X_InitCoord + gabion.MaterialDiameter + gabion.MaterialDiameter / 2 + gabion.CellWidth / 2 - 28,
+                         2 * Y_InitCoord + gabion.Width + gabion.CardHeight + outPartHorSize - 15,
                          0,
                          SvgLengthUnits.Pixels));    // Make text of size's value cell width of gabion
 
+            // Draw size outlet of card by height  
 
+            var horLineSizeUpOutPartCardHeigth = GetSvgLineElement(X_InitCoord + gabion.MaterialDiameter
+                                                           , 2 * Y_InitCoord + gabion.Width
+                                                           , X_InitCoord + gabion.MaterialDiameter - outPartVertSizeHalf - 10
+                                                           , 2 * Y_InitCoord + gabion.Width
+                                                           , Color.Black
+                                                           , 1f
+                                                           , SvgLengthUnits.Pixels);
+            svgElements.Add(horLineSizeUpOutPartCardHeigth);
 
+            var horLineSizeBotOutPartCardHeigth = GetSvgLineElement(X_InitCoord
+                                                           , 2 * Y_InitCoord + gabion.Width + gabion.OutletVert
+                                                           , X_InitCoord + gabion.MaterialDiameter - outPartVertSizeHalf - 10
+                                                           , 2 * Y_InitCoord + gabion.Width + gabion.OutletVert
+                                                           , Color.Black
+                                                           , 1f
+                                                           , SvgLengthUnits.Pixels);
+            svgElements.Add(horLineSizeBotOutPartCardHeigth);
 
+            var vertLineSizeOutPartCardHeigth = GetSvgLineElement(X_InitCoord - outPartVertSizeHalf + 10
+                                                   , 2 * Y_InitCoord + gabion.Width - gabion.OutletVert - 20
+                                                   , X_InitCoord - outPartVertSizeHalf + 10
+                                                   , 2 * Y_InitCoord + gabion.Width + gabion.OutletVert
+                                                   , Color.Black
+                                                   , 1f
+                                                   , SvgLengthUnits.Pixels);
+            svgElements.Add(vertLineSizeOutPartCardHeigth);
+
+            var serifUpSizeOutPartCardHeigth = GetSerif(X_InitCoord + gabion.MaterialDiameter - outPartVertSizeHalf
+                                   , 2 * Y_InitCoord + gabion.Width
+                                   , X_InitCoord + gabion.MaterialDiameter - outPartVertSizeHalf
+                                   , 2 * Y_InitCoord + gabion.Width
+                                   , Color.Black
+                                   , 1f
+                                   , SvgLengthUnits.Pixels);
+            svgElements.Add(serifUpSizeOutPartCardHeigth);
+
+            var serifBotSizeOutPartCardHeigth = GetSerif(X_InitCoord + gabion.MaterialDiameter - outPartVertSizeHalf
+                                              , 2 * Y_InitCoord + gabion.Width + gabion.OutletVert
+                                              , X_InitCoord + gabion.MaterialDiameter - outPartVertSizeHalf
+                                              , 2 * Y_InitCoord + gabion.Width + gabion.OutletVert
+                                              , Color.Black
+                                              , 1f
+                                              , SvgLengthUnits.Pixels);
+            svgElements.Add(serifBotSizeOutPartCardHeigth);
+
+            svgElements.Add(GetSvgTextElement($"{gabion.OutletVert}",
+                          X_InitCoord - outPartVertSizeHalf + 5,
+                          2 * Y_InitCoord + gabion.Width - 5,
+                          -90,
+                          SvgLengthUnits.Pixels));    // Make text of size outlet of card by height 
 
             pathViewAboveGabion.PathData = pbViewAboveGabion.ToPathData();
             pathViewAboveGabion.Fill = new SvgPaint(Color.Transparent);
@@ -541,9 +631,9 @@ namespace GabionCalculator.BAL.Utils
             SvgViewBox view = new()
             {
                 MinX = 0,
-                MinY = 0,
-                Width = width * 1.5f,
-                Height = height * 4f
+                MinY = 0,   
+                Width = width * 1.25f,
+                Height = height * 3.5f
             };
                 
             svgDoc.RootSvg.ViewBox = view;

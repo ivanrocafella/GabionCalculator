@@ -73,7 +73,13 @@ namespace GabionCalculator.BAL.Services
             throw new NotImplementedException();
         }
 
-        public async Task<Gabion> GetByIdAsync(int id, CancellationToken cancellationToken = default) => await _context.Gabions.FindAsync(id, cancellationToken);
+        public async Task<Gabion> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+           Gabion gabion = await _context.Gabions.FindAsync(id, cancellationToken);
+           gabion.User = FileAction<User>.Deserialize(gabion.UserJson);
+           gabion.Material = FileAction<Material>.Deserialize(gabion.MaterialJson);
+           return gabion;
+        } 
 
         public IQueryable<Gabion> GetAllinQeryable() => _context.Gabions;
 

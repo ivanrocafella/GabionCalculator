@@ -27,3 +27,11 @@ em {
     margin-left: 5px;
 }
 
+@media print {
+  #draw_card {
+    display: flex !important;
+  }
+  #calculation_card {
+    display: flex !important;
+  }
+}

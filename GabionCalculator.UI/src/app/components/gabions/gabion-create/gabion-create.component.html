@@ -100,15 +100,15 @@
             <div class="card-body" id="PriceWeight">
               <h2 class="card-title">Результаты расчёта</h2>
               <p class="card-text">Кол-во: {{apiResultTempGab.result?.Quantity}} шт</p>
-              <p *ngIf="isUserAuthenticated" class="card-text">Себестоимость: {{roundNumber(apiResultTempGab.result?.Sebes)}} сом</p>
-              <p *ngIf="isUserAuthenticated" class="card-text">Общая себестоимость: {{roundNumber(apiResultTempGab.result?.BatchSebes)}} сом</p>
-              <p class="card-text">Цена: {{roundNumber(apiResultTempGab.result?.Price)}} сом</p>
-              <p class="card-text">Общая стоимость: {{roundNumber(apiResultTempGab.result?.BatchPrice)}} сом</p>
-              <p *ngIf="isUserAuthenticated" class="card-text">Расход мат-ла на 1 шт: {{roundNumber(apiResultTempGab.result?.MaterialTotalLength)}} м</p>
-              <p class="card-text">Вес 1 шт: {{roundNumber(apiResultTempGab.result?.Weight)}} кг</p>
-              <p class="card-text">Вес {{apiResultTempGab.result?.Quantity}} шт: {{roundNumber(apiResultTempGab.result?.BatchWeight)}} кг</p>
-              <p *ngIf="isUserAuthenticated" class="card-text">Цена мат-ла на 1 шт: {{roundNumber(apiResultTempGab.result?.PriceMaterial)}} сом</p>
-              <p *ngIf="isUserAuthenticated" class="card-text">Общая стоим-ть мат-ла: {{roundNumber(apiResultTempGab.result?.PriceMaterialBatch)}} сом</p>
+              <p *ngIf="isUserAuthenticated" class="card-text">Себестоимость: {{roundNumber(apiResultTempGab.result?.Sebes, true)}} сом</p>
+              <p *ngIf="isUserAuthenticated" class="card-text">Общая себестоимость: {{roundNumber(apiResultTempGab.result?.BatchSebes, true)}} сом</p>
+              <p class="card-text">Цена: {{roundNumber(apiResultTempGab.result?.Price, true)}} сом</p>
+              <p class="card-text">Общая стоимость: {{roundNumber(apiResultTempGab.result?.BatchPrice, true)}} сом</p>
+              <p *ngIf="isUserAuthenticated" class="card-text">Расход мат-ла на 1 шт: {{roundNumber(apiResultTempGab.result?.MaterialTotalLength, true)}} м</p>
+              <p class="card-text">Вес 1 шт: {{roundNumber(apiResultTempGab.result?.Weight, false)}} кг</p>
+              <p class="card-text">Вес {{apiResultTempGab.result?.Quantity}} шт: {{roundNumber(apiResultTempGab.result?.BatchWeight, false)}} кг</p>
+              <p *ngIf="isUserAuthenticated" class="card-text">Цена мат-ла на 1 шт: {{roundNumber(apiResultTempGab.result?.PriceMaterial, true)}} сом</p>
+              <p *ngIf="isUserAuthenticated" class="card-text">Общая стоим-ть мат-ла: {{roundNumber(apiResultTempGab.result?.PriceMaterialBatch, true)}} сом</p>
               <p *ngIf="isUserAuthenticated" class="card-text">Ширина карты: {{apiResultTempGab.result?.CardWidth}} мм</p>
               <p *ngIf="isUserAuthenticated" class="card-text">Высота карты: {{apiResultTempGab.result?.CardHeight}} мм</p>
               <p class="card-text">Материал: {{apiResultTempGab.result?.Material?.FullName}}</p>
@@ -122,8 +122,8 @@
               </button>
               <button *ngIf="isUserAuthenticated" type="button" id="calculationBtn"
                       printSectionId="calculation_card" class="btn btn-success" ngxPrint disabled
-                      [useExistingCss]="true" (click)="makeFlex()">
-                Калькуляция
+                      [useExistingCss]="true" [printStyle]="{ div: { display: 'inline-block' } }">
+                Результаты
               </button>
             </div>
           </div>
@@ -141,8 +141,8 @@
   <div id="stamp_draw" class="card-body"></div>
 </div>
 
-<div #calculation_card id="calculation_card" class="card mb-3" style="display:none;">
+<div #calculation_card id="calculation_card" class="row g-0 mb-3" style="display:none;">
   <!-- Content to be printed -->
-  <div id="notes_calculation" class="card-body"></div>
-  <div id="svg_calculation" class="card-img-top"></div>
+  <div id="notes_calculation" class="col-md-5"></div>
+  <div id="svg_calculation" class="col-md-7 card-img-overlay"></div>
 </div>
