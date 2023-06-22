@@ -18,7 +18,7 @@ namespace GabionCalculator.DAL.Entities
         public string? Name { get; set; }
         [NotMapped]
         [JsonPropertyName("FullName")]
-        public string? FullName { get { return $"{Name} ⌀{Size} {MaterialKind}"; } }
+        public string? FullName { get { return $"{Name} Ø{Size} {MaterialKind}"; } }
         [JsonPropertyName("Size")]
         public float Size { get; set; }
         [JsonPropertyName("PricePerKg")]

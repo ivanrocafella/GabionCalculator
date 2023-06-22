@@ -36,7 +36,7 @@ namespace GabionCalculator.API.Controllers
 
         // POST: api/CostWork/Update/5
         [HttpGet("Update/{id:int}")]
-      //  [Authorize]
+      //[Authorize]
         public async Task<IActionResult> UpdateAsync(int id)
         {
             CostWork costWork = await _costWorkService.GetByIdAsync(id);
@@ -45,7 +45,7 @@ namespace GabionCalculator.API.Controllers
 
         // POST: api/CostWork/Update/5
         [HttpPut("Update/{id:int}")]
-      //  [Authorize]
+       // [Authorize]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateCostWorkModel updateCostWorkModel)
         {
             if (ModelState.IsValid)

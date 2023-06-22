@@ -11,7 +11,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './gabion-details.component.html',
   styleUrls: ['./gabion-details.component.css']
 })
-export class GabionDetailsComponent implements OnInit {
+export class GabionDetailsComponent implements AfterViewInit {
   apiResultResponseGabion: Partial<ApiResultResponseGabionModel> = {};
   id!: number;
   svgSafeHtml?: SafeHtml;
@@ -21,7 +21,7 @@ export class GabionDetailsComponent implements OnInit {
   constructor(private gabionService: GabionsService, private route: ActivatedRoute
     , private sanitizer: DomSanitizer, private datePipe: DatePipe) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.id = this.route.snapshot.params['id'];
     this.gabionService.getGabionResponseModel(this.id).subscribe(
       {
@@ -35,6 +35,7 @@ export class GabionDetailsComponent implements OnInit {
           svgElem.setAttribute('style', 'height: auto; width: 100%;');
           svgStr = new XMLSerializer().serializeToString(svgElem);
           this.svgSafeHtml = this.sanitizer.bypassSecurityTrustHtml(svgStr);
+          this.makeContent();
         },
         error: (err: HttpErrorResponse) => {
           console.log(err.error);
@@ -93,9 +94,24 @@ export class GabionDetailsComponent implements OnInit {
     var notes_calculation = document.getElementById("notes_calculation") as HTMLDivElement;
     svg_calculation.innerHTML = this.apiResultResponseGabion.result?.Svg!;
 
-    var PriceWeightDiv = document.getElementById("PriceWeight") as HTMLDivElement;
-    console.log(PriceWeightDiv)
-    notes_calculation.innerHTML = PriceWeightDiv.innerHTML;
+    var priceWeightStr = '<div class="card-body" id="PriceWeight">' +
+      '<h2 class="card-title mb-1" ># ' + this.apiResultResponseGabion.result?.Id + '</h2>' +
+      '<p class="card-text"> Кол-во: ' + this.apiResultResponseGabion.result?.Quantity + ' шт</p>' +
+      '<p class="card-text"> Себестоимость: ' + this.roundNumber(this.apiResultResponseGabion.result?.Sebes, true) + ' сом</p>' +
+      '<p class="card-text"> Общая себестоимость: ' + this.roundNumber(this.apiResultResponseGabion.result?.BatchSebes, true) + ' сом</p>' +
+      '<p class="card-text"> Цена: ' + this.roundNumber(this.apiResultResponseGabion.result?.Price, true) + ' сом </p>' +
+      '<p class="card-text"> Общая стоимость: ' + this.roundNumber(this.apiResultResponseGabion.result?.BatchPrice, true) + ' сом</p>' +
+      '<p class="card-text"> Расход мат - ла на 1 шт: ' + this.roundNumber(this.apiResultResponseGabion.result?.MaterialTotalLength, true) + ' м</p>' +
+      '<p class="card-text"> Вес 1 шт: ' + this.roundNumber(this.apiResultResponseGabion.result?.Weight, false) + ' кг</p>' +
+      '<p class="card-text"> Вес ' + this.apiResultResponseGabion.result?.Quantity + ' шт: ' + this.roundNumber(this.apiResultResponseGabion.result?.BatchWeight, false) + ' кг</p>' +
+      '<p class="card-text">Цена мат-ла на 1 шт: ' + this.roundNumber(this.apiResultResponseGabion.result?.PriceMaterial, true) + ' сом</p>' +
+      '<p class="card-text">Общая стоим-ть мат-ла: ' + this.roundNumber(this.apiResultResponseGabion.result?.PriceMaterialBatch, true) + ' сом</p>' +
+      '<p class="card-text">Ширина карты: ' + this.apiResultResponseGabion.result?.CardWidth + ' мм</p>' +
+      '<p class="card-text">Высота карты: ' + this.apiResultResponseGabion.result?.CardHeight + ' мм</p>' +
+      '<p class="card-text">Материал: ' + this.apiResultResponseGabion.result?.Material?.FullName + '</p>' +
+      '<p class="card-text">Исполнитель: ' + this.apiResultResponseGabion.result?.User?.UserName + '</p></div>';
+                                    
+    notes_calculation.innerHTML = priceWeightStr;
   }
 
   makeContent() {

@@ -53,7 +53,7 @@ namespace GabionCalculator.API.Controllers
 
         // POST: api/Material/Update/5
         [HttpPut("Update/{id:int}")]
-        [Authorize]
+       // [Authorize]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody]UpdateMaterialModel updateMaterialModel)
         {
             if (ModelState.IsValid)

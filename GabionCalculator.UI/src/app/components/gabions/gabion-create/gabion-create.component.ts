@@ -93,11 +93,13 @@ export class GabionCreateComponent {
     this.gabionService.submitForm(this.formData).subscribe(
       {
         next: (ApiResultResponseGabionModel) => {
-           this.drawingBtn = document.getElementById("drawingBtn") as HTMLButtonElement;
-           this.calculationBtn = document.getElementById("calculationBtn") as HTMLButtonElement;
-           this.drawingBtn.disabled = true;
-           this.calculationBtn.disabled = true; 
-              
+          if (this.isUserAuthenticated) {
+            this.drawingBtn = document.getElementById("drawingBtn") as HTMLButtonElement;
+            this.calculationBtn = document.getElementById("calculationBtn") as HTMLButtonElement;
+            this.drawingBtn.disabled = true;
+            this.calculationBtn.disabled = true; 
+           }
+             
            this.showError = false;
            this.apiResultTempGab = ApiResultResponseGabionModel;
            console.log('Form submitted', this.apiResultTempGab);

@@ -111,13 +111,9 @@ namespace GabionCalculator.BAL
            string adminEmail = "admin@adminov.ru";
            string password = "WH90LeZ5uMe9";
            if (await roleManager.FindByNameAsync("admin") == null)
-           {
                await roleManager.CreateAsync(new IdentityRole("admin"));
-           }
            if (await roleManager.FindByNameAsync("employee") == null)
-           {
                await roleManager.CreateAsync(new IdentityRole("employee"));
-           }
            if (await userManager.FindByNameAsync(adminEmail) == null)
            {
                User admin = new() { Email = adminEmail, UserName = adminEmail };

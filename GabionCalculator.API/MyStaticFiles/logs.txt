@@ -1,0 +1,69 @@
+22.06.2023 14:44:30---Object reference not set to an instance of an object.----GabionCalculator.BAL   at GabionCalculator.BAL.Services.CostWorkService.UpdateAsync(CostWork costWork, UpdateCostWorkModel updateCostWorkModel, CancellationToken cancellationToken) in C:\Иван\Programming\Калькулятор_габионов\GabionCalculator\GabionCalculator.BAL\Services\CostWorkService.cs:line 38
+   at GabionCalculator.API.Controllers.CostWorkController.UpdateAsync(Int32 id, UpdateCostWorkModel updateCostWorkModel) in C:\Иван\Programming\Калькулятор_габионов\GabionCalculator\GabionCalculator.API\Controllers\CostWorkController.cs:line 54
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at GabionCalculator.API.Middleware.ExceptionHandlingMiddleware.Invoke(HttpContext context) in C:\Иван\Programming\Калькулятор_габионов\GabionCalculator\GabionCalculator.API\Middleware\ExceptionHandlingMiddleware.cs:line 26
+22.06.2023 14:56:15---Object reference not set to an instance of an object.----GabionCalculator.BAL
+   at GabionCalculator.BAL.Services.MaterialService.UpdateAsync(Material material, UpdateMaterialModel updateMaterialModel, CancellationToken cancellationToken) in C:\Иван\Programming\Калькулятор_габионов\GabionCalculator\GabionCalculator.BAL\Services\MaterialService.cs:line 82
+   at GabionCalculator.API.Controllers.MaterialController.UpdateAsync(Int32 id, UpdateMaterialModel updateMaterialModel) in C:\Иван\Programming\Калькулятор_габионов\GabionCalculator\GabionCalculator.API\Controllers\MaterialController.cs:line 62
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at GabionCalculator.API.Middleware.ExceptionHandlingMiddleware.Invoke(HttpContext context) in C:\Иван\Programming\Калькулятор_габионов\GabionCalculator\GabionCalculator.API\Middleware\ExceptionHandlingMiddleware.cs:line 26
+[RED]22.06.2023 15:01:18---Object reference not set to an instance of an object.----GabionCalculator.BAL[/RED]
+   at GabionCalculator.BAL.Services.CostWorkService.UpdateAsync(CostWork costWork, UpdateCostWorkModel updateCostWorkModel, CancellationToken cancellationToken) in C:\Иван\Programming\Калькулятор_габионов\GabionCalculator\GabionCalculator.BAL\Services\CostWorkService.cs:line 38
+   at GabionCalculator.API.Controllers.CostWorkController.UpdateAsync(Int32 id, UpdateCostWorkModel updateCostWorkModel) in C:\Иван\Programming\Калькулятор_габионов\GabionCalculator\GabionCalculator.API\Controllers\CostWorkController.cs:line 54
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at GabionCalculator.API.Middleware.ExceptionHandlingMiddleware.Invoke(HttpContext context) in C:\Иван\Programming\Калькулятор_габионов\GabionCalculator\GabionCalculator.API\Middleware\ExceptionHandlingMiddleware.cs:line 26
+<span style="color: red;">22.06.2023 15:05:06---Object reference not set to an instance of an object.----GabionCalculator.BAL</span>
+   at GabionCalculator.BAL.Services.CostWorkService.UpdateAsync(CostWork costWork, UpdateCostWorkModel updateCostWorkModel, CancellationToken cancellationToken) in C:\Иван\Programming\Калькулятор_габионов\GabionCalculator\GabionCalculator.BAL\Services\CostWorkService.cs:line 38
+   at GabionCalculator.API.Controllers.CostWorkController.UpdateAsync(Int32 id, UpdateCostWorkModel updateCostWorkModel) in C:\Иван\Programming\Калькулятор_габионов\GabionCalculator\GabionCalculator.API\Controllers\CostWorkController.cs:line 54
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at GabionCalculator.API.Middleware.ExceptionHandlingMiddleware.Invoke(HttpContext context) in C:\Иван\Programming\Калькулятор_габионов\GabionCalculator\GabionCalculator.API\Middleware\ExceptionHandlingMiddleware.cs:line 26
+{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1033{\\colortbl;\\red0\\green0\\blue255;}{\\cf122.06.2023 15:08:02---Object reference not set to an instance of an object.----GabionCalculator.BAL}
+   at GabionCalculator.BAL.Services.CostWorkService.UpdateAsync(CostWork costWork, UpdateCostWorkModel updateCostWorkModel, CancellationToken cancellationToken) in C:\Иван\Programming\Калькулятор_габионов\GabionCalculator\GabionCalculator.BAL\Services\CostWorkService.cs:line 38
+   at GabionCalculator.API.Controllers.CostWorkController.UpdateAsync(Int32 id, UpdateCostWorkModel updateCostWorkModel) in C:\Иван\Programming\Калькулятор_габионов\GabionCalculator\GabionCalculator.API\Controllers\CostWorkController.cs:line 54
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at GabionCalculator.API.Middleware.ExceptionHandlingMiddleware.Invoke(HttpContext context) in C:\Иван\Programming\Калькулятор_габионов\GabionCalculator\GabionCalculator.API\Middleware\ExceptionHandlingMiddleware.cs:line 26

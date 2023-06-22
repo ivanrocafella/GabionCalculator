@@ -29,12 +29,12 @@
         <div class="btn-group">
           <button type="button" id="drawingBtn"
                   printSectionId="draw_card" class="btn btn-success" ngxPrint
-                  [useExistingCss]="true" (click)="makeContent()">
+                  [useExistingCss]="true">
             Чертёж
           </button>
           <button type="button" id="calculationBtn"
                   printSectionId="calculation_card" class="btn btn-success" ngxPrint
-                  [useExistingCss]="true" [printStyle]="{ div: { display: 'inline-block' } }" (click)="makeContent()">
+                  [useExistingCss]="true" [printStyle]="{ div: { display: 'inline-block' } }" (click)="makeContentCalculation()">
             Результаты
           </button>
         </div>
