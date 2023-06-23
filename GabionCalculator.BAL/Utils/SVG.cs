@@ -15,9 +15,9 @@ namespace GabionCalculator.BAL.Utils
         {
             int X_InitCoord = 100; // X origin
             int Y_InitCoord = 200; // Y origin
-            int outPartHorSize = 60; // length output part of horizontal size
-            int outPartVertSize = 110; // length output part of vertical size
-            int outPartVertSizeHalf = 60; // length output part of vertical height size
+            int outPartHorSize = 70; // length output part of horizontal size
+            int outPartVertSize = 130; // length output part of vertical size
+            int outPartVertSizeHalf = 70; // length output part of vertical height size
             int width = 1350; // width of svg
             int height = 1350; // height of svg
 
@@ -87,9 +87,9 @@ namespace GabionCalculator.BAL.Utils
             // Underline
 
             var horUnderlineOfInscriptionViewAbove = GetSvgLineElement(X_InitCoord + gabion.Length / 2 - 50
-                                                                , Y_InitCoord - outPartHorSize - 50
-                                                                , X_InitCoord + gabion.Length / 2 + 100
-                                                                , Y_InitCoord - outPartHorSize - 50
+                                                                , Y_InitCoord - outPartHorSize - 60
+                                                                , X_InitCoord + gabion.Length / 2 + 140
+                                                                , Y_InitCoord - outPartHorSize - 60
                                                                 , Color.Black
                                                                 , 1f
                                                                 , SvgLengthUnits.Pixels);
@@ -99,7 +99,7 @@ namespace GabionCalculator.BAL.Utils
 
             svgElements.Add(GetSvgTextElement("Сверху",
                                  X_InitCoord + gabion.Length / 2 - 50,
-                                 Y_InitCoord - outPartHorSize - 55,
+                                 Y_InitCoord - outPartHorSize - 65,
                                  0,
                                  SvgLengthUnits.Pixels));    // Make text of inscription of above view 
 
@@ -313,7 +313,7 @@ namespace GabionCalculator.BAL.Utils
 
             var horUnderlineOfInscriptionViewFront = GetSvgLineElement(X_InitCoord + gabion.Length / 2 - 50
                                                                 , Y_InitCoord + gabion.Width + 100
-                                                                , X_InitCoord + gabion.Length / 2 + 130
+                                                                , X_InitCoord + gabion.Length / 2 + 180
                                                                 , Y_InitCoord + gabion.Width + 100
                                                                 , Color.Black
                                                                 , 1f
@@ -593,18 +593,18 @@ namespace GabionCalculator.BAL.Utils
                                                    , SvgLengthUnits.Pixels);
             svgElements.Add(vertLineSizeOutPartCardHeigth);
 
-            var serifUpSizeOutPartCardHeigth = GetSerif(X_InitCoord + gabion.MaterialDiameter - outPartVertSizeHalf
+            var serifUpSizeOutPartCardHeigth = GetSerif(X_InitCoord + gabion.MaterialDiameter - outPartVertSizeHalf + 5
                                    , 2 * Y_InitCoord + gabion.Width
-                                   , X_InitCoord + gabion.MaterialDiameter - outPartVertSizeHalf
+                                   , X_InitCoord + gabion.MaterialDiameter - outPartVertSizeHalf + 5
                                    , 2 * Y_InitCoord + gabion.Width
                                    , Color.Black
                                    , 1f
                                    , SvgLengthUnits.Pixels);
             svgElements.Add(serifUpSizeOutPartCardHeigth);
 
-            var serifBotSizeOutPartCardHeigth = GetSerif(X_InitCoord + gabion.MaterialDiameter - outPartVertSizeHalf
+            var serifBotSizeOutPartCardHeigth = GetSerif(X_InitCoord + gabion.MaterialDiameter - outPartVertSizeHalf + 5
                                               , 2 * Y_InitCoord + gabion.Width + gabion.OutletVert
-                                              , X_InitCoord + gabion.MaterialDiameter - outPartVertSizeHalf
+                                              , X_InitCoord + gabion.MaterialDiameter - outPartVertSizeHalf + 5
                                               , 2 * Y_InitCoord + gabion.Width + gabion.OutletVert
                                               , Color.Black
                                               , 1f
@@ -678,7 +678,7 @@ namespace GabionCalculator.BAL.Utils
                 Y = coordsYSizeThreadLength,
                 Color = new SvgColor(Color.Black),
                 FontStyle = SvgFontStyle.Normal,
-                FontSize = new SvgLength(45, units),
+                FontSize = new SvgLength(60, units),
                 FontWeight = SvgFontWeight.Bold,
                 Transform = transforms,
                 TextOrientation = SvgTextOrientation.Mixed

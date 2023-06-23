@@ -34,7 +34,7 @@
           </button>
           <button type="button" id="calculationBtn"
                   printSectionId="calculation_card" class="btn btn-success" ngxPrint
-                  [useExistingCss]="true" [printStyle]="{ div: { display: 'inline-block' } }" (click)="makeContentCalculation()">
+                  [useExistingCss]="true" [printStyle]="{ div: { display: 'inline-block' } }">
             Результаты
           </button>
         </div>
@@ -43,14 +43,14 @@
   </div>
 </div>
 
-<div #draw_card id="draw_card" class="card mb-3" style="display:none;">
+<div #draw_card id="draw_card" class="card mb-3" style="display: none; border: 5px solid black;">
   <!-- Content to be printed -->
   <div id="svg_draw" class="card-img-top"></div>
   <div id="notes_draw" class="card-body"></div>
   <div id="stamp_draw" class="card-body"></div>
 </div>
 
-<div #calculation_card id="calculation_card" class="row g-0 mb-3" style="display:none;">
+<div #calculation_card id="calculation_card" class="row g-0 mb-3" style="display: none; border: 5px solid black;">
   <!-- Content to be printed -->
   <div id="notes_calculation" class="col-md-5"></div>
   <div id="svg_calculation" class="col-md-7 card-img-overlay"></div>

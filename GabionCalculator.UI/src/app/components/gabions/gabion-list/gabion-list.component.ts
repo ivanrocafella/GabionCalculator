@@ -65,28 +65,32 @@ export class GabionListComponent implements OnInit {
         error: (response) => { console.log(response); }
       }
     )
-    this.getSrverData(this.itemsPerPage, this.currentPage);
+    this.getSrverData(this.itemsPerPage, this.currentPage, this.filterDateFrom, this.filterDateBefore, this.filterByExecut, this.filterMaterialName);
   }
 
-  public getSrverData(itemsPerPage: number, currentPage: number) {
-    this.gabions.getGabions(itemsPerPage, currentPage).subscribe(
+  public getSrverData(itemsPerPage: number, currentPage: number, filterDateFrom: Date | null, filterDateBefore: Date | null
+                      , filterByExecut: string | null, filterMaterialName: string | null) {
+    this.gabions.getGabions(itemsPerPage, currentPage, filterDateFrom, filterDateBefore, filterByExecut, filterMaterialName).subscribe(
       {
         next: (ApiResultListGabion) => {
           this.apiResultListGabion = ApiResultListGabion; console.log(this.apiResultListGabion);
 
           this.listGabions = ApiResultListGabion.result!;
           this.totalItems = ApiResultListGabion.additNum;
+          console.log(this.totalItems)
 
-          //Filtration
-          this.listGabions = this.listGabions
-            .filter(gabion => this.filterDateFrom ? new Date(gabion.DateStart) >= this.filterDateFrom : true);
-          this.listGabions = this.listGabions
-            .filter(gabion => this.filterDateBefore ? new Date(gabion.DateStart) <= this.filterDateBefore : true);
-          this.listGabions = this.listGabions
-            .filter(gabion => this.filterByExecut ? gabion.User?.UserName!.toLowerCase().includes(this.filterByExecut.toLowerCase()) : true);
-          this.listGabions = this.listGabions
-            .filter(gabion => this.filterMaterialName ? gabion.Material?.FullName! === this.filterMaterialName : true);
-          console.log(this.filterMaterialName);
+        // if (this.listGabions.length > 0) {
+        //   //Filtration
+        //   this.listGabions = this.listGabions
+        //     .filter(gabion => this.filterDateFrom ? new Date(gabion.DateStart) >= this.filterDateFrom : true);
+        //   this.listGabions = this.listGabions
+        //     .filter(gabion => this.filterDateBefore ? new Date(gabion.DateStart) <= this.filterDateBefore : true);
+        //   this.listGabions = this.listGabions
+        //     .filter(gabion => this.filterByExecut ? gabion.User?.UserName!.toLowerCase().includes(this.filterByExecut.toLowerCase()) : true);
+        //   this.listGabions = this.listGabions
+        //     .filter(gabion => this.filterMaterialName ? gabion.Material?.FullName! === this.filterMaterialName : true);
+        //   console.log(this.filterMaterialName);
+        // }
 
           this.paginator._intl.itemsPerPageLabel = "Элементов на странице";
           this.paginator._intl.nextPageLabel = "Следующая страница";
@@ -122,7 +126,7 @@ export class GabionListComponent implements OnInit {
   onPageChange(event: PageEvent) {
     this.currentPage = event.pageIndex;
     this.itemsPerPage = event.pageSize;
-    this.getSrverData(this.itemsPerPage, this.currentPage);
+    this.getSrverData(this.itemsPerPage, this.currentPage, this.filterDateFrom, this.filterDateBefore, this.filterByExecut, this.filterMaterialName);
   }
 
   ruLocale() {
@@ -134,7 +138,7 @@ export class GabionListComponent implements OnInit {
     this.filterDateBefore = null;
     this.filterByExecut = null;
     this.filterMaterialName = null;
-    this.getSrverData(this.itemsPerPage, this.currentPage);
+    this.getSrverData(this.itemsPerPage, this.currentPage, this.filterDateFrom, this.filterDateBefore, this.filterByExecut, this.filterMaterialName);
   }
 }
 

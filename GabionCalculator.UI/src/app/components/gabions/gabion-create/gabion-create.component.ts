@@ -109,7 +109,7 @@ export class GabionCreateComponent {
             this.divSvg.innerHTML = svg;
             var svgHtmlElem = this.divSvg.querySelectorAll('svg')[0];
             console.log(svgHtmlElem);
-            svgHtmlElem.setAttribute('style', 'height: auto; width: 100%;');
+            svgHtmlElem.setAttribute('style', 'height: auto; width: 130%;');
            }          
         },
         error: (err: HttpErrorResponse) => {

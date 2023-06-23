@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using GabionCalculator.BAL.Models.User;
+using Google.Protobuf;
+using static System.Net.Mime.MediaTypeNames;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GabionCalculator.API.Controllers
 {
@@ -78,9 +81,42 @@ namespace GabionCalculator.API.Controllers
         // POST: api/Gabion/Gabions
         [HttpGet("Gabions")]
        // [Authorize]
-        public async Task<IActionResult> GetAllAsync([FromQuery]int itemsPerPage, [FromQuery]int currentPage)
+        public async Task<IActionResult> GetAllAsync([FromQuery]int itemsPerPage, [FromQuery]int currentPage
+                                                    , [FromQuery]string filterDateFrom, [FromQuery]string filterDateBefore
+                                                    , [FromQuery] string filterByExecut, [FromQuery] string filterMaterialName)
         {
+   
+
+
+
+
+
             IQueryable<Gabion> queryGabions = _gabionService.GetAllinQeryable();
+            IQueryable<Gabion> allQueryGabions = queryGabions;
+
+            DateTime dateTimeFrom;
+            DateTime dateTimeBefore;
+            if (!string.IsNullOrEmpty(filterDateFrom))
+                filterDateFrom = filterDateFrom.Substring(1, filterDateFrom.Length - 2);
+            if (!string.IsNullOrEmpty(filterDateBefore))
+                filterDateBefore = filterDateBefore.Substring(1, filterDateBefore.Length - 2);
+
+            DateTime.TryParse(filterDateFrom, out dateTimeFrom);
+            DateTime.TryParse(filterDateBefore, out dateTimeBefore);
+
+            if (!String.IsNullOrEmpty(filterMaterialName))
+                queryGabions = queryGabions.Where(e => e.MaterialJson.Contains(filterMaterialName));
+            if (!String.IsNullOrEmpty(filterByExecut))
+                queryGabions = queryGabions.Where(e => e.User.UserName.Contains(filterByExecut));
+            if (dateTimeFrom > DateTime.MinValue && dateTimeFrom < DateTime.MaxValue && dateTimeBefore <= DateTime.MinValue)
+                queryGabions = queryGabions.Where(e => e.DateStart >= dateTimeFrom);
+            if (dateTimeBefore > DateTime.MinValue && dateTimeBefore < DateTime.MaxValue && dateTimeFrom <= DateTime.MinValue)
+                queryGabions = queryGabions.Where(e => e.DateStart <= dateTimeFrom);
+            if (dateTimeFrom > DateTime.MinValue && dateTimeFrom < DateTime.MaxValue && dateTimeBefore > DateTime.MinValue && dateTimeBefore < DateTime.MaxValue)
+                queryGabions = queryGabions.Where(e => e.DateStart >= dateTimeFrom && e.DateStart <= dateTimeBefore);
+
+            
+
             int totalItems = queryGabions.Count();
             queryGabions = _gabionService.Pagination(queryGabions, itemsPerPage, currentPage);
             IEnumerable<Gabion> gabions = await _gabionService.QueryGabionsToList(queryGabions);

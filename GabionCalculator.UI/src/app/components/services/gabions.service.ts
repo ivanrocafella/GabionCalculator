@@ -17,10 +17,14 @@ export class GabionsService {
   getCreateGabionModel(): Observable<ApiResultCreateGabionModel> { return this.http.get<ApiResultCreateGabionModel>(this.baseApiURL + '/api/Gabion') };
   submitForm(formData: any): Observable<ApiResultResponseGabionModel> { return this.http.post<ApiResultResponseGabionModel>(this.baseApiURL + '/api/Gabion/GetTemporaryGabion', formData) };
   post(body: ResponseGabionModel): Observable<ApiResultGabionModel> { return this.http.post<ApiResultGabionModel>(this.baseApiURL + '/api/Gabion', body) };
-  getGabions(itemsPerPage: number, currentPage: number): Observable<ApiResultResponseListGabion> {
+  getGabions(itemsPerPage: number, currentPage: number, filterDateFrom: Date | null, filterDateBefore: Date | null, filterByExecut: string | null, filterMaterialName: string | null): Observable<ApiResultResponseListGabion> {
     const params = new HttpParams()
       .set('itemsPerPage', itemsPerPage.toString())
-      .set('currentPage', currentPage.toString());
+      .set('currentPage', currentPage.toString())
+      .set('filterDateFrom', filterDateFrom ? JSON.stringify(filterDateFrom) : '')
+      .set('filterDateBefore', filterDateBefore ? JSON.stringify(filterDateBefore) : '')
+      .set('filterByExecut', filterByExecut ? filterByExecut : '')
+      .set('filterMaterialName', filterMaterialName ? filterMaterialName : '');
     return this.http.get<ApiResultResponseListGabion>(this.baseApiURL + '/api/Gabion/Gabions', { params })};
   getGabionResponseModel(id: number): Observable<ApiResultResponseGabionModel> { return this.http.get<ApiResultResponseGabionModel>(this.baseApiURL + '/api/Gabion/Details/' + id + '') };
 }

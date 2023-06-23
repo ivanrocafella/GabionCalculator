@@ -88,6 +88,28 @@ namespace GabionCalculator.BAL.Services
             , int currentPage
             , CancellationToken cancellationToken = default) => queryGabions.Skip(currentPage * itemsPerPage).Take(itemsPerPage);
 
+        //Method for filtration gabion
+     //  public void Filter(ref IQueryable<Gabion> queryGabions, string? SelectedMaterial, string SelectedUserName
+     //      , DateTime DateTimeFrom, DateTime DateTimeTill, double PriceFrom, double PriceTill)
+     //  {
+     //      if (!String.IsNullOrEmpty(SelectedMaterial))
+     //          anchors = anchors.Where(e => e.MaterialJson.Contains(SelectedMaterial));
+     //      if (!String.IsNullOrEmpty(SelectedUserName))
+     //          anchors = anchors.Where(e => e.User.UserName.Contains(SelectedUserName));
+     //      if (DateTimeFrom > DateTime.MinValue && DateTimeFrom < DateTime.MaxValue && DateTimeTill <= DateTime.MinValue)
+     //          anchors = anchors.Where(e => e.DateCreate >= DateTimeFrom);
+     //      if (DateTimeTill > DateTime.MinValue && DateTimeTill < DateTime.MaxValue && DateTimeFrom <= DateTime.MinValue)
+     //          anchors = anchors.Where(e => e.DateCreate <= DateTimeTill);
+     //      if (DateTimeFrom > DateTime.MinValue && DateTimeFrom < DateTime.MaxValue && DateTimeTill > DateTime.MinValue && DateTimeTill < DateTime.MaxValue)
+     //          anchors = anchors.Where(e => e.DateCreate >= DateTimeFrom && e.DateCreate <= DateTimeTill);
+     //      if (PriceFrom > 0 && PriceFrom < Double.PositiveInfinity && PriceTill == 0)
+     //          anchors = anchors.Where(e => e.Price >= PriceFrom);
+     //      if (PriceTill > 0 && PriceTill < Double.PositiveInfinity && PriceFrom == 0)
+     //          anchors = anchors.Where(e => e.Price <= PriceTill);
+     //      if (PriceFrom > 0 && PriceFrom < Double.PositiveInfinity && PriceTill > 0 && PriceTill < Double.PositiveInfinity)
+     //          anchors = anchors.Where(e => e.Price >= PriceFrom && e.Price <= PriceTill);
+     //  }
+
         public async Task<IEnumerable<Gabion>> QueryGabionsToList(IQueryable<Gabion> queryGabions
             , CancellationToken cancellationToken = default)
         {

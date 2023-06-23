@@ -8,19 +8,19 @@
   <mat-form-field color="warn" class="my-form-field" [style.margin-left]="'-12px'">
     <mat-label>По дате:</mat-label>
     <mat-date-range-input [rangePicker]="picker" color="warn">
-      <input matStartDate placeholder="Дата от:" [(ngModel)]="filterDateFrom" (dateChange)="getSrverData(itemsPerPage, currentPage)">
-      <input matEndDate placeholder="Дата до:" [(ngModel)]="filterDateBefore" (dateChange)="getSrverData(itemsPerPage, currentPage)">
+      <input matStartDate placeholder="Дата от:" [(ngModel)]="filterDateFrom" (dateChange)="getSrverData(itemsPerPage, currentPage, filterDateFrom, filterDateBefore, filterByExecut, filterMaterialName)">
+      <input matEndDate placeholder="Дата до:" [(ngModel)]="filterDateBefore" (dateChange)="getSrverData(itemsPerPage, currentPage, filterDateFrom, filterDateBefore, filterByExecut, filterMaterialName)">
     </mat-date-range-input>
     <mat-datepicker-toggle matSuffix [for]="picker" color="warn"></mat-datepicker-toggle>
     <mat-date-range-picker #picker color="warn"></mat-date-range-picker>
   </mat-form-field>
   <mat-form-field color="warn" class="my-form-field">
     <mat-label>По исполнителю:</mat-label>
-    <input matInput [(ngModel)]="filterByExecut" placeholder="Исполнитель" (input)="getSrverData(itemsPerPage, currentPage)" color="warn">
+    <input matInput [(ngModel)]="filterByExecut" placeholder="Исполнитель" (input)="getSrverData(itemsPerPage, currentPage, filterDateFrom, filterDateBefore, filterByExecut, filterMaterialName)" color="warn">
   </mat-form-field>
   <mat-form-field color="warn" class="my-form-field">
     <mat-label>По материалу:</mat-label>
-    <mat-select [(ngModel)]="filterMaterialName" (selectionChange)="getSrverData(itemsPerPage, currentPage)">
+    <mat-select [(ngModel)]="filterMaterialName" (selectionChange)="getSrverData(itemsPerPage, currentPage, filterDateFrom, filterDateBefore, filterByExecut, filterMaterialName)">
       <mat-option *ngFor="let m of listMaterials" [value]="m.FullName">{{ m.FullName }}</mat-option>
     </mat-select>
   </mat-form-field>
