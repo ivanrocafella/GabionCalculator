@@ -85,49 +85,15 @@ namespace GabionCalculator.API.Controllers
                                                     , [FromQuery]string filterDateFrom, [FromQuery]string filterDateBefore
                                                     , [FromQuery] string filterByExecut, [FromQuery] string filterMaterialName)
         {
-   
-
-
-
-
-
             IQueryable<Gabion> queryGabions = _gabionService.GetAllinQeryable();
-            IQueryable<Gabion> allQueryGabions = queryGabions;
-
-            DateTime dateTimeFrom;
-            DateTime dateTimeBefore;
-            if (!string.IsNullOrEmpty(filterDateFrom))
-                filterDateFrom = filterDateFrom.Substring(1, filterDateFrom.Length - 2);
-            if (!string.IsNullOrEmpty(filterDateBefore))
-                filterDateBefore = filterDateBefore.Substring(1, filterDateBefore.Length - 2);
-
-            DateTime.TryParse(filterDateFrom, out dateTimeFrom);
-            DateTime.TryParse(filterDateBefore, out dateTimeBefore);
-
-            if (!String.IsNullOrEmpty(filterMaterialName))
-                queryGabions = queryGabions.Where(e => e.MaterialJson.Contains(filterMaterialName));
-            if (!String.IsNullOrEmpty(filterByExecut))
-                queryGabions = queryGabions.Where(e => e.User.UserName.Contains(filterByExecut));
-            if (dateTimeFrom > DateTime.MinValue && dateTimeFrom < DateTime.MaxValue && dateTimeBefore <= DateTime.MinValue)
-                queryGabions = queryGabions.Where(e => e.DateStart >= dateTimeFrom);
-            if (dateTimeBefore > DateTime.MinValue && dateTimeBefore < DateTime.MaxValue && dateTimeFrom <= DateTime.MinValue)
-                queryGabions = queryGabions.Where(e => e.DateStart <= dateTimeFrom);
-            if (dateTimeFrom > DateTime.MinValue && dateTimeFrom < DateTime.MaxValue && dateTimeBefore > DateTime.MinValue && dateTimeBefore < DateTime.MaxValue)
-                queryGabions = queryGabions.Where(e => e.DateStart >= dateTimeFrom && e.DateStart <= dateTimeBefore);
-
-            
+            if (!string.IsNullOrEmpty(filterDateFrom) || !string.IsNullOrEmpty(filterDateBefore) || !string.IsNullOrEmpty(filterByExecut) || !string.IsNullOrEmpty(filterMaterialName))
+                _gabionService.Filter(ref queryGabions, filterDateFrom, filterDateBefore, filterByExecut, filterMaterialName);
 
             int totalItems = queryGabions.Count();
             queryGabions = _gabionService.Pagination(queryGabions, itemsPerPage, currentPage);
             IEnumerable<Gabion> gabions = await _gabionService.QueryGabionsToList(queryGabions);
-            if (gabions.Any())
-            {
-                ApiResult<IEnumerable<GabionResponseModel>> apiResult = ApiResult<IEnumerable<GabionResponseModel>>
-                    .SuccessWithAdditNum(_mapper.Map<IEnumerable<GabionResponseModel>>(gabions), totalItems);
-                return Ok(apiResult);
-            }                
-            else
-                return StatusCode(500, ApiResult<IEnumerable<GabionResponseModel>>.Failure(new List<string>() { "Объекты ещё не добавлены." }));
+
+            return Ok(ApiResult<IEnumerable<GabionResponseModel>>.SuccessWithAdditNum(_mapper.Map<IEnumerable<GabionResponseModel>>(gabions), totalItems));               
         }
 
         // GET: api/Gabion/GetById/5

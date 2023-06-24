@@ -21,6 +21,7 @@ namespace GabionCalculator.BAL.Services.Interfaces
         IQueryable<Gabion> Pagination(IQueryable<Gabion> queryGabions, int itemsPerPage, int currentPage, CancellationToken cancellationToken = default);
         IQueryable<Gabion> GetAllinQeryable();
         Task<IEnumerable<Gabion>> QueryGabionsToList(IQueryable<Gabion> queryGabions, CancellationToken cancellationToken = default);
+        void Filter(ref IQueryable<Gabion> queryGabions, string filterDateFrom, string filterDateBefore, string filterByExecut, string filterMaterialName);
     }
 }
         

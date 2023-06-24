@@ -8,8 +8,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CellDividinngValidatorService } from 'src/app/components/validators/cell-dividinng-validator.service';
 import { DatePipe } from '@angular/common';
-import * as printJS from 'print-js';
-import * as jQuery from 'jquery';
 
 
 @Component({
@@ -199,30 +197,6 @@ export class GabionCreateComponent {
     }
     return 0;
   }
-
-  printDiv() {
-    this.makeContentDraw();
-
-    const printContents = this.draw_card.nativeElement.innerHTML;
-    const originalContents = document.body.innerHTML;
-
-    document.body.innerHTML = printContents;
-
-    window.print();
-    document.body.innerHTML = originalContents;
-   // window.location.reload()
-  }
-
-  printDrawJs(): void {
-    this.makeContentDraw();
-    const draw_card = document.getElementById("draw_card") as HTMLDivElement;
-    draw_card.style.display = "flex";
-    printJS({
-      printable: 'draw_card',
-      type: 'html',
-      // Other optional configuration options...
-    });
-  } 
 
   makeContentDraw() {
     var svg_draw = document.getElementById("svg_draw") as HTMLDivElement;
