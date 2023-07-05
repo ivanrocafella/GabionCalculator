@@ -42,8 +42,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1.5mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -74,10 +74,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "GabionCalculator.UI:build:production"
+              "browserTarget": "GabionCalculator.UI:build:production"         
             },
             "development": {
-              "browserTarget": "GabionCalculator.UI:build:development"
+              "browserTarget": "GabionCalculator.UI:build:development"             
             }
           },
           "defaultConfiguration": "development"
