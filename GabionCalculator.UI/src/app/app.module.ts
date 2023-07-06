@@ -31,7 +31,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { CostWorkUpdateComponent } from './components/costworks/cost-work-update/cost-work-update.component';
 import { NgxPrintModule } from 'ngx-print';
 import { DatePipe } from '@angular/common';
-
+import { APP_BASE_HREF } from '@angular/common';
 
 
 export function tokenGetter() {
@@ -61,7 +61,7 @@ export function tokenGetter() {
     provide: HTTP_INTERCEPTORS,
     useClass: ErrorHandlerService,
     multi: true
-    }, { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' }, DatePipe],
+    }, { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' }, DatePipe, { provide: APP_BASE_HREF, useValue: '/gabion' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
