@@ -5,5 +5,5 @@ interface AppEnv {
 
 export const environment: AppEnv = {
   production: false,
-  apiUrl: 'https://localhost:7083'
+  apiUrl: 'https://localhost:5001'
 }

@@ -106,10 +106,7 @@ namespace GabionCalculator.API.Controllers
         {
             bool isAuth = User.Identity.IsAuthenticated;
             await _userService.GetSignOutAsync();
-          // if (User.Identity.IsAuthenticated)
-          //     return StatusCode(500, ApiResult<IEnumerable<UserResponseModel>>.Failure(new List<string>() { "Пользователь не вышел из системы." }));
-          // else
-                return RedirectToAction("GetAsync","Gabion");
+            return RedirectToAction("GetAsync","Gabion");
         }
 
         // POST: api/User/Remove/skf34l41ksm

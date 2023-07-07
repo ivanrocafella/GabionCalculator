@@ -26,7 +26,7 @@ export class GabionCreateComponent {
   apiResultCreateGab: Partial<ApiResultCreateGabionModel> = {};
   apiResultTempGab: Partial<ApiResultResponseGabionModel> = {};
   formData: any = {};
-  imageUrl: string = 'assets/images/gabion.png';
+  imageUrl: string = './assets/images/gabion.png';
   divSvg: any = {};
   divDescriptAnchor: any = {};
   createGabionForm!: FormGroup;
