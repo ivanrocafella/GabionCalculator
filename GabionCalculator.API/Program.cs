@@ -60,3 +60,8 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.MapControllers();
 app.UseCors(MyAllowSpecificOrigins);
 app.Run();
+
+using (StreamWriter writer = new StreamWriter(Path.Combine(builder.Environment.ContentRootPath, "MyStaticFiles"), true))
+{
+    writer.WriteLine($"WORKS {Path.Combine(builder.Environment.ContentRootPath, "MyStaticFiles")}");
+}

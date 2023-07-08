@@ -9,11 +9,13 @@ namespace GabionCalculator.API.Middleware
     {
         private readonly ILogger<ExceptionHandlingMiddleware> _logger;
         private readonly RequestDelegate _next;
+        private readonly IWebHostEnvironment _env;
 
-        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
+        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger, IWebHostEnvironment env)
         {
             _next = next;
             _logger = logger;
+            _env = env;
         }
 
         public async Task Invoke(HttpContext context)
@@ -31,6 +33,7 @@ namespace GabionCalculator.API.Middleware
         private Task HandleException(HttpContext context, Exception ex)
         {
             _logger.LogError(ex.Message);
+            File.WriteAllText(Path.Combine(_env.ContentRootPath, "MyStaticFiles"), ex.Message);
 
             var code = StatusCodes.Status500InternalServerError;
             var errors = new List<string> { ex.Message };
