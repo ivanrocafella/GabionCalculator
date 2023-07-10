@@ -79,19 +79,6 @@ export class GabionListComponent implements OnInit {
           this.totalItems = ApiResultListGabion.additNum;
           console.log(this.totalItems)
 
-        // if (this.listGabions.length > 0) {
-        //   //Filtration
-        //   this.listGabions = this.listGabions
-        //     .filter(gabion => this.filterDateFrom ? new Date(gabion.DateStart) >= this.filterDateFrom : true);
-        //   this.listGabions = this.listGabions
-        //     .filter(gabion => this.filterDateBefore ? new Date(gabion.DateStart) <= this.filterDateBefore : true);
-        //   this.listGabions = this.listGabions
-        //     .filter(gabion => this.filterByExecut ? gabion.User?.UserName!.toLowerCase().includes(this.filterByExecut.toLowerCase()) : true);
-        //   this.listGabions = this.listGabions
-        //     .filter(gabion => this.filterMaterialName ? gabion.Material?.FullName! === this.filterMaterialName : true);
-        //   console.log(this.filterMaterialName);
-        // }
-
           this.paginator._intl.itemsPerPageLabel = "Элементов на странице";
           this.paginator._intl.nextPageLabel = "Следующая страница";
           this.paginator._intl.previousPageLabel = "Предыдущая страница";
