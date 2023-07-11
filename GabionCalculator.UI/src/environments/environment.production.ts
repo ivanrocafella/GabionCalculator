@@ -5,5 +5,5 @@ interface AppEnv {
 
 export const environment: AppEnv = {
   production: true,
-  apiUrl: 'http://192.168.0.232:5001'
+  apiUrl: 'http://192.168.0.232/api'
 }
