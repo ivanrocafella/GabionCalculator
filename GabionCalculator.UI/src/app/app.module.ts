@@ -63,4 +63,5 @@ export function tokenGetter() {
     }, { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' }, DatePipe],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
