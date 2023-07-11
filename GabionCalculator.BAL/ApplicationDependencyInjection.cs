@@ -46,7 +46,7 @@ namespace GabionCalculator.BAL
         services.AddCors(options =>
         {
          options.AddPolicy(name: MyAllowSpecificOrigins,
-                           policy => policy.WithOrigins("http://localhost:5002", "http://192.168.0.232/gabion")
+                           policy => policy.WithOrigins("http://localhost:5002", "http://192.168.0.232")
                            .AllowAnyHeader()
                            .AllowAnyMethod()
                            .AllowCredentials());
