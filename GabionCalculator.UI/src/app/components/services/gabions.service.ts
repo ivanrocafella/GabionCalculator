@@ -26,5 +26,7 @@ export class GabionsService {
       .set('filterByExecut', filterByExecut ? filterByExecut : '')
       .set('filterMaterialName', filterMaterialName ? filterMaterialName : '');
     return this.http.get<ApiResultResponseListGabion>(this.baseApiURL + '/api/Gabion/Gabions', { params })};
-  getGabionResponseModel(id: number): Observable<ApiResultResponseGabionModel> { return this.http.get<ApiResultResponseGabionModel>(this.baseApiURL + '/api/Gabion/Details/' + id + '') };
+  getGabionResponseModel(id: number): Observable<ApiResultResponseGabionModel> {
+    return this.http.get<ApiResultResponseGabionModel>(this.baseApiURL + '/api/Gabion/Details/' + id + '')
+  };
 }
