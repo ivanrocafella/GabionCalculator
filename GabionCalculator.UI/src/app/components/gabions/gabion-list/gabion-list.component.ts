@@ -10,6 +10,8 @@ import { DateAdapter } from '@angular/material/core';
 import { MaterialsService } from 'src/app/components/services/materials.service'
 import { ApiResultResponseListMaterial } from '../../../models/apiResultResponseListMaterial.model';
 import { ResponseMaterialModel } from '../../../models/responseMaterialModel.model';
+import { ApiResultResponseGabionModel } from '../../../models/apiResultResponseGabionModel.model';
+import { UsersService } from 'src/app/components/services/users.service';
 
 
 
@@ -19,8 +21,7 @@ import { ResponseMaterialModel } from '../../../models/responseMaterialModel.mod
   styleUrls: ['./gabion-list.component.css']
 })
 export class GabionListComponent implements OnInit {
-
-
+  public isAdmin!: boolean;
   apiResultListGabion: Partial<ApiResultResponseListGabion> = {};
   apiResultListMaterial: Partial<ApiResultResponseListMaterial> = {};
   errorMessage!: string;
@@ -49,11 +50,18 @@ export class GabionListComponent implements OnInit {
   constructor(private gabions: GabionsService
     , private sanitizer: DomSanitizer
     , private dateAdapter: DateAdapter<any>
-    , private materials: MaterialsService) { 
+    , private materials: MaterialsService
+    , private users: UsersService) {
+    this.users.isAdminChanged
+      .subscribe(res => {
+        this.isAdmin = res;
+      })
   }
 
 
   ngOnInit(): void {
+    if (this.users.isUserAdmin())
+      this.users.sendIsAdminStateChangeNotification(true);
     this.ruLocale();
     this.materials.getAllMaterials().subscribe(
       {
@@ -126,6 +134,38 @@ export class GabionListComponent implements OnInit {
     this.filterByExecut = null;
     this.filterMaterialName = null;
     this.getSrverData(this.itemsPerPage, this.currentPage, this.filterDateFrom, this.filterDateBefore, this.filterByExecut, this.filterMaterialName);
+  }
+
+  setIdForButton(Id: number) {
+    console.log(Id);
+    var gabionLine = document.getElementById('card-' + Id + '')
+    console.log(gabionLine);
+    var gabionName = gabionLine!.getElementsByTagName('div')[0]
+      .getElementsByTagName('div')[0]
+      .getElementsByTagName('div')[1]
+      .getElementsByTagName('div')[0].getElementsByTagName('h4')[0]
+      .textContent?.replace('Наименование: ', '');
+    console.log(gabionName);
+    var btnDelCard = document.getElementsByClassName("btnDelCard")[0];
+    var modal_body = document.getElementById("modal_body");
+    modal_body!.innerHTML = 'Вы действительно хотите удалить ' + gabionName + '?';
+    btnDelCard.setAttribute('id', Id.toString());
+  }
+
+  delGabion(event: Event) {
+    event.preventDefault();
+    var target = event.target || event.currentTarget;
+    if (target instanceof Element) {
+      var id = parseInt(target.getAttribute("id")!)
+      var gabionLine = document.getElementById('card-' + id + '')
+      gabionLine!.remove();
+      console.log(id)
+      this.gabions.deleteGabion(id!).subscribe
+        ({
+          next: (response: ApiResultResponseGabionModel) => {console.log(response); this.totalItems--},
+          error: (response) => { console.log(response) }
+        })
+    }
   }
 }
 

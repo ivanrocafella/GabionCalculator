@@ -124,6 +124,13 @@ namespace GabionCalculator.BAL.Services
                 item.Material = FileAction<Material>.Deserialize(item.MaterialJson);
             }
             return Gabions;
-        } 
+        }
+
+        public async Task DeleteByObject(Gabion gabion, CancellationToken cancellationToken = default)
+        {
+            gabion.User = null; gabion.Material = null;
+            _context.Gabions.Remove(gabion);
+            await _context.SaveChangesAsync();
+        }
     }
 }

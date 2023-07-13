@@ -24,26 +24,30 @@
       <mat-option *ngFor="let m of listMaterials" [value]="m.FullName">{{ m.FullName }}</mat-option>
     </mat-select>
   </mat-form-field>
-  <button mat-raised-button color="warn" (click)="cleareFilters()">
+  <button mat-raised-button color="basic" (click)="cleareFilters()">
     <mat-icon>clear</mat-icon>
     Очистить фильтры
   </button>
 
-
   <div class="row row-cols-1 g-4">
-    <div class="card mb-3" *ngFor="let g of listGabions; let i = index" routerLink="/Gabion/Details/{{g.Id}}" style="cursor: pointer;" id="card-{{g.Id}}">
-      <div class="row g-0">
-        <div class="col-md-2" id="svg-{{g.Id}}" [innerHTML]="svgSafeHtml[i]">
-        </div>
-        <div class="col-md-10 ">
-          <div class="card-body">
-            <h2 class="card-title"># {{g.Id}}</h2>
-            <h4 class="card-title">Наименование: Габион Ø{{g.Material?.Size}} {{g.Length}}x{{g.Width}}x{{g.Height}}, ячейка {{g.CellHeight}}x{{g.CellWidth}}</h4>
-            <p class="card-text">Исполнитель: {{g.User?.UserName}}</p>
-            <p class="card-text"><small class="text-muted">Дата создания: {{g.DateStart | date:'dd/MM/yyyy HH:mm:ss'}}</small></p>
+    <div class="card mb-3 pt-3" *ngFor="let g of listGabions; let i = index" id="card-{{g.Id}}">
+      <div class="card mb-3" routerLink="/Gabion/Details/{{g.Id}}" style="cursor: pointer;">
+        <div class="row g-0">
+          <div class="col-md-2" id="svg-{{g.Id}}" [innerHTML]="svgSafeHtml[i]"></div>
+          <div class="col-md-10 ">
+            <div class="card-body">
+              <h2 class="card-title"># {{g.Id}}</h2>
+              <h4 class="card-title">Наименование: Габион Ø{{g.Material?.Size}} {{g.Length}}x{{g.Width}}x{{g.Height}}, ячейка {{g.CellHeight}}x{{g.CellWidth}}</h4>
+              <p class="card-text">Исполнитель: {{g.User?.UserName}}</p>
+              <p class="card-text"><small class="text-muted">Дата создания: {{g.DateStart | date:'dd/MM/yyyy HH:mm:ss'}}</small></p>
+            </div>
           </div>
         </div>
-      </div>
+      </div>  
+      <button *ngIf="isAdmin" type="button" mat-raised-button color="warn" class="mb-3 w-25 mx-auto" style="text-align:center;" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="setIdForButton(g.Id)">
+        <mat-icon>delete_forever</mat-icon>
+        Удалить
+      </button>
     </div>
   </div>
   <footer class="footer-container">
@@ -56,5 +60,22 @@
                    color="warn">
     </mat-paginator>
   </footer>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Удаление габиона</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="modal_body" class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+        <button type="button" class="btnDelCard btn btn-danger" data-bs-dismiss="modal" (click)="delGabion($event)">Да</button>
+      </div>
+    </div>
+  </div>
 </div>
 

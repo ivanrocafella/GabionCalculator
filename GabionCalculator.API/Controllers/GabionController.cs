@@ -118,5 +118,23 @@ namespace GabionCalculator.API.Controllers
                 model.Materials = materials;  
             return Ok(ApiResult<CreateGabionModel>.Success(model));
         }
+
+        // POST: api/Gabion/Remove/5
+        [HttpPost("Remove/{id}")]
+
+        public async Task<IActionResult> Remove([FromRoute] int id)
+        {
+            if (id > 0)
+            {
+                Gabion gabion = await _gabionService.GetByIdAsync(id);
+                if (gabion != null)
+                {
+                    await _gabionService.DeleteByObject(gabion);
+                    return Ok(ApiResult<GabionResponseModel>.Success(_mapper.Map<GabionResponseModel>(gabion)));
+                }
+                return StatusCode(500, ApiResult<Gabion>.Failure(new List<string>() { "Габион не найден" }));
+            }
+            return StatusCode(500, ApiResult<Gabion>.Failure(new List<string>() { "Id габиона не передан в параметры" }));
+        }
     }
 }

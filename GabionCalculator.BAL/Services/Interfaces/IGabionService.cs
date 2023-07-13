@@ -22,6 +22,7 @@ namespace GabionCalculator.BAL.Services.Interfaces
         IQueryable<Gabion> GetAllinQeryable();
         Task<IEnumerable<Gabion>> QueryGabionsToList(IQueryable<Gabion> queryGabions, CancellationToken cancellationToken = default);
         void Filter(ref IQueryable<Gabion> queryGabions, string filterDateFrom, string filterDateBefore, string filterByExecut, string filterMaterialName);
+        Task DeleteByObject(Gabion gabion, CancellationToken cancellationToken = default);
     }
 }
         
