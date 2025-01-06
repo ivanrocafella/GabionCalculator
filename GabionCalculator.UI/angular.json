@@ -104,7 +104,11 @@
         },
         "serve": {
           "options": {
-            "port": 5002
+            "port": 5002,
+            "allowedHosts": [
+              "calculator.ztta.kg",
+              "localhost"
+            ]
           },
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
