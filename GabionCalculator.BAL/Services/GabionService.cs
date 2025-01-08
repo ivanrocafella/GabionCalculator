@@ -103,7 +103,7 @@ namespace GabionCalculator.BAL.Services
             DateOnly.TryParse(filterDateBefore, out dateTimeBefore);
 
             if (!String.IsNullOrEmpty(filterMaterialName))
-                queryGabions = queryGabions.Where(e => e.MaterialJson.Contains(filterMaterialName));
+                queryGabions = queryGabions.Where(e => e.MaterialJson.ToLower().Contains(filterMaterialName.ToLower().Replace('⌀', 'Ø')));
             if (!String.IsNullOrEmpty(filterByExecut))
                 queryGabions = queryGabions.Where(e => e.User.UserName.Contains(filterByExecut));
             if (dateTimeFrom > DateOnly.MinValue && dateTimeFrom < DateOnly.MaxValue && dateTimeBefore <= DateOnly.MinValue)
